@@ -107,6 +107,115 @@ bool Board::CheckPlayerAndVirusCollision(std::vector<std::pair<int, int>> _virus
 	return false;
 }
 
+bool Board::CheckVirusInClearedArea(Pixel* _pixel, std::vector<std::pair<int, int>> _viruspos)
+{
+	for (int i = 0; i < _viruspos.size(); ++i)
+	{
+		if ((_pixel->indexX == _viruspos[i].first) &&
+			(_pixel->indexY == _viruspos[i].second))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void Board::PathstoClearAndSpawnItem(std::list<Pixel*> _list)
+{
+	// 점수 Cleared된 pixel들의 갯수
+	score += _list.size();
+	for (auto& it : _list)
+	{
+		// 안에 바이러스 있는지 없는지 탐색
+		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+		{
+			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+				continue;
+
+			if (CheckVirusInClearedArea(it, VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
+			{
+				VirusManager::GetInstance()->virusVector[i]->isactive = false;
+			}
+		}
+		it->state = CLEARED;
+	}
+
+	// 일단 전부 다 소진되어있으면
+	if (item[0] == 0 &&
+		item[1] == 0 &&
+		item[2] == 0 &&
+		item[3] == 0 &&
+		item[4] == 0)
+	{
+		// 아이템 스폰이 안됨. 따로 띄워주고싶으면 여기다가
+	}
+	// 랜덤으로 고른 그 아이템이 나올 수 있으면
+	// 그게 아니라 아이템이 이미 다 소진되어있으면 다시 돌리기
+	else
+	{
+		int ind = rand() % 5;
+		while (item[ind] == 0)
+		{
+			ind = rand() % 5;
+			if (item[ind] != 0)
+				break;
+		}
+		--item[ind];
+		// index에 해당하는 아이템 생성
+		auto iter = paths.front();
+		ItemManager::GetInstance()->SpawnItem(iter->position, iter->indexX, iter->indexY, (ITEMTAG)ind);
+	}
+	return;
+}
+
+void Board::MovePlayer()
+{
+	if (deltatime <= 0)
+	{
+		if (DXUTIsKeyDown('W'))
+		{
+			backposX = playerX;
+			backposY = playerY;
+			direction = UPDOWN;
+			playerY -= 1;
+			if (playerY < 0)
+				playerY = 0;
+		}
+		else if (DXUTIsKeyDown('S'))
+		{
+			backposX = playerX;
+			backposY = playerY;
+			direction = UPDOWN;
+			playerY += 1;
+			if (playerY > 49)
+				playerY = 49;
+		}
+		else if (DXUTIsKeyDown('A'))
+		{
+			backposX = playerX;
+			backposY = playerY;
+			direction = LEFTRIGHT;
+			playerX -= 1;
+			if (playerX < 0)
+				playerX = 0;
+		}
+		else if (DXUTIsKeyDown('D'))
+		{
+			backposX = playerX;
+			backposY = playerY;
+			direction = LEFTRIGHT;
+			playerX += 1;
+			if (playerX > 49)
+				playerX = 49;
+		}
+		deltatime = vim->movementspeed;
+	}
+	else
+	{
+		deltatime -= DXUTGetElapsedTime();
+	}
+}
+
 Board::Board(void)
 {
 	for (int i = 0; i < 50; ++i)
@@ -183,53 +292,9 @@ Board::~Board(void)
 void Board::Update(void)
 {
 	ItemManager::GetInstance()->CheckItem(playerX, playerY, vim);
+	MovePlayer();
 
-	if (deltatime <= 0)
-	{
-		if (DXUTIsKeyDown('W'))
-		{
-			backposX = playerX;
-			backposY = playerY;
-			direction = UPDOWN;
-			playerY -= 1;
-			if (playerY < 0)
-				playerY = 0;
-		}
-		else if (DXUTIsKeyDown('S'))
-		{
-			backposX = playerX;
-			backposY = playerY;
-			direction = UPDOWN;
-			playerY += 1;
-			if (playerY > 49)
-				playerY = 49;
-		}
-		else if (DXUTIsKeyDown('A'))
-		{
-			backposX = playerX;
-			backposY = playerY;
-			direction = LEFTRIGHT;
-			playerX -= 1;
-			if (playerX < 0)
-				playerX = 0;
-		}
-		else if (DXUTIsKeyDown('D'))
-		{
-			backposX = playerX;
-			backposY = playerY;
-			direction = LEFTRIGHT;
-			playerX += 1;
-			if (playerX > 49)
-				playerX = 49;
-		}
-		deltatime = vim->movementspeed;
-	}
-	else
-	{
-		deltatime -= DXUTGetElapsedTime();
-	}
-
-	if (isCutting == false && pixels[playerX][playerY]->state == NONE)
+	if (isCutting == false && pixels[playerX][playerY]->state == NONE) // 자르기 시작했는지 확인하는 조건문
 	{
 		// 자르기 시작했다!
 		isCutting = true;
@@ -237,16 +302,17 @@ void Board::Update(void)
 		pathStartposY = backposY;
 	}
 
-	if (isCutting == true)
+	if (isCutting == true) // 자르기 시작했다면
 	{
-		if (pixels[backposX][backposY]->state == NONE)
+		if (pixels[backposX][backposY]->state == NONE) // 만약 다음 픽셀의 state가 NONE이라면
 		{
-			pixels[backposX][backposY]->state = PATH;
+			pixels[backposX][backposY]->state = PATH; // PATH 변경
 			pixels[backposX][backposY]->direction = direction;
 			paths.emplace_back(pixels[backposX][backposY]);
 		}
 
-		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+		// 적이랑 플레이어랑 부딪혔는지 확인
+		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i) 
 		{
 			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
 				continue;
@@ -258,7 +324,8 @@ void Board::Update(void)
 			}
 		}
 
-		if (pixels[playerX][playerY]->state == PATH || pixels[playerX][playerY]->state == OBSTICLE)
+		// 따로 Path나 Obsticle 이랑 부딪혔다면 (둘이 다시 시작부분으로 되돌아간다는 공통점이 있음.)
+		if (pixels[playerX][playerY]->state == PATH || pixels[playerX][playerY]->state == OBSTICLE) 
 		{
 			// HP 깎기
 			if (pixels[playerX][playerY]->state == OBSTICLE)
@@ -281,14 +348,16 @@ void Board::Update(void)
 		}
 	}
 
-	if (pixels[playerX][playerY]->state == OBSTICLE)
-	{
-		playerX = backposX;
-		playerY = backposY;
-	}
-
 	if (isCutting == false)
 	{
+		// 자르지 않는데 장애물이면 그냥 그 방향으로 못가게만 하기
+		if (pixels[playerX][playerY]->state == OBSTICLE) 
+		{
+			playerX = backposX;
+			playerY = backposY;
+		}
+
+		// 자르지 않고있는데 바이러스랑 부딪히는지 확인
 		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
 		{
 			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
@@ -302,6 +371,7 @@ void Board::Update(void)
 		}
 	}
 
+	// 다 잘랐는지 확인해주는 조건문
 	if (isCutting == true && (pixels[playerX][playerY]->state == WALL) || (pixels[playerX][playerY]->state == CLEARED))
 	{
 		isCutting = false;
@@ -342,102 +412,11 @@ void Board::Update(void)
 
 				if (clear1.size() > clear2.size()) // 더 작은거 채우기!!
 				{
-					// 점수 Cleared된 pixel들의 갯수
-					score += clear2.size();
-					for (auto& it : clear2)
-					{
-						for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
-						{
-							if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
-								continue;
-
-							for (int j = 0; j < VirusManager::GetInstance()->virusVector[i]->pixelpos.size(); ++j)
-							{
-								if ((it->indexX == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].first) &&
-									(it->indexY == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].second))
-								{
-									VirusManager::GetInstance()->virusVector[i]->isactive = false;
-									break;
-								}
-							}
-						}
-						it->state = CLEARED;
-					}
-
-					// 일단 전부 다 소진되어있으면
-					if (item[0] == 0 &&
-						item[1] == 0 &&
-						item[2] == 0 &&
-						item[3] == 0 &&
-						item[4] == 0)
-					{
-						// 아이템 스폰이 안됨. 따로 띄워주고싶으면 여기다가
-					}
-					// 랜덤으로 고른 그 아이템이 나올 수 있으면
-					// 그게 아니라 아이템이 이미 다 소진되어있으면 다시 돌리기
-					else
-					{
-						int ind = rand() % 5;
-						while (item[ind] == 0)
-						{
-							ind = rand() % 5;
-							if (item[ind] != 0)
-								break;
-						}
-						--item[ind];
-						// index에 해당하는 아이템 생성
-						auto iter = paths.front();
-						ItemManager::GetInstance()->SpawnItem(iter->position, iter->indexX, iter->indexY, (ITEMTAG)ind);
-					}
+					PathstoClearAndSpawnItem(clear2);
 				}
 				else
 				{
-					// 점수 Cleared된 pixel들의 갯수
-					score += clear1.size();
-					for (auto& it : clear1)
-					{
-						for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
-						{
-							if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
-								continue;
-
-							for (int j = 0; j < VirusManager::GetInstance()->virusVector[i]->pixelpos.size(); ++j)
-							{
-								if ((it->indexX == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].first) &&
-									(it->indexY == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].second))
-								{
-									VirusManager::GetInstance()->virusVector[i]->isactive = false;
-									break;
-								}
-							}
-						}
-						it->state = CLEARED;
-					}
-
-					if (item[0] == 0 &&
-						item[1] == 0 &&
-						item[2] == 0 &&
-						item[3] == 0 &&
-						item[4] == 0)
-					{
-						// 아이템 스폰 안됨.
-					}
-					// 랜덤으로 고른 그 아이템이 나올 수 있으면
-					// 그게 아니라 아이템이 이미 다 소진되어있으면 다시 돌리기
-					else
-					{
-						int ind = rand() % 5;
-						while (item[ind] == 0)
-						{
-							ind = rand() % 5;
-							if (item[ind] != 0)
-								break;
-						}
-						--item[ind];
-						// 아이템 생성
-						auto iter = paths.front();
-						ItemManager::GetInstance()->SpawnItem(iter->position, iter->indexX, iter->indexY, (ITEMTAG)ind);
-					}
+					PathstoClearAndSpawnItem(clear1);
 				}
 
 				clear1.clear();
@@ -462,6 +441,7 @@ void Board::Update(void)
 		paths.clear();
 	}
 
+	// 색 설정
 	for (int i = 0; i < 50; ++i)
 	{
 		for (int j = 0; j < 50; ++j)
@@ -504,6 +484,7 @@ void Board::Update(void)
 		}
 	}
 
+	// 색 설정
 	for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
 	{
 		if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
@@ -516,6 +497,7 @@ void Board::Update(void)
 		}
 	}
 
+	// 디버그
 	if (DXUTWasKeyPressed('L'))
 		showplayerpos = !showplayerpos;
 
@@ -527,19 +509,19 @@ void Board::Update(void)
 		std::cout << "----" << std::endl;
 	}
 
+	// 클리어 조건 충족했는지 확인
 	if (score >= 2000) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
 	{
 		std::cout << "CLEAR" << std::endl;
 	}
 
+	// 플레이어가 죽었는지 확인
 	if (vim->HP <= 0)
 	{
 		std::cout << "DEAD" << std::endl;
 	}
 
 	std::cout << vim->HP << std::endl;
-
-
 
 
 	// 1. 무적
