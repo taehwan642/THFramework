@@ -13,5 +13,5 @@ VIM::~VIM()
 
 void VIM::Update()
 {
-	
+	immunetime -= DXUTGetElapsedTime();
 }

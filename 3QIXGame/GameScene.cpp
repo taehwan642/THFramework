@@ -10,7 +10,7 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
-	if (DXUTWasKeyPressed('P'))
+	if (DXUTWasKeyPressed(VK_F4))
 	{
 		Director::GetInstance()->ChangeScene(MENUSCENE);
 		return;

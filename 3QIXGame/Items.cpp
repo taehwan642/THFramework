@@ -8,17 +8,18 @@ void Items::Heal(VIM* vim)
 	else
 	{
 		// 스코어 올림.
+		++vim->vimscore;
 	}
 }
 
 void Items::Barrier(VIM* vim)
 {
+	vim->barriervalue = 1;
 }
 
 void Items::Immune(VIM* vim)
 {
-	vim->isimmune = true;
-	vim->immunetime = 2.f;
+	vim->immunetime = 15.f;
 }
 
 void Items::Speed(VIM* vim)

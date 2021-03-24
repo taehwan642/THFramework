@@ -27,7 +27,8 @@ private:
 
     void CheckBoard(int _posX, int _posY, int _index);
     void SpawnObsticle(int _posX, int _posY, OBSTICLETAG _tag);
-    void CheckPathAndVirusCollision(std::vector<std::pair<int,int>> _viruspos);
+    bool CheckPathPlayerAndVirusCollision(std::vector<std::pair<int,int>> _viruspos); // bool return
+    bool CheckPlayerAndVirusCollision(std::vector<std::pair<int, int>> _viruspos);
 
 protected:
 public:

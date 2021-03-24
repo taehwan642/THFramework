@@ -56,7 +56,7 @@ void Board::SpawnObsticle(int _posX, int _posY, OBSTICLETAG _tag)
 	}
 }
 
-void Board::CheckPathAndVirusCollision(std::vector<std::pair<int, int>> _viruspos)
+bool Board::CheckPathPlayerAndVirusCollision(std::vector<std::pair<int, int>> _viruspos)
 {
 	for (auto& it : paths)
 	{
@@ -67,18 +67,44 @@ void Board::CheckPathAndVirusCollision(std::vector<std::pair<int, int>> _viruspo
 				(playerX == _viruspos[i].first &&
 				 playerY == _viruspos[i].second))
 			{
+				if (vim->barriervalue == 1)
+				{
+					vim->barriervalue = 0;
+					return true;
+				}
+
 				playerX = pathStartposX;
 				playerY = pathStartposY;
-				--vim->HP;
+
+				if (vim->immunetime <= 0)
+					--vim->HP;
+				
 				isCutting = false;
 				for (auto& it : paths)
 					it->state = NONE;
 
 				paths.clear();
-				return;
+				return true;
 			}
 		}
 	}
+	return false;
+}
+
+bool Board::CheckPlayerAndVirusCollision(std::vector<std::pair<int, int>> _viruspos)
+{
+	for (int i = 0; i < _viruspos.size(); ++i)
+	{
+		if ((playerX == _viruspos[i].first) &&
+			(playerY == _viruspos[i].second))
+		{
+			if (vim->immunetime <= 0)
+				--vim->HP;
+
+			return true;
+		}
+	}
+	return false;
 }
 
 Board::Board(void)
@@ -157,7 +183,6 @@ Board::~Board(void)
 void Board::Update(void)
 {
 	ItemManager::GetInstance()->CheckItem(playerX, playerY, vim);
-	std::vector<std::pair<int, int>> viruspos = VirusManager::GetInstance()->GetVirusPositions();
 
 	if (deltatime <= 0)
 	{
@@ -214,7 +239,6 @@ void Board::Update(void)
 
 	if (isCutting == true)
 	{
-
 		if (pixels[backposX][backposY]->state == NONE)
 		{
 			pixels[backposX][backposY]->state = PATH;
@@ -222,13 +246,26 @@ void Board::Update(void)
 			paths.emplace_back(pixels[backposX][backposY]);
 		}
 
-		CheckPathAndVirusCollision(viruspos); // 여기서 path 클리어부분에서 오류. 고쳐야함
+		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+		{
+			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+				continue;
+			if (VirusManager::GetInstance()->virusVector[i]->isHit == true)
+				continue;
+			if (CheckPathPlayerAndVirusCollision(VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
+			{
+				VirusManager::GetInstance()->virusVector[i]->isHit = true;
+			}
+		}
 
 		if (pixels[playerX][playerY]->state == PATH || pixels[playerX][playerY]->state == OBSTICLE)
 		{
 			// HP 깎기
 			if (pixels[playerX][playerY]->state == OBSTICLE)
-				--vim->HP;
+			{
+				if (vim->immunetime <= 0)
+					--vim->HP;
+			}
 
 			playerX = pathStartposX;
 			playerY = pathStartposY;
@@ -248,6 +285,21 @@ void Board::Update(void)
 	{
 		playerX = backposX;
 		playerY = backposY;
+	}
+
+	if (isCutting == false)
+	{
+		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+		{
+			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+				continue;
+			if (VirusManager::GetInstance()->virusVector[i]->isHit == true)
+				continue;
+			if (CheckPlayerAndVirusCollision(VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
+			{
+				VirusManager::GetInstance()->virusVector[i]->isHit = true;
+			}
+		}
 	}
 
 	if (isCutting == true && (pixels[playerX][playerY]->state == WALL) || (pixels[playerX][playerY]->state == CLEARED))
@@ -294,6 +346,21 @@ void Board::Update(void)
 					score += clear2.size();
 					for (auto& it : clear2)
 					{
+						for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+						{
+							if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+								continue;
+
+							for (int j = 0; j < VirusManager::GetInstance()->virusVector[i]->pixelpos.size(); ++j)
+							{
+								if ((it->indexX == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].first) &&
+									(it->indexY == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].second))
+								{
+									VirusManager::GetInstance()->virusVector[i]->isactive = false;
+									break;
+								}
+							}
+						}
 						it->state = CLEARED;
 					}
 
@@ -329,6 +396,21 @@ void Board::Update(void)
 					score += clear1.size();
 					for (auto& it : clear1)
 					{
+						for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+						{
+							if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+								continue;
+
+							for (int j = 0; j < VirusManager::GetInstance()->virusVector[i]->pixelpos.size(); ++j)
+							{
+								if ((it->indexX == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].first) &&
+									(it->indexY == VirusManager::GetInstance()->virusVector[i]->pixelpos[j].second))
+								{
+									VirusManager::GetInstance()->virusVector[i]->isactive = false;
+									break;
+								}
+							}
+						}
 						it->state = CLEARED;
 					}
 
@@ -422,9 +504,16 @@ void Board::Update(void)
 		}
 	}
 
-	for (int i = 0; i < viruspos.size(); ++i)
+	for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
 	{
-		pixels[viruspos[i].first][viruspos[i].second]->color = D3DCOLOR_RGBA(128, 0, 128, 255);
+		if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+			continue;
+
+		for (int j = 0; j < VirusManager::GetInstance()->virusVector[i]->pixelpos.size(); ++j)
+		{
+			pixels[VirusManager::GetInstance()->virusVector[i]->pixelpos[j].first]
+				[VirusManager::GetInstance()->virusVector[i]->pixelpos[j].second]->color = D3DCOLOR_RGBA(128, 0, 128, 255);
+		}
 	}
 
 	if (DXUTWasKeyPressed('L'))
@@ -438,11 +527,45 @@ void Board::Update(void)
 		std::cout << "----" << std::endl;
 	}
 
-	//isCutting == true ? cout << "YES" << endl : cout << "NO" << endl;
-	std::cout << paths.size() << std::endl;
 	if (score >= 2000) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
 	{
 		std::cout << "CLEAR" << std::endl;
+	}
+
+	if (vim->HP <= 0)
+	{
+		std::cout << "DEAD" << std::endl;
+	}
+
+	std::cout << vim->HP << std::endl;
+
+
+
+
+	// 1. 무적
+	if (DXUTWasKeyPressed(VK_F1))
+		vim->immunetime = FLT_MAX;
+	// 2. 아이템 랜덤 사용
+	if (DXUTWasKeyPressed(VK_F2))
+	{
+		int ind = rand() % 5;
+		ItemManager::GetInstance()->SpawnItem
+		(pixels[playerX + 1][playerY]->position, playerX + 1, playerY, (ITEMTAG)ind);
+	}
+	// 3. 생명력 증가
+	if (DXUTWasKeyPressed(VK_F3))
+	{
+		++vim->HP;
+	}
+	// 5. 1스테이지 전환
+	if (DXUTWasKeyPressed(VK_F5))
+	{
+
+	}
+	// 6. 2스테이지 전환
+	if (DXUTWasKeyPressed(VK_F6))
+	{
+
 	}
 }
 
