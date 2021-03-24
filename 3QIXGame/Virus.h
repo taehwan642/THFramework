@@ -32,6 +32,7 @@ class VirusManager :
 private:
     int difficulty = 1;
 public:
+    Pixel* pixels[50][50];
     std::vector<Virus*> virusVector;
     void SetDifficulty(int _val);
     void CreateVirus();

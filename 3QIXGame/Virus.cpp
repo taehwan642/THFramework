@@ -1,4 +1,5 @@
 #include "DXUT.h"
+#include "Pixel.h"
 #include "Virus.h"
 
 void Virus::SpeedMove()
@@ -10,6 +11,12 @@ void Virus::SpeedMove()
 		for (int i = 0; i < pixelpos.size(); ++i)
 		{
 			pixelpos[i].first += speed;
+
+			if (VirusManager::GetInstance()->pixels[pixelpos[i].first + speed][pixelpos[i].second]->state == OBSTICLE)
+			{
+				 // 가고 있던 방향 바로 앞에 장애물이니까 반대 혹은 다른 방향으로 간다.
+			}
+
 			if (pixelpos[i].first > 49)
 			{
 				// movespeed 감소 후 다시 증가

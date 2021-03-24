@@ -1,6 +1,13 @@
 #include "DXUT.h"
 #include "Board.h"
 
+// TODO : 텍스쳐 입히기
+// 1. 플레이어
+// 2. 앞배경 / 뒷배경
+// 3. 완전 뒷배경
+// 4. 바이러스
+// 5. 이펙트
+
 void Board::CheckBoard(int _posX, int _posY, int _index)
 {
 	if (checkedPixels[_posX][_posY] == true)
@@ -35,21 +42,33 @@ void Board::SpawnObsticle(int _posX, int _posY, OBSTICLETAG _tag)
 	{
 	case OBRECT:
 		pixels[_posX][_posY]->state = OBSTICLE;
+		pixels[_posX][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 1][_posY]->state = OBSTICLE;
+		pixels[_posX + 1][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX][_posY + 1]->state = OBSTICLE;
+		pixels[_posX][_posY + 1]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 1][_posY + 1]->state = OBSTICLE;
+		pixels[_posX + 1][_posY + 1]->SetTexture(L"Obsticle.png");
 		break;
 	case OBT:
 		pixels[_posX][_posY]->state = OBSTICLE;
+		pixels[_posX][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 1][_posY]->state = OBSTICLE;
+		pixels[_posX + 1][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 2][_posY]->state = OBSTICLE;
+		pixels[_posX + 2][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 1][_posY + 1]->state = OBSTICLE;
+		pixels[_posX + 1][_posY + 1]->SetTexture(L"Obsticle.png");
 		break;
 	case OBI:
 		pixels[_posX][_posY]->state = OBSTICLE;
+		pixels[_posX][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 1][_posY]->state = OBSTICLE;
+		pixels[_posX + 1][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 2][_posY]->state = OBSTICLE;
+		pixels[_posX + 2][_posY]->SetTexture(L"Obsticle.png");
 		pixels[_posX + 3][_posY]->state = OBSTICLE;
+		pixels[_posX + 3][_posY]->SetTexture(L"Obsticle.png");
 		break;
 	default:
 		break;
@@ -218,6 +237,7 @@ void Board::MovePlayer()
 
 Board::Board(void)
 {
+	pivot = { 0, 0 };
 	for (int i = 0; i < 50; ++i)
 	{
 		for (int j = 0; j < 50; ++j)
@@ -260,9 +280,10 @@ Board::Board(void)
 
 	vim = new VIM();
 
+	position = pixels[1][1]->position;
 	layer = -1; // 신경쓰지말기
-	SetTexture(L"Pixel.png"); // 신경쓰지말기 아직까진
-
+	SetTexture(L"infectedDesert.png"); // 신경쓰지말기 아직까진
+	
 	item[0] = 3;
 	item[1] = 3;
 	item[2] = 1;
@@ -273,6 +294,14 @@ Board::Board(void)
 	VirusManager::GetInstance()->CreateVirus();
 
 	VirusManager::GetInstance()->SpawnVirus(pixels[0][20]->position, pixels[0][20]->indexX, pixels[0][20]->indexY, SPEEDVIRUS);
+
+	for (int i = 0; i < 50; ++i)
+	{
+		for (int j = 0; j < 50; ++j)
+		{
+			VirusManager::GetInstance()->pixels[i][j] = pixels[i][j];
+		}
+	}
 }
 
 Board::~Board(void)
@@ -291,6 +320,7 @@ Board::~Board(void)
 
 void Board::Update(void)
 {
+	std::cout << position.x << " " << position.y << std::endl;
 	ItemManager::GetInstance()->CheckItem(playerX, playerY, vim);
 	MovePlayer();
 
@@ -449,19 +479,19 @@ void Board::Update(void)
 			switch (pixels[i][j]->state)
 			{
 			case NONE:
-				pixels[i][j]->color = D3DCOLOR_RGBA(255, 255, 255, 255);
+				pixels[i][j]->color = D3DCOLOR_RGBA(255, 255, 255, 100);
 				break;
 			case WALL:
 				pixels[i][j]->color = D3DCOLOR_RGBA(255, 0, 0, 255);
 				break;
 			case OBSTICLE:
-				pixels[i][j]->color = D3DCOLOR_RGBA(255, 0, 255, 255);
+				pixels[i][j]->color = D3DCOLOR_RGBA(255, 255, 255, 255);
 				break;
 			case PATH:
 				pixels[i][j]->color = D3DCOLOR_RGBA(0, 255, 0, 255);
 				break;
 			case CLEARED:
-				pixels[i][j]->color = D3DCOLOR_RGBA(0, 0, 255, 255);
+				pixels[i][j]->color = D3DCOLOR_RGBA(0, 0, 0, 0);
 				break;
 			default:
 				break;

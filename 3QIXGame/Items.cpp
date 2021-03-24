@@ -31,7 +31,7 @@ Items::Items()
 {
 	layer = 2;
 	SetTexture(L"Item.png");
-	scale = { 0.05f,0.05f };
+	scale = { 0.07f,0.07f };
 }
 
 Items::~Items()
@@ -106,6 +106,27 @@ void ItemManager::SpawnItem(Vec2 _position, int _X, int _Y, ITEMTAG _tag)
 			items[i]->tag = _tag;
 			items[i]->ItemIndexX = _X;
 			items[i]->ItemIndexY = _Y;
+
+			switch (_tag)
+			{
+			case SPEED:
+				items[i]->SetTexture(L"blueItem.png");
+				break;
+			case BARRIER:
+				items[i]->SetTexture(L"yellowItem.png");
+				break;
+			case IMMUNE:
+				items[i]->SetTexture(L"mintItem.png");
+				break;
+			case HEAL:
+				items[i]->SetTexture(L"greenItem.png");
+				break;
+			case RANDOM:
+				items[i]->SetTexture(L"orangeItem.png");
+				break;
+			default:
+				break;
+			}
 			return;
 		}
 	}
