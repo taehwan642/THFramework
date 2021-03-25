@@ -419,4 +419,10 @@ enum VIRUSTAG
     TOXINO
 };
 
+struct VIRUSPIXEL
+{
+    int x, y;
+    int speedx, speedy;
+};
+
 /// CLIENT

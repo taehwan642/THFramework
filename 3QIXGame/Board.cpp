@@ -4,6 +4,8 @@
 // TODO : 텍스쳐 입히기
 // 1. 플레이어
 // 2. 앞배경 / 뒷배경
+// 앞배경 0, 0 또는 1,1 의 pivot 0, 0일때의 위치 구해서 거기에다 설정하기
+// 아직 클리어가 안됐을 때 그냥 검정색 구름같은게 주변에 떠다니는게 더 나을듯.
 // 3. 완전 뒷배경
 // 4. 바이러스
 // 5. 이펙트
@@ -282,7 +284,7 @@ Board::Board(void)
 
 	position = pixels[1][1]->position;
 	layer = -1; // 신경쓰지말기
-	SetTexture(L"infectedDesert.png"); // 신경쓰지말기 아직까진
+	SetTexture(L"desert (1).png"); // 신경쓰지말기 아직까진
 	
 	item[0] = 3;
 	item[1] = 3;
@@ -479,7 +481,7 @@ void Board::Update(void)
 			switch (pixels[i][j]->state)
 			{
 			case NONE:
-				pixels[i][j]->color = D3DCOLOR_RGBA(255, 255, 255, 100);
+				pixels[i][j]->color = D3DCOLOR_RGBA(0, 0, 0, 100);
 				break;
 			case WALL:
 				pixels[i][j]->color = D3DCOLOR_RGBA(255, 0, 0, 255);
