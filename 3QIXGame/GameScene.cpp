@@ -5,7 +5,7 @@ void GameScene::Init()
 {
 	b = new Board;
 	b->difficulty = 2; // 스테이지 2라는 뜻
-	Sprite* back = new Sprite();
+	back = new Sprite();
 	back->position = { ScreenW / 2, ScreenH / 2 };
 	back->layer = -3;
 	back->SetTexture(L"background.png");
@@ -23,4 +23,5 @@ void GameScene::Update()
 void GameScene::Exit()
 {
 	delete b;
+	delete back;
 }

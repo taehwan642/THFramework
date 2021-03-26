@@ -19,6 +19,7 @@ void Board::CheckBoard(int _posX, int _posY, int _index)
 	if ((pixels[_posX][_posY]->state == CLEARED) ||
 		(pixels[_posX][_posY]->state == WALL) ||
 		(pixels[_posX][_posY]->state == PATH) ||
+		(pixels[_posX][_posY]->state == OUTLINE) ||
 		(pixels[_posX][_posY]->state == OBSTICLE))
 	{
 		return;
@@ -76,66 +77,57 @@ void Board::SpawnObsticle(int _posX, int _posY, OBSTICLETAG _tag)
 	}
 }
 
-bool Board::CheckPathPlayerAndVirusCollision(std::vector<std::pair<int, int>> _viruspos)
+bool Board::CheckPathPlayerAndVirusCollision(std::pair<int, int> _viruspos)
 {
 	for (auto& it : paths)
 	{
-		for (int i = 0; i < _viruspos.size(); ++i)
+		if ((it->indexX == _viruspos.first &&
+			it->indexY == _viruspos.second) ||
+			(playerX == _viruspos.first &&
+				playerY == _viruspos.second))
 		{
-			if ((it->indexX == _viruspos[i].first &&
-				 it->indexY == _viruspos[i].second) ||
-				(playerX == _viruspos[i].first &&
-				 playerY == _viruspos[i].second))
+			if (vim->barriervalue == 1)
 			{
-				if (vim->barriervalue == 1)
-				{
-					vim->barriervalue = 0;
-					return true;
-				}
-
-				playerX = pathStartposX;
-				playerY = pathStartposY;
-
-				if (vim->immunetime <= 0)
-					--vim->HP;
-				
-				isCutting = false;
-				for (auto& it : paths)
-					it->state = NONE;
-
-				paths.clear();
+				vim->barriervalue = 0;
 				return true;
 			}
-		}
-	}
-	return false;
-}
 
-bool Board::CheckPlayerAndVirusCollision(std::vector<std::pair<int, int>> _viruspos)
-{
-	for (int i = 0; i < _viruspos.size(); ++i)
-	{
-		if ((playerX == _viruspos[i].first) &&
-			(playerY == _viruspos[i].second))
-		{
+			playerX = pathStartposX;
+			playerY = pathStartposY;
+
 			if (vim->immunetime <= 0)
 				--vim->HP;
 
+			isCutting = false;
+			for (auto& it : paths)
+				it->state = NONE;
+
+			paths.clear();
 			return true;
 		}
 	}
 	return false;
 }
 
-bool Board::CheckVirusInClearedArea(Pixel* _pixel, std::vector<std::pair<int, int>> _viruspos)
+bool Board::CheckPlayerAndVirusCollision(std::pair<int, int> _viruspos)
 {
-	for (int i = 0; i < _viruspos.size(); ++i)
+	if ((playerX == _viruspos.first) &&
+		(playerY == _viruspos.second))
 	{
-		if ((_pixel->indexX == _viruspos[i].first) &&
-			(_pixel->indexY == _viruspos[i].second))
-		{
-			return true;
-		}
+		if (vim->immunetime <= 0)
+			--vim->HP;
+
+		return true;
+	}
+	return false;
+}
+
+bool Board::CheckVirusInClearedArea(Pixel* _pixel, std::pair<int, int> _viruspos)
+{
+	if ((_pixel->indexX == _viruspos.first) &&
+		(_pixel->indexY == _viruspos.second))
+	{
+		return true;
 	}
 	return false;
 }
@@ -150,6 +142,9 @@ void Board::PathstoClearAndSpawnItem(std::list<Pixel*> _list)
 		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
 		{
 			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+				continue;
+
+			if (VirusManager::GetInstance()->virusVector[i]->tag == TOXINO)
 				continue;
 
 			if (CheckVirusInClearedArea(it, VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
@@ -300,7 +295,7 @@ Board::Board(void)
 
 	layer = -1; // 신경쓰지말기
 	SetTexture(L"desert (1).png"); // 신경쓰지말기 아직까진
-	
+
 	item[0] = 3;
 	item[1] = 3;
 	item[2] = 1;
@@ -308,8 +303,25 @@ Board::Board(void)
 	item[4] = 5;
 
 	ItemManager::GetInstance()->CreateItem();
+	
+	for (int i = 0; i < 10; ++i) 
+	{
+		int r = rand() % TOXINO;
+		int x = 5 + (rand() % 40);
+		int y = 5 + (rand() % 40);
+		while (pixels[x][y]->state == OBSTICLE)
+		{
+			x = 5 + (rand() % 40);
+			y = 5 + (rand() % 40); 
+			if (pixels[x][y]->state != OBSTICLE)
+				break;
+		}
 
-	VirusManager::GetInstance()->SpawnVirus(pixels[0][20]->position, pixels[0][20]->indexX, pixels[0][20]->indexY, SPEEDVIRUS);
+		if(i == 0)
+			VirusManager::GetInstance()->SpawnVirus(pixels[x][y]->position, pixels[x][y]->indexX, pixels[x][y]->indexY, TOXINO);
+
+		VirusManager::GetInstance()->SpawnVirus(pixels[x][y]->position, pixels[x][y]->indexX, pixels[x][y]->indexY, (VIRUSTAG)r);
+	}
 
 	vim->position = pixels[playerX][playerY]->position; // NEW1
 }
@@ -352,7 +364,7 @@ void Board::Update(void)
 		}
 
 		// 적이랑 플레이어랑 부딪혔는지 확인
-		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i) 
+		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
 		{
 			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
 				continue;
@@ -365,7 +377,7 @@ void Board::Update(void)
 		}
 
 		// 따로 Path나 Obsticle 이랑 부딪혔다면 (둘이 다시 시작부분으로 되돌아간다는 공통점이 있음.)
-		if (pixels[playerX][playerY]->state == PATH || pixels[playerX][playerY]->state == OBSTICLE) 
+		if (pixels[playerX][playerY]->state == PATH || pixels[playerX][playerY]->state == OBSTICLE)
 		{
 			// HP 깎기
 			if (pixels[playerX][playerY]->state == OBSTICLE)
@@ -391,7 +403,7 @@ void Board::Update(void)
 	if (isCutting == false)
 	{
 		// 자르지 않는데 장애물이면 그냥 그 방향으로 못가게만 하기
-		if (pixels[playerX][playerY]->state == OBSTICLE) 
+		if (pixels[playerX][playerY]->state == OBSTICLE)
 		{
 			playerX = backposX;
 			playerY = backposY;
@@ -412,7 +424,8 @@ void Board::Update(void)
 	}
 
 	// 다 잘랐는지 확인해주는 조건문
-	if (isCutting == true && (pixels[playerX][playerY]->state == WALL) || (pixels[playerX][playerY]->state == CLEARED))
+	if (isCutting == true && (pixels[playerX][playerY]->state == WALL) || (pixels[playerX][playerY]->state == CLEARED) ||
+		(pixels[playerX][playerY]->state == OUTLINE))
 	{
 		isCutting = false;
 		for (auto& it : paths)
@@ -476,7 +489,7 @@ void Board::Update(void)
 		score += paths.size();
 		for (auto& it : paths)
 		{
-			it->state = CLEARED;
+			it->state = OUTLINE;
 		}
 		paths.clear();
 	}
@@ -499,6 +512,9 @@ void Board::Update(void)
 				break;
 			case PATH:
 				pixels[i][j]->color = D3DCOLOR_RGBA(0, 255, 0, 255);
+				break;
+			case OUTLINE:
+				pixels[i][j]->color = D3DCOLOR_RGBA(0, 0, 0, 255);
 				break;
 			case CLEARED:
 				pixels[i][j]->color = D3DCOLOR_RGBA(0, 0, 0, 0);
@@ -525,7 +541,7 @@ void Board::Update(void)
 	}
 
 	// 색 설정
-	for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+	/*for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
 	{
 		if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
 			continue;
@@ -535,7 +551,7 @@ void Board::Update(void)
 			pixels[VirusManager::GetInstance()->virusVector[i]->pixelpos[j].first]
 				[VirusManager::GetInstance()->virusVector[i]->pixelpos[j].second]->color = D3DCOLOR_RGBA(128, 0, 128, 255);
 		}
-	}
+	}*/
 
 	// 디버그
 	if (DXUTWasKeyPressed('L'))

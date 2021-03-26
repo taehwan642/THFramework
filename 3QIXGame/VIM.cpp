@@ -3,7 +3,7 @@
 
 VIM::VIM()
 {
-	layer = 1;
+	layer = 3;
 	scale = { 0.3f, 0.3f };
 	SetTexture(L"bluePlayer (1).png"); // NEW1
 }

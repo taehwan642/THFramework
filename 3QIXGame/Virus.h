@@ -10,17 +10,19 @@ private:
     void BigMove();
     void FlashMove();
     void ToxinoMove();
-
+    void CheckCollision();
     void SetRandomDirection(VIRUSDIRECTION _direction);
+    void ToxinoAbility();
 public:
     float delta = 0.f;
     float movespeed = 0.01f;
+    int virusscale = 0;
     int speedX = 1;
     int speedY = 0;
 
     bool isHit = false;
 
-    std::vector<std::pair<int, int>> pixelpos; // first = X, second = Y
+    std::pair<int, int> pixelpos; // first = X, second = Y
 
     VIRUSTAG tag;
     VIRUSDIRECTION direction;

@@ -11,6 +11,7 @@
 #include "GameScene.h"
 #include "Renderer.h"
 #include "Items.h"
+#include "Virus.h"
 #include "Camera.h"
 
 //--------------------------------------------------------------------------------------
@@ -99,6 +100,8 @@ void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
     TextureManager::DeleteInstance();
     ItemManager::GetInstance()->DeleteItem();
     ItemManager::DeleteInstance();
+    VirusManager::GetInstance()->DeleteVirus();
+    VirusManager::DeleteInstance();
     exit(1);
 }
 
@@ -114,7 +117,7 @@ int main(void)
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
 
-    //_CrtSetBreakAlloc(159);
+    //_CrtSetBreakAlloc(281);
     // Set the callback functions
     DXUTSetCallbackD3D9DeviceCreated( OnD3D9CreateDevice );
     DXUTSetCallbackD3D9DeviceReset( OnD3D9ResetDevice );

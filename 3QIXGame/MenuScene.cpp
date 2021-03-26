@@ -27,5 +27,5 @@ void MenuScene::Update()
 
 void MenuScene::Exit()
 {
-
+	delete start;
 }

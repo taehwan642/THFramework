@@ -375,17 +375,13 @@ enum SceneTag
 };
 /// ENGINE
 /// CLIENT 
-enum IMAGETAG
-{
-    ORGAN // per 1 pixel
-};
-
 enum PIXELSTATE
 {
     NONE,
     WALL,
     OBSTICLE,
     PATH,
+    OUTLINE,
     CLEARED
 };
 
