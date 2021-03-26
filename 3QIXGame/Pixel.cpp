@@ -3,7 +3,10 @@
 
 Pixel::Pixel(void)
 {
-	SetTexture(L"Pixel.png");
+	int ran = (rand() % 3) + 1;
+	std::wstring result = L"infected" + to_wstring(ran) + L".png";
+	SetTexture(result);
+
 	scale = { 0.05f,0.05f };
 }
 

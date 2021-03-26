@@ -419,10 +419,12 @@ enum VIRUSTAG
     TOXINO
 };
 
-struct VIRUSPIXEL
+enum VIRUSDIRECTION
 {
-    int x, y;
-    int speedx, speedy;
+    VUP,
+    VDOWN,
+    VLEFT,
+    VRIGHT
 };
 
 /// CLIENT

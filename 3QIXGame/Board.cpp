@@ -267,7 +267,7 @@ Board::Board(void)
 	float y = pixels[1][1]->position.y - (pixels[1][1]->texture->info.Height / 2 * pixels[1][1]->scale.y); // NEW2
 
 	pivot = { 0, 0 }; // NEW2
-	position = { x,y }; // NEW2
+	position = { x, y }; // NEW2
 	scale = { 1.01f, 1.01f }; // NEW2
 
 	for (int i = 0; i < 50; ++i)
@@ -489,7 +489,7 @@ void Board::Update(void)
 			switch (pixels[i][j]->state)
 			{
 			case NONE:
-				pixels[i][j]->color = D3DCOLOR_RGBA(0, 0, 0, 100);
+				pixels[i][j]->color = D3DCOLOR_RGBA(255, 255, 255, 200);
 				break;
 			case WALL:
 				pixels[i][j]->color = D3DCOLOR_RGBA(255, 0, 0, 255);
