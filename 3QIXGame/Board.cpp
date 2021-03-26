@@ -2,12 +2,11 @@
 #include "Board.h"
 
 // TODO : 텍스쳐 입히기
-// 1. 플레이어
-// 2. 앞배경 / 뒷배경
-// 앞배경 0, 0 또는 1,1 의 pivot 0, 0일때의 위치 구해서 거기에다 설정하기
+// 1. 플레이어 OK
+// 2. 앞배경 / 뒷배경 OK
 // 아직 클리어가 안됐을 때 그냥 검정색 구름같은게 주변에 떠다니는게 더 나을듯.
-// 3. 완전 뒷배경
-// 4. 바이러스
+// 3. 완전 뒷배경 - 이미지 필요
+// 4. 바이러스 1개 또는 4개일때 어떻게 텍스쳐를 구성할지 OK
 // 5. 이펙트
 
 void Board::CheckBoard(int _posX, int _posY, int _index)
@@ -201,6 +200,8 @@ void Board::MovePlayer()
 			playerY -= 1;
 			if (playerY < 0)
 				playerY = 0;
+			vim->position = pixels[playerX][playerY]->position; // NEW1
+			vim->rotation = D3DXToRadian(90); // NEW1
 		}
 		else if (DXUTIsKeyDown('S'))
 		{
@@ -210,6 +211,8 @@ void Board::MovePlayer()
 			playerY += 1;
 			if (playerY > 49)
 				playerY = 49;
+			vim->position = pixels[playerX][playerY]->position; // NEW1
+			vim->rotation = D3DXToRadian(270); // NEW1
 		}
 		else if (DXUTIsKeyDown('A'))
 		{
@@ -219,6 +222,8 @@ void Board::MovePlayer()
 			playerX -= 1;
 			if (playerX < 0)
 				playerX = 0;
+			vim->position = pixels[playerX][playerY]->position; // NEW1
+			vim->rotation = D3DXToRadian(0); // NEW1
 		}
 		else if (DXUTIsKeyDown('D'))
 		{
@@ -228,6 +233,8 @@ void Board::MovePlayer()
 			playerX += 1;
 			if (playerX > 49)
 				playerX = 49;
+			vim->position = pixels[playerX][playerY]->position; // NEW1
+			vim->rotation = D3DXToRadian(180); // NEW1
 		}
 		deltatime = vim->movementspeed;
 	}
@@ -239,7 +246,8 @@ void Board::MovePlayer()
 
 Board::Board(void)
 {
-	pivot = { 0, 0 };
+	VirusManager::GetInstance()->CreateVirus(); // NEW1
+
 	for (int i = 0; i < 50; ++i)
 	{
 		for (int j = 0; j < 50; ++j)
@@ -251,8 +259,16 @@ Board::Board(void)
 			{ 300 + ((float)i * 13),
 			  20 + ((float)j * 13) };
 			pixels[i][j]->state = NONE;
+			VirusManager::GetInstance()->pixels[i][j] = pixels[i][j]; // NEW1
 		}
 	}
+
+	float x = pixels[1][1]->position.x - (pixels[1][1]->texture->info.Width / 2 * pixels[1][1]->scale.x); // NEW2
+	float y = pixels[1][1]->position.y - (pixels[1][1]->texture->info.Height / 2 * pixels[1][1]->scale.y); // NEW2
+
+	pivot = { 0, 0 }; // NEW2
+	position = { x,y }; // NEW2
+	scale = { 1.01f, 1.01f }; // NEW2
 
 	for (int i = 0; i < 50; ++i)
 	{
@@ -282,7 +298,6 @@ Board::Board(void)
 
 	vim = new VIM();
 
-	position = pixels[1][1]->position;
 	layer = -1; // 신경쓰지말기
 	SetTexture(L"desert (1).png"); // 신경쓰지말기 아직까진
 	
@@ -293,17 +308,10 @@ Board::Board(void)
 	item[4] = 5;
 
 	ItemManager::GetInstance()->CreateItem();
-	VirusManager::GetInstance()->CreateVirus();
 
 	VirusManager::GetInstance()->SpawnVirus(pixels[0][20]->position, pixels[0][20]->indexX, pixels[0][20]->indexY, SPEEDVIRUS);
 
-	for (int i = 0; i < 50; ++i)
-	{
-		for (int j = 0; j < 50; ++j)
-		{
-			VirusManager::GetInstance()->pixels[i][j] = pixels[i][j];
-		}
-	}
+	vim->position = pixels[playerX][playerY]->position; // NEW1
 }
 
 Board::~Board(void)
@@ -322,7 +330,7 @@ Board::~Board(void)
 
 void Board::Update(void)
 {
-	std::cout << position.x << " " << position.y << std::endl;
+	//std::cout << position.x << " " << position.y << std::endl;
 	ItemManager::GetInstance()->CheckItem(playerX, playerY, vim);
 	MovePlayer();
 
@@ -553,7 +561,7 @@ void Board::Update(void)
 		std::cout << "DEAD" << std::endl;
 	}
 
-	std::cout << vim->HP << std::endl;
+	//std::cout << vim->HP << std::endl;
 
 
 	// 1. 무적
