@@ -29,6 +29,7 @@ void GameScene::Init()
 	score->color = D3DCOLOR_RGBA(0, 0, 0, 255);
 	score->position = {469, 132 };
 	score->isactive = false;
+	Director::GetInstance()->isgameend = false;
 }
 
 void GameScene::Update()
@@ -55,11 +56,22 @@ void GameScene::Update()
 		if (DXUTWasKeyPressed(VK_RETURN))
 		{
 			int difficulty = b->difficulty;
-			delete b;
-			b = new Board();
-			b->SetDifficulty(difficulty + 1);
-			score->isactive = false;
-			panel->isactive = false;
+			if (difficulty == 1)
+			{
+				Director::GetInstance()->latestScore += b->score + b->vim->vimscore;
+				delete b;
+				b = new Board();
+				b->SetDifficulty(difficulty + 1);
+				score->isactive = false;
+				panel->isactive = false;
+			}
+			else
+			{
+				Director::GetInstance()->latestScore += b->score + b->vim->vimscore;
+				Director::GetInstance()->isgameend = true;
+				Director::GetInstance()->ChangeScene(RANKINGSCENE);
+				return;
+			}
 		}
 	}
 
@@ -107,6 +119,8 @@ void GameScene::Update()
 
 void GameScene::Exit()
 {
+	delete panel;
+	delete score;
 	delete b;
 	delete back;
 	delete font;

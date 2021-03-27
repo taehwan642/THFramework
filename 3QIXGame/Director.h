@@ -46,6 +46,12 @@ public:
 		return { float(p.x), float(p.y) };
 	};
 
+	std::vector<Rank> ranking;
+	static bool Comp(Rank a, Rank b) { return a.score > b.score; };
+
+	int latestScore = 0;
+	bool isgameend = false;
+
 	void Init();
 	void AddScene(SceneTag _sceneTag, Scene* _scene);
 	void ChangeScene(SceneTag _sceneTag);

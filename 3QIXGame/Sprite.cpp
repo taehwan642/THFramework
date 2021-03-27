@@ -64,7 +64,7 @@ bool Sprite::Animation(wstring path, float t, int f) // time, max frame
 			frame = 0; // 프레임 초기화
 			return true; // 리턴
 		}
-		auto p = path + L" (" + to_wstring(frame) + L").png"; // 이 부분이 중요하다
+		std::wstring p = path + L" (" + to_wstring(frame) + L").png"; // 이 부분이 중요하다
 		// 자기 게임 리소스 속 애니메이션들을 나타내는,
 		// player (1), player (2) 이런거나
 		// player1, player2 이렇게 되어있으면

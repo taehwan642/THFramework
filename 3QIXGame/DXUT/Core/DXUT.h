@@ -430,4 +430,10 @@ enum EFFECTTAG
     EFLASH
 };
 
+struct Rank
+{
+    char name[4];
+    int score;
+};
+
 /// CLIENT

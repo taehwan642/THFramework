@@ -588,8 +588,11 @@ void Board::Update(void)
 	if (DXUTWasKeyPressed(VK_F2))
 	{
 		int ind = rand() % 5;
-		ItemManager::GetInstance()->SpawnItem
-		(pixels[playerX + 1][playerY]->position, playerX + 1, playerY, (ITEMTAG)ind);
+		if (playerX + 1 <= 49)
+		{
+			ItemManager::GetInstance()->SpawnItem
+			(pixels[playerX + 1][playerY]->position, playerX + 1, playerY, (ITEMTAG)ind);
+		}
 	}
 	// 3. 생명력 증가
 	if (DXUTWasKeyPressed(VK_F3))
