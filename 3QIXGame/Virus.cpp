@@ -136,61 +136,38 @@ void Virus::SetRandomDirection(VIRUSDIRECTION _direction)
 {
 	// 1. X 중심일지 Y 중심일지 선택
 	// 2. parameter로 들어온 _direction을 제외하고 나머지 3 방향을 골라야함.
-	int xory = rand() % 2;
-	if (xory == 0) // x 중심
+	std::vector<VIRUSDIRECTION> directions;
+	if (_direction != VRIGHT && 
+		VirusManager::GetInstance()->pixels[pixelpos.first + 1][pixelpos.second]->state == NONE)
 	{
-		if (_direction == VLEFT ||
-			_direction == VRIGHT)
-		{
-			if (_direction == VLEFT)
-			{
-				direction = VRIGHT;
-			}
-			else
-			{
-				direction = VLEFT;
-			}
-		}
-		else
-		{
-			int ran = rand() % 2;
-			if (ran == 0)
-			{
-				direction = VRIGHT;
-			}
-			else
-			{
-				direction = VLEFT;
-			}
-		}
+		directions.emplace_back(VRIGHT);
 	}
-	else // y중심
+	
+	if (_direction != VLEFT && 
+		VirusManager::GetInstance()->pixels[pixelpos.first - 1][pixelpos.second]->state == NONE)
 	{
-		if (_direction == VUP ||
-			_direction == VDOWN)
-		{
-			if (_direction == VUP)
-			{
-				direction = VDOWN;
-			}
-			else
-			{
-				direction = VUP;
-			}
-		}
-		else
-		{
-			int ran = rand() % 2;
-			if (ran == 0)
-			{
-				direction = VDOWN;
-			}
-			else
-			{
-				direction = VUP;
-			}
-		}
+		directions.emplace_back(VLEFT);
 	}
+	
+	if (_direction != VDOWN && 
+		VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + 1]->state == NONE)
+	{
+		directions.emplace_back(VDOWN);
+	}
+	
+	if (_direction != VUP && 
+		VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second - 1]->state == NONE)
+	{
+		directions.emplace_back(VUP);
+	}
+
+	if (directions.size() != 0)
+	{
+		int r = rand() % directions.size();
+		direction = directions[r];
+	}
+	else
+		direction = VRIGHT;
 }
 
 void Virus::ToxinoAbility()
