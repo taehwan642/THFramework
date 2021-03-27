@@ -3,13 +3,13 @@
 #include "VIM.h"
 #include "Items.h"
 #include "Virus.h"
+#include "Effects.h"
 #include "Sprite.h"
 
 class Board :
     public Sprite
 {
 private:
-    int score = 0;
 
     bool checkedPixels[50][50];
     bool showplayerpos = true; // debug
@@ -20,7 +20,6 @@ private:
     list<Pixel*> clear1;
     list<Pixel*> clear2;
 
-    VIM* vim = nullptr;
     float deltatime = 0.f;
 
     int item[5];
@@ -38,9 +37,14 @@ private:
     // 플레이어 이동시키기
     void MovePlayer();
 
+    void Initalize();
+
 protected:
 public:
+    VIM* vim = nullptr;
+
     int difficulty = 1;
+    int score = 0;
 
     int pathStartposX = 0;
     int pathStartposY = 0;

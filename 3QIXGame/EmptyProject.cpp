@@ -12,6 +12,7 @@
 #include "Renderer.h"
 #include "Items.h"
 #include "Virus.h"
+#include "Effects.h"
 #include "Camera.h"
 
 //--------------------------------------------------------------------------------------
@@ -102,6 +103,8 @@ void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
     ItemManager::DeleteInstance();
     VirusManager::GetInstance()->DeleteVirus();
     VirusManager::DeleteInstance();
+    EffectManager::GetInstance()->DeleteEffect();
+    EffectManager::DeleteInstance();
     exit(1);
 }
 

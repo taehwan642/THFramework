@@ -185,6 +185,9 @@ void Board::PathstoClearAndSpawnItem(std::list<Pixel*> _list)
 
 void Board::MovePlayer()
 {
+	if (vim->HP <= 0)
+		return;
+
 	if (deltatime <= 0)
 	{
 		if (DXUTIsKeyDown('W'))
@@ -239,7 +242,7 @@ void Board::MovePlayer()
 	}
 }
 
-Board::Board(void)
+void Board::Initalize()
 {
 	VirusManager::GetInstance()->CreateVirus(); // NEW1
 
@@ -303,8 +306,9 @@ Board::Board(void)
 	item[4] = 5;
 
 	ItemManager::GetInstance()->CreateItem();
-	
-	for (int i = 0; i < 10; ++i) 
+	EffectManager::GetInstance()->CreateEffect();
+
+	for (int i = 0; i < 10; ++i)
 	{
 		int r = rand() % TOXINO;
 		int x = 5 + (rand() % 40);
@@ -312,18 +316,31 @@ Board::Board(void)
 		while (pixels[x][y]->state == OBSTICLE)
 		{
 			x = 5 + (rand() % 40);
-			y = 5 + (rand() % 40); 
+			y = 5 + (rand() % 40);
 			if (pixels[x][y]->state != OBSTICLE)
 				break;
 		}
 
-		if(i == 0)
-			VirusManager::GetInstance()->SpawnVirus(pixels[x][y]->position, pixels[x][y]->indexX, pixels[x][y]->indexY, TOXINO);
-
+		if (difficulty == 2 && i == 0)
+		{
+			VirusManager::GetInstance()->SpawnVirus(pixels[24][24]->position, pixels[24][24]->indexX, pixels[24][24]->indexY, TOXINO);
+			for (int j = 0; j < 5; ++j)
+			{
+				EffectManager::GetInstance()->SpawnEffect(
+					{ pixels[24][24]->position.x + (float)j * 30,
+					pixels[24][24]->position.y + (float)j * 30 }, EFLASH);
+			}
+		}
 		VirusManager::GetInstance()->SpawnVirus(pixels[x][y]->position, pixels[x][y]->indexX, pixels[x][y]->indexY, (VIRUSTAG)r);
 	}
 
 	vim->position = pixels[playerX][playerY]->position; // NEW1
+
+}
+
+Board::Board(void)
+{
+	
 }
 
 Board::~Board(void)
@@ -338,6 +355,7 @@ Board::~Board(void)
 	delete vim;
 	ItemManager::GetInstance()->DeleteItem();
 	VirusManager::GetInstance()->DeleteVirus();
+	EffectManager::GetInstance()->DeleteEffect();
 }
 
 void Board::Update(void)
@@ -540,19 +558,6 @@ void Board::Update(void)
 		}
 	}
 
-	// 색 설정
-	/*for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
-	{
-		if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
-			continue;
-
-		for (int j = 0; j < VirusManager::GetInstance()->virusVector[i]->pixelpos.size(); ++j)
-		{
-			pixels[VirusManager::GetInstance()->virusVector[i]->pixelpos[j].first]
-				[VirusManager::GetInstance()->virusVector[i]->pixelpos[j].second]->color = D3DCOLOR_RGBA(128, 0, 128, 255);
-		}
-	}*/
-
 	// 디버그
 	if (DXUTWasKeyPressed('L'))
 		showplayerpos = !showplayerpos;
@@ -565,20 +570,16 @@ void Board::Update(void)
 		std::cout << "----" << std::endl;
 	}
 
-	// 클리어 조건 충족했는지 확인
-	if (score >= 2000) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
-	{
-		std::cout << "CLEAR" << std::endl;
-	}
-
 	// 플레이어가 죽었는지 확인
 	if (vim->HP <= 0)
 	{
 		std::cout << "DEAD" << std::endl;
 	}
 
-	//std::cout << vim->HP << std::endl;
-
+	if (DXUTWasKeyPressed('M'))
+	{
+		EffectManager::GetInstance()->SpawnEffect(pixels[24][24]->position, EFLASH);
+	}
 
 	// 1. 무적
 	if (DXUTWasKeyPressed(VK_F1))
@@ -595,20 +596,11 @@ void Board::Update(void)
 	{
 		++vim->HP;
 	}
-	// 5. 1스테이지 전환
-	if (DXUTWasKeyPressed(VK_F5))
-	{
-
-	}
-	// 6. 2스테이지 전환
-	if (DXUTWasKeyPressed(VK_F6))
-	{
-
-	}
 }
 
 void Board::SetDifficulty(int _val)
 {
 	difficulty = _val;
 	VirusManager::GetInstance()->SetDifficulty(_val);
+	Initalize();
 }

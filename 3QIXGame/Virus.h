@@ -13,7 +13,9 @@ private:
     void CheckCollision();
     void SetRandomDirection(VIRUSDIRECTION _direction);
     void ToxinoAbility();
+
 public:
+    bool isAttackOn = false;
     float delta = 0.f;
     float movespeed = 0.01f;
     int virusscale = 0;

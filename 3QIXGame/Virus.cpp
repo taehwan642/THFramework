@@ -43,29 +43,37 @@ void Virus::FlashMove()
 
 void Virus::ToxinoMove()
 {
-	if (delta <= 0)
+	if (Animation(L"toxino", 0.3f, 5))
 	{
-		isHit = false;
-		int viruses = 0;
-		for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
-		{
-			if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
-				++viruses;
-			if (viruses > VirusManager::GetInstance()->virusVector.size() - 4)
-			{
-				for (int j = 0; j < viruses; ++j)
-				{
-					ToxinoAbility();
-				}
-				break;
-			}
-		}
-		pixelpos.first += speedX;
-		pixelpos.second += speedY;
-		delta = movespeed;
+		isAttackOn = true;
 	}
-	else
-		delta -= DXUTGetElapsedTime();
+	
+	if (isAttackOn == true)
+	{
+		if (delta <= 0)
+		{
+			isHit = false;
+			int viruses = 0;
+			for (int i = 0; i < VirusManager::GetInstance()->virusVector.size(); ++i)
+			{
+				if (VirusManager::GetInstance()->virusVector[i]->isactive == false)
+					++viruses;
+				if (viruses > VirusManager::GetInstance()->virusVector.size() - 4)
+				{
+					for (int j = 0; j < viruses; ++j)
+					{
+						ToxinoAbility();
+					}
+					break;
+				}
+			}
+			pixelpos.first += speedX;
+			pixelpos.second += speedY;
+			delta = movespeed;
+		}
+		else
+			delta -= DXUTGetElapsedTime();
+	}
 }
 
 void Virus::CheckCollision()
@@ -94,13 +102,13 @@ void Virus::CheckCollision()
 		SetRandomDirection(direction);
 	}
 
-	for (int j = virusscale; j >= 0; --j)
+	for (int j = virusscale; j > 0; --j)
 	{
 		bool check = false;
-		if ((pixelpos.first + speedY + j) <= 49)
+		if ((pixelpos.second + speedY * j) <= 49 && (pixelpos.second + speedY * j) >= 0)
 		{
-			if (VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + speedY + j]->state == OBSTICLE ||
-				VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + speedY + j]->state == OUTLINE)
+			if (VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + speedY * j]->state == OBSTICLE ||
+				VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + speedY * j]->state == OUTLINE)
 			{
 				// 가고 있던 방향 바로 앞에 장애물이니까 반대 혹은 다른 방향으로 간다.
 				SetRandomDirection(direction);
@@ -108,10 +116,10 @@ void Virus::CheckCollision()
 			}
 		}
 
-		if ((pixelpos.first + speedX + j) <= 49)
+		if ((pixelpos.first + speedX * j) <= 49 && (pixelpos.first + speedX * j) >= 0)
 		{
-			if (VirusManager::GetInstance()->pixels[pixelpos.first + speedX + j][pixelpos.second]->state == OBSTICLE ||
-				VirusManager::GetInstance()->pixels[pixelpos.first + speedX + j][pixelpos.second]->state == OUTLINE)
+			if (VirusManager::GetInstance()->pixels[pixelpos.first + speedX * j][pixelpos.second]->state == OBSTICLE ||
+				VirusManager::GetInstance()->pixels[pixelpos.first + speedX * j][pixelpos.second]->state == OUTLINE)
 			{
 				// 가고 있던 방향 바로 앞에 장애물이니까 반대 혹은 다른 방향으로 간다.
 				SetRandomDirection(direction);
@@ -136,12 +144,10 @@ void Virus::SetRandomDirection(VIRUSDIRECTION _direction)
 		{
 			if (_direction == VLEFT)
 			{
-				speedX = 1;
 				direction = VRIGHT;
 			}
 			else
 			{
-				speedX = -1;
 				direction = VLEFT;
 			}
 		}
@@ -150,16 +156,13 @@ void Virus::SetRandomDirection(VIRUSDIRECTION _direction)
 			int ran = rand() % 2;
 			if (ran == 0)
 			{
-				speedX = 1;
 				direction = VRIGHT;
 			}
 			else
 			{
-				speedX = -1;
 				direction = VLEFT;
 			}
 		}
-		speedY = 0;
 	}
 	else // y중심
 	{
@@ -168,12 +171,10 @@ void Virus::SetRandomDirection(VIRUSDIRECTION _direction)
 		{
 			if (_direction == VUP)
 			{
-				speedY = 1;
 				direction = VDOWN;
 			}
 			else
 			{
-				speedY = -1;
 				direction = VUP;
 			}
 		}
@@ -182,16 +183,13 @@ void Virus::SetRandomDirection(VIRUSDIRECTION _direction)
 			int ran = rand() % 2;
 			if (ran == 0)
 			{
-				speedY = 1;
 				direction = VDOWN;
 			}
 			else
 			{
-				speedY = -1;
 				direction = VUP;
 			}
 		}
-		speedX = 0;
 	}
 }
 
@@ -248,6 +246,29 @@ Virus::~Virus()
 void Virus::Update()
 {
 	CheckCollision();
+
+	switch (direction)
+	{
+	case VUP:
+		speedX = 0;
+		speedY = -1;
+		break;
+	case VDOWN:
+		speedX = 0;
+		speedY = 1;
+		break;
+	case VLEFT:
+		speedX = -1;
+		speedY = 0;
+		break;
+	case VRIGHT:
+		speedX = 1;
+		speedY = 0;
+		break;
+	default:
+		break;
+	}
+
 	switch (tag)
 	{
 	case SPEEDVIRUS:
@@ -294,27 +315,75 @@ void VirusManager::SpawnVirus(Vec2 _position, int _startX, int _startY, VIRUSTAG
 			virusVector[i]->pixelpos.first = _startX;
 			virusVector[i]->pixelpos.second = _startY;
 			virusVector[i]->position = _position;
+			virusVector[i]->SetTexture(L"virus.png");
+
+			if (pixels[_startX + 1][_startY]->state == NONE)
+			{
+				virusVector[i]->direction = VRIGHT;
+			}
+			if (pixels[_startX - 1][_startY]->state == NONE)
+			{
+				virusVector[i]->direction = VLEFT;
+			}
+			if (pixels[_startX][_startY + 1]->state == NONE)
+			{
+				virusVector[i]->direction = VDOWN;
+			}
+			if (pixels[_startX][_startY - 1]->state == NONE)
+			{
+				virusVector[i]->direction = VUP;
+			}
+
 			switch (_tag)
 			{
 			case SPEEDVIRUS:
-				virusVector[i]->scale = { 0.1f,0.1f };
-				virusVector[i]->virusscale = 0;
-				virusVector[i]->movespeed = 0.1f;
+				if (difficulty == 1)
+				{
+					virusVector[i]->scale = { 0.1f,0.1f };
+					virusVector[i]->virusscale = 1;
+					virusVector[i]->movespeed = 0.1f;
+				}
+				else
+				{
+					virusVector[i]->scale = { 0.1f,0.1f };
+					virusVector[i]->virusscale = 1;
+					virusVector[i]->movespeed = 0.03f;
+				}
 				break;
 			case BIGVIRUS:
-				virusVector[i]->scale = { 0.2f,0.2f };
-				virusVector[i]->virusscale = 1;
-				virusVector[i]->movespeed = 0.1f;
+				if (difficulty == 1)
+				{
+					virusVector[i]->scale = { 0.2f,0.2f };
+					virusVector[i]->virusscale = 2;
+					virusVector[i]->movespeed = 0.1f;
+				}
+				else
+				{
+					virusVector[i]->scale = { 0.2f,0.2f };
+					virusVector[i]->virusscale = 2;
+					virusVector[i]->movespeed = 0.08f;
+				}
 				break;
 			case FLASHVIRUS:
-				virusVector[i]->scale = { 0.15f,0.15f };
-				virusVector[i]->virusscale = 1;
-				virusVector[i]->movespeed = 0.1f;
+				if (difficulty == 1)
+				{
+					virusVector[i]->scale = { 0.15f,0.15f };
+					virusVector[i]->virusscale = 2;
+					virusVector[i]->movespeed = 0.1f;
+				}
+				else
+				{
+					virusVector[i]->scale = { 0.15f,0.15f };
+					virusVector[i]->virusscale = 2;
+					virusVector[i]->movespeed = 0.1f;
+				}
 				break;
 			case TOXINO:
-				virusVector[i]->scale = { 0.3f,0.3f };
-				virusVector[i]->virusscale = 2;
+				virusVector[i]->scale = { 0.5f,0.5f };
+				virusVector[i]->virusscale = 3;
 				virusVector[i]->movespeed = 0.1f;
+				virusVector[i]->isAttackOn = false;
+				virusVector[i]->SetTexture(L"toxino (1).png");
 				break;
 			default:
 				break;

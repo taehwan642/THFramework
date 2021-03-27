@@ -423,4 +423,9 @@ enum VIRUSDIRECTION
     VRIGHT
 };
 
+enum EFFECTTAG
+{
+    EFLASH
+};
+
 /// CLIENT

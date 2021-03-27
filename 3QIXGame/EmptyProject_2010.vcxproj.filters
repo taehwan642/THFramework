@@ -87,6 +87,9 @@
     <Filter Include="Client\Objects\Virus">
       <UniqueIdentifier>{c9e31e8c-59b5-4495-9ef4-719b49e60750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client\Objects\Effects">
+      <UniqueIdentifier>{6c92b740-54a7-4654-88c3-b49d2e7e984c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -206,6 +209,9 @@
     <ClCompile Include="Virus.cpp">
       <Filter>Client\Objects\Virus</Filter>
     </ClCompile>
+    <ClCompile Include="Effects.cpp">
+      <Filter>Client\Objects\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Director.h">
@@ -264,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="Virus.h">
       <Filter>Client\Objects\Virus</Filter>
+    </ClInclude>
+    <ClInclude Include="Effects.h">
+      <Filter>Client\Objects\Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
