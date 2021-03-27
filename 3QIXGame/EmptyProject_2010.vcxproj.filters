@@ -212,6 +212,12 @@
     <ClCompile Include="Effects.cpp">
       <Filter>Client\Objects\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Client\Scenes\IntroScene</Filter>
+    </ClCompile>
+    <ClCompile Include="RankingScene.cpp">
+      <Filter>Client\Scenes\RankingScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Director.h">
@@ -273,6 +279,12 @@
     </ClInclude>
     <ClInclude Include="Effects.h">
       <Filter>Client\Objects\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Client\Scenes\IntroScene</Filter>
+    </ClInclude>
+    <ClInclude Include="RankingScene.h">
+      <Filter>Client\Scenes\RankingScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

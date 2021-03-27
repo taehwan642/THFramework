@@ -12,24 +12,61 @@ void GameScene::Init()
 	font = new Font();
 	font->layer = 10;
 	font->Createfont(5, 5, L"Arial");
-	font->SetFont("Press R to Restart");
+	font->SetFont("Press R to Restart\nPress E to view RankingScene");
 	font->isactive = false;
+
+	panel = new Sprite();
+	panel->position = { ScreenW / 2, ScreenH / 2 };
+	panel->layer = 8;
+	panel->SetTexture(L"Pixel.png");
+	panel->scale = { 1.5f,2.f };
+	panel->isactive = false;
+
+	score = new Font();
+	score->layer = 9;
+	score->Createfont(2, 2, L"Arial");
+	score->SetFont("Score :");
+	score->color = D3DCOLOR_RGBA(0, 0, 0, 255);
+	score->position = {469, 132 };
+	score->isactive = false;
 }
 
 void GameScene::Update()
 {
+	//POINT p;
+	//GetCursorPos(&p);
+	//ScreenToClient(DXUTGetHWND(), &p);
+	//std::cout << p.x << " " << p.y << std::endl;
 	// 클리어 조건 충족했는지 확인
+	
+
+	
+	
 	if (b->score >= 2000) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
 	{
-		int difficulty = b->difficulty;
-		delete b;
-		b = new Board();
-		b->SetDifficulty(difficulty + 1);
+		// 결과창 띄워주고
+		// 몇 초 뒤 또는 특정 버튼을 입력하면 넘어감
+		score->isactive = true;
+		panel->isactive = true;
+		string a;
+		a = "Score : " + to_string(b->score) + " + " + to_string(b->vim->vimscore) + "\nNext Stage = ENTER";
+		score->SetFont((char*)a.c_str());
+		
+		if (DXUTWasKeyPressed(VK_RETURN))
+		{
+			int difficulty = b->difficulty;
+			delete b;
+			b = new Board();
+			b->SetDifficulty(difficulty + 1);
+			score->isactive = false;
+			panel->isactive = false;
+		}
 	}
 
 	if (b->vim->HP <= 0)
 	{
 		font->isactive = true;
+		// 이어하던지, 아님 랭킹으로 가던지
 		if (DXUTWasKeyPressed('R'))
 		{
 			int difficulty = b->difficulty;
@@ -38,14 +75,13 @@ void GameScene::Update()
 			b->SetDifficulty(difficulty);
 			font->isactive = false;
 		}
+		else if (DXUTWasKeyPressed('E'))
+		{
+			Director::GetInstance()->ChangeScene(RANKINGSCENE);
+			return;
+		}
 	}
 
-	// 4. 메뉴 전환
-	if (DXUTWasKeyPressed(VK_F4))
-	{
-		Director::GetInstance()->ChangeScene(MENUSCENE);
-		return;
-	}
 	// 5. 1스테이지 전환
 	if (DXUTWasKeyPressed(VK_F5))
 	{
@@ -59,6 +95,13 @@ void GameScene::Update()
 		delete b;
 		b = new Board();
 		b->SetDifficulty(2);
+	}
+
+	// 4. 메뉴 전환
+	if (DXUTWasKeyPressed(VK_F4))
+	{
+		Director::GetInstance()->ChangeScene(MENUSCENE);
+		return;
 	}
 }
 

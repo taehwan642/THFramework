@@ -371,7 +371,9 @@ typedef D3DXCOLOR Color;
 enum SceneTag
 {
     MENUSCENE,
-    GAMESCENE
+    GAMESCENE,
+    INTROSCENE,
+    RANKINGSCENE
 };
 /// ENGINE
 /// CLIENT 

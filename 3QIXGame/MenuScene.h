@@ -5,7 +5,8 @@ class MenuScene :
     public Scene
 {
 public:
-    Sprite* start = nullptr;
+    Sprite* buttons[5];
+
     void Init() override; 
     void Update() override;
     void Exit() override;

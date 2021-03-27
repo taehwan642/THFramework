@@ -7,6 +7,10 @@ class GameScene :
 {
 public:
     Sprite* back = nullptr;
+
+    Sprite* panel = nullptr;
+    Font* score = nullptr;
+
     Font* font = nullptr;
     Board* b = nullptr;
     void Init() override;

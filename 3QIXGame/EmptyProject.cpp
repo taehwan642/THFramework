@@ -9,6 +9,8 @@
 #include "Director.h"
 #include "MenuScene.h"
 #include "GameScene.h"
+#include "IntroScene.h"
+#include "RankingScene.h"
 #include "Renderer.h"
 #include "Items.h"
 #include "Virus.h"
@@ -141,7 +143,9 @@ int main(void)
 
     Director::GetInstance()->AddScene(SceneTag::MENUSCENE, new MenuScene);
     Director::GetInstance()->AddScene(SceneTag::GAMESCENE, new GameScene);
-    Director::GetInstance()->ChangeScene(SceneTag::MENUSCENE);
+    Director::GetInstance()->AddScene(SceneTag::INTROSCENE, new IntroScene);
+    Director::GetInstance()->AddScene(SceneTag::RANKINGSCENE, new RankingScene);
+    Director::GetInstance()->ChangeScene(SceneTag::INTROSCENE);
 
     // Start the render loop
     DXUTMainLoop();
