@@ -4,6 +4,7 @@
 
 void Virus::SpeedMove()
 {
+	speedtime -= DXUTGetElapsedTime();
 	if (delta <= 0)
 	{
 		isHit = false;
@@ -82,23 +83,31 @@ void Virus::CheckCollision()
 	{
 		// movespeed 감소 후 다시 증가
 		pixelpos.first = 48;
+		if (tag == SPEEDVIRUS)
+			speedtime = 0.3f;
 		SetRandomDirection(direction);
 	}
 	else if (pixelpos.first < 1)
 	{
 		// movespeed 감소 후 다시 증가
 		pixelpos.first = 1;
+		if (tag == SPEEDVIRUS)
+			speedtime = 0.3f; 
 		SetRandomDirection(direction);
 	}
 
 	if (pixelpos.second > 48)
 	{
 		pixelpos.second = 48;
+		if (tag == SPEEDVIRUS)
+			speedtime = 0.3f;
 		SetRandomDirection(direction);
 	}
 	else if (pixelpos.second < 1)
 	{
 		pixelpos.second = 1;
+		if (tag == SPEEDVIRUS)
+			speedtime = 0.3f;
 		SetRandomDirection(direction);
 	}
 
@@ -111,6 +120,8 @@ void Virus::CheckCollision()
 				VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + speedY * j]->state == OUTLINE)
 			{
 				// 가고 있던 방향 바로 앞에 장애물이니까 반대 혹은 다른 방향으로 간다.
+				if (tag == SPEEDVIRUS)
+					speedtime = 0.3f;
 				SetRandomDirection(direction);
 				check = true;
 			}
@@ -122,6 +133,8 @@ void Virus::CheckCollision()
 				VirusManager::GetInstance()->pixels[pixelpos.first + speedX * j][pixelpos.second]->state == OUTLINE)
 			{
 				// 가고 있던 방향 바로 앞에 장애물이니까 반대 혹은 다른 방향으로 간다.
+				if (tag == SPEEDVIRUS)
+					speedtime = 0.3f;
 				SetRandomDirection(direction);
 				check = true;
 			}
@@ -222,7 +235,14 @@ Virus::~Virus()
 
 void Virus::Update()
 {
-	CheckCollision();
+	if (speedtime > 0)
+		movespeed = defaultMovespeed - 0.05f;
+	else
+		movespeed = defaultMovespeed;
+
+	int randirection = rand() % 160;
+	if (randirection == 0)
+		SetRandomDirection(direction);
 
 	switch (direction)
 	{
@@ -263,6 +283,7 @@ void Virus::Update()
 	default:
 		break;
 	}
+	CheckCollision();
 	position = VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second]->position;
 }
 
@@ -293,6 +314,7 @@ void VirusManager::SpawnVirus(Vec2 _position, int _startX, int _startY, VIRUSTAG
 			virusVector[i]->pixelpos.second = _startY;
 			virusVector[i]->position = _position;
 			virusVector[i]->SetTexture(L"virus.png");
+			virusVector[i]->speedtime = 0.f;
 
 			if (pixels[_startX + 1][_startY]->state == NONE)
 			{
@@ -319,12 +341,14 @@ void VirusManager::SpawnVirus(Vec2 _position, int _startX, int _startY, VIRUSTAG
 					virusVector[i]->scale = { 0.1f,0.1f };
 					virusVector[i]->virusscale = 1;
 					virusVector[i]->movespeed = 0.1f;
+					virusVector[i]->defaultMovespeed = 0.1f;
 				}
 				else
 				{
 					virusVector[i]->scale = { 0.1f,0.1f };
 					virusVector[i]->virusscale = 1;
 					virusVector[i]->movespeed = 0.03f;
+					virusVector[i]->defaultMovespeed = 0.03f;
 				}
 				break;
 			case BIGVIRUS:

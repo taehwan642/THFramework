@@ -15,9 +15,11 @@ private:
     void ToxinoAbility();
 
 public:
+    float speedtime = 0.f;
     bool isAttackOn = false;
     float delta = 0.f;
     float movespeed = 0.01f;
+    float defaultMovespeed = 0.1f;
     int virusscale = 0;
     int speedX = 1;
     int speedY = 0;

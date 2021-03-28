@@ -10,7 +10,7 @@ void IntroScene::Update()
 {
 	delta += DXUTGetElapsedTime();
 	std::cout << delta << std::endl;
-	if (delta >= 3) // Animation(L"Intro", 1.f, 10) == true
+	if (delta >= 0.3) // Animation(L"Intro", 1.f, 10) == true
 	{
 		Director::GetInstance()->ChangeScene(MENUSCENE);
 		return;
