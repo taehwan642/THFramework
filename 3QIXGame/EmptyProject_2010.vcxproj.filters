@@ -81,9 +81,6 @@
     <Filter Include="Client\Scenes\IntroScene">
       <UniqueIdentifier>{cf7c54b1-3769-4b71-86ba-e8c39e6a8660}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client\Scenes\CreditScene">
-      <UniqueIdentifier>{4c79c394-f62d-4051-94e7-175cd284747f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Client\Objects\Virus">
       <UniqueIdentifier>{c9e31e8c-59b5-4495-9ef4-719b49e60750}</UniqueIdentifier>
     </Filter>

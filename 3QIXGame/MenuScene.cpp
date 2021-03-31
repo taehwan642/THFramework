@@ -155,4 +155,11 @@ void MenuScene::Exit()
 {
 	for (int i = 0; i < 5; ++i)
 		delete buttons[i];
+	delete about;
+	delete exitabout;
+	for (int i = 0; i < 4; ++i)
+	{
+		delete items[i];
+		delete aboutfont[i];
+	}
 }

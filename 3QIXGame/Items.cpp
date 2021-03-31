@@ -1,4 +1,5 @@
 #include "DXUT.h"
+#include "Sound.h"
 #include "Items.h"
 
 void Items::Heal(VIM* vim)
@@ -40,22 +41,28 @@ Items::~Items()
 
 void Items::GetItem(VIM* vim)
 {
+	Sound::GetInstance()->PlaySFX(L"Hit");
 	switch (tag)
 	{
 	case SPEED:
+		//
 		Speed(vim);
 		break;
 	case BARRIER:
+		//
 		Barrier(vim);
 		break;
 	case IMMUNE:
+		//
 		Immune(vim);
 		break;
 	case HEAL:
+		//
 		Heal(vim);
 		break;
 	case RANDOM:
 	{
+		//
 		int r = rand() % RANDOM;
 		if (r == SPEED)
 		{

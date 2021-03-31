@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Director.h"
 #include "Effects.h"
+#include "Sound.h"
 #include "IntroScene.h"
 
 void IntroScene::Init()
@@ -9,6 +10,10 @@ void IntroScene::Init()
 	introsprite->layer = -5;
 	introsprite->position = { ScreenW / 2, ScreenH / 2 };
 	EffectManager::GetInstance()->CreateEffect();
+	Sound::GetInstance()->LoadSound(L"Res/Sound/BGM.wav", L"BGM");
+	Sound::GetInstance()->LoadSound(L"Res/Sound/_collision.wav", L"Collision");
+	Sound::GetInstance()->LoadSound(L"Res/Sound/Win1.wav", L"Win");
+	Sound::GetInstance()->LoadSound(L"Res/Sound/Hit.wav", L"Hit");
 }
 
 void IntroScene::Update()
@@ -32,7 +37,7 @@ void IntroScene::Update()
 		}
 		delta = 0;
 	}
-	if (introsprite->Animation(L"intro", 3.5f, 3))
+	if (introsprite->Animation(L"intro", 0.5f, 3))
 	{
 		Director::GetInstance()->ChangeScene(MENUSCENE);
 		return;
@@ -41,5 +46,6 @@ void IntroScene::Update()
 
 void IntroScene::Exit()
 {
+	delete introsprite;
 	EffectManager::GetInstance()->DeleteEffect();
 }

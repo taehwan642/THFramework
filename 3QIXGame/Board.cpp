@@ -1,4 +1,5 @@
 #include "DXUT.h"
+#include "Sound.h"
 #include "Board.h"
 
 // TODO : 텍스쳐 입히기
@@ -340,6 +341,9 @@ void Board::Initalize()
 	}
 
 	vim->position = pixels[playerX][playerY]->position; // NEW1
+
+	Sound::GetInstance()->PlaySFX(L"BGM", true);
+	Sound::GetInstance()->StopSFX(L"Win");
 }
 
 Board::Board(void)
@@ -360,6 +364,7 @@ Board::~Board(void)
 	ItemManager::GetInstance()->DeleteItem();
 	VirusManager::GetInstance()->DeleteVirus();
 	EffectManager::GetInstance()->DeleteEffect();
+	Sound::GetInstance()->StopSFX(L"BGM");
 }
 
 void Board::Update(void)
@@ -395,6 +400,7 @@ void Board::Update(void)
 			if (CheckPathPlayerAndVirusCollision(VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
 			{
 				VirusManager::GetInstance()->virusVector[i]->isHit = true;
+				Sound::GetInstance()->PlaySFX(L"Collision");
 			}
 		}
 
@@ -406,6 +412,7 @@ void Board::Update(void)
 			{
 				if (vim->immunetime <= 0)
 					--vim->HP;
+				Sound::GetInstance()->PlaySFX(L"Collision");
 			}
 
 			playerX = pathStartposX;
@@ -440,6 +447,7 @@ void Board::Update(void)
 				continue;
 			if (CheckPlayerAndVirusCollision(VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
 			{
+				Sound::GetInstance()->PlaySFX(L"Collision");
 				VirusManager::GetInstance()->virusVector[i]->isHit = true;
 			}
 		}
@@ -581,6 +589,8 @@ void Board::Update(void)
 		boardclear -= DXUTGetElapsedTime();
 		if (clearedBoard == false)
 		{
+			Sound::GetInstance()->PlaySFX(L"Win");
+			Sound::GetInstance()->StopSFX(L"BGM");
 			clearedBoard = true;
 			for (int i = 0; i < 50; ++i)
 			{

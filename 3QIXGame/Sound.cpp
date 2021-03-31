@@ -34,6 +34,7 @@ void Sound::PlaySFX(wstring name, bool isloop, LONG volume)
 		wcout << "play fail : " << name << endl;
 		return;
 	}
+	iter->second->Reset();
 	iter->second->Play(0, isloop, volume);
 }
 
@@ -43,4 +44,10 @@ void Sound::StopSFX(wstring name)
 	if (iter == soundgroup.end())
 		return;
 	iter->second->Stop();
+}
+
+void Sound::ReleaseSounds()
+{
+	delete mng;
+	soundgroup.clear();
 }

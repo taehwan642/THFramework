@@ -45,6 +45,7 @@ void GameScene::Update()
 		a = "Score : " + to_string(b->score) + " + " + to_string(b->vim->vimscore) + "\nNext Stage = ENTER";
 		score->SetFont((char*)a.c_str());
 		
+
 		if (DXUTWasKeyPressed(VK_RETURN))
 		{
 			int difficulty = b->difficulty;

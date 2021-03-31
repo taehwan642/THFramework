@@ -14,5 +14,7 @@ public:
     void LoadSound(LPWSTR path, wstring name); // 미리 로드
     void PlaySFX(wstring name, bool isloop = false, LONG volume = 0);
     void StopSFX(wstring name);
+
+    void ReleaseSounds();
 };
 
