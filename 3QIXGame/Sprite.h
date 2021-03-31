@@ -9,8 +9,8 @@ class Sprite : // 텍스쳐를 가지고 실제로 그려주는 클래스.
 {
 private:
     float deltatime = 0.0f;
-    int frame = 0;
 public:
+    int frame = 0;
     Sprite();
     virtual ~Sprite();
 

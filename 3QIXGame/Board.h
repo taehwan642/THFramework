@@ -39,8 +39,11 @@ private:
 
     void Initalize();
 
+    bool clearedBoard = false;
 protected:
 public:
+    float boardclear = 2.f;
+    float cleartime = 180.f;
     VIM* vim = nullptr;
 
     int difficulty = 1;

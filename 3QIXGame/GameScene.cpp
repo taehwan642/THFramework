@@ -34,17 +34,9 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
-	//POINT p;
-	//GetCursorPos(&p);
-	//ScreenToClient(DXUTGetHWND(), &p);
-	//std::cout << p.x << " " << p.y << std::endl;
-	// 클리어 조건 충족했는지 확인
-	
-
-	
-	
-	if (b->score >= 2000) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
+	if (b->score >= 2000 && b->boardclear < 0) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
 	{
+		b->vim->immunetime = FLT_MAX;
 		// 결과창 띄워주고
 		// 몇 초 뒤 또는 특정 버튼을 입력하면 넘어감
 		score->isactive = true;
@@ -75,7 +67,7 @@ void GameScene::Update()
 		}
 	}
 
-	if (b->vim->HP <= 0)
+	if (b->vim->HP <= 0 || b->cleartime < 0)
 	{
 		font->isactive = true;
 		// 이어하던지, 아님 랭킹으로 가던지

@@ -151,25 +151,29 @@ void Virus::SetRandomDirection(VIRUSDIRECTION _direction)
 	// 2. parameter로 들어온 _direction을 제외하고 나머지 3 방향을 골라야함.
 	std::vector<VIRUSDIRECTION> directions;
 	if (_direction != VRIGHT && 
-		VirusManager::GetInstance()->pixels[pixelpos.first + 1][pixelpos.second]->state == NONE)
+	   (VirusManager::GetInstance()->pixels[pixelpos.first + 1][pixelpos.second]->state == NONE ||
+		VirusManager::GetInstance()->pixels[pixelpos.first + 1][pixelpos.second]->state == CLEARED))
 	{
 		directions.emplace_back(VRIGHT);
 	}
 	
 	if (_direction != VLEFT && 
-		VirusManager::GetInstance()->pixels[pixelpos.first - 1][pixelpos.second]->state == NONE)
+	   (VirusManager::GetInstance()->pixels[pixelpos.first - 1][pixelpos.second]->state == NONE ||
+		VirusManager::GetInstance()->pixels[pixelpos.first - 1][pixelpos.second]->state == CLEARED))
 	{
 		directions.emplace_back(VLEFT);
 	}
 	
 	if (_direction != VDOWN && 
-		VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + 1]->state == NONE)
+	   (VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + 1]->state == NONE ||
+		VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second + 1]->state == CLEARED))
 	{
 		directions.emplace_back(VDOWN);
 	}
 	
 	if (_direction != VUP && 
-		VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second - 1]->state == NONE)
+	   (VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second - 1]->state == NONE ||
+		VirusManager::GetInstance()->pixels[pixelpos.first][pixelpos.second - 1]->state == CLEARED))
 	{
 		directions.emplace_back(VUP);
 	}

@@ -73,9 +73,6 @@ void MenuScene::Init()
 
 void MenuScene::Update()
 {
-	POINT p;
-	GetCursorPos(&p);
-	ScreenToClient(DXUTGetHWND(), &p);
 	if (DXUTIsMouseButtonDown(VK_LEFT))
 	{
 		POINT p;

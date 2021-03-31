@@ -102,6 +102,8 @@ bool Board::CheckPathPlayerAndVirusCollision(std::pair<int, int> _viruspos)
 			for (auto& it : paths)
 				it->state = NONE;
 
+			vim->position = pixels[playerX][playerY]->position;
+
 			paths.clear();
 			return true;
 		}
@@ -186,6 +188,9 @@ void Board::PathstoClearAndSpawnItem(std::list<Pixel*> _list)
 void Board::MovePlayer()
 {
 	if (vim->HP <= 0)
+		return;
+
+	if (score >= 2000)
 		return;
 
 	if (deltatime <= 0)
@@ -335,7 +340,6 @@ void Board::Initalize()
 	}
 
 	vim->position = pixels[playerX][playerY]->position; // NEW1
-
 }
 
 Board::Board(void)
@@ -570,10 +574,25 @@ void Board::Update(void)
 		std::cout << "----" << std::endl;
 	}
 
-	// 플레이어가 죽었는지 확인
-	if (vim->HP <= 0)
+	cleartime -= DXUTGetElapsedTime();
+
+	if (score >= 2000)
 	{
-		std::cout << "DEAD" << std::endl;
+		boardclear -= DXUTGetElapsedTime();
+		if (clearedBoard == false)
+		{
+			clearedBoard = true;
+			for (int i = 0; i < 50; ++i)
+			{
+				for (int j = 0; j < 50; ++j)
+				{
+					if (pixels[i][j]->state != CLEARED)
+					{
+						pixels[i][j]->state = CLEARED;
+					}
+				}
+			}
+		}
 	}
 
 	if (DXUTWasKeyPressed('M'))
