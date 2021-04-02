@@ -1,5 +1,6 @@
 #include "DXUT.h"
 #include "Sound.h"
+#include "Effects.h"
 #include "Items.h"
 
 void Items::Heal(VIM* vim)
@@ -58,6 +59,7 @@ void Items::GetItem(VIM* vim)
 		break;
 	case HEAL:
 		//
+		EffectManager::GetInstance()->SpawnEffect(this->position, EHEAL);
 		Heal(vim);
 		break;
 	case RANDOM:

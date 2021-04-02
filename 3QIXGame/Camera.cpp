@@ -8,18 +8,6 @@ void Camera::CameraInit()
 
 void Camera::CameraUpdate()
 {
-	shaketime -= DELTATIME;
-	if (shaketime > 0)
-	{
-		float ranx = (rand() % 20) - 10;
-		float rany = (rand() % 20) - 10;
-		cameraPos = followpos;
-		cameraPos.x += ranx;
-		cameraPos.y += rany;
-	}
-	else
-		cameraPos = followpos;
-
 	D3DXMATRIX translation;
 	D3DXMatrixTranslation(&translation, -cameraPos.x, -cameraPos.y, 0);
 	D3DXMATRIX rotation;

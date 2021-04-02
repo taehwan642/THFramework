@@ -427,7 +427,9 @@ enum VIRUSDIRECTION
 
 enum EFFECTTAG
 {
-    EFLASH
+    EFLASH,
+    EGETATTACK,
+    EHEAL
 };
 
 struct Rank

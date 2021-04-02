@@ -20,9 +20,6 @@ public:
 
     RECT GetRect();
 
-    float GetDistance(Vec2 obj);
-    float Look(Vec2 obj);
-
     bool Animation(wstring path, float t, int f);
 
     void Draw() override;

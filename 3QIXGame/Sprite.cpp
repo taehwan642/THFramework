@@ -41,18 +41,6 @@ RECT Sprite::GetRect()
 	return r;
 }
 
-float Sprite::GetDistance(Vec2 obj)
-{
-	Vec2 temp = position - obj;
-	return sqrt(temp.x * temp.x + temp.y * temp.y);
-}
-
-float Sprite::Look(Vec2 obj)
-{
-	Vec2 temp = position - obj;
-	return atan2(temp.y, temp.x);
-}
-
 bool Sprite::Animation(wstring path, float t, int f) // time, max frame
 {
 	deltatime += DELTATIME; // 0.0에서부터 시간이 계속 올라가요

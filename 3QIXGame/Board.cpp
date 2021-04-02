@@ -156,6 +156,7 @@ void Board::PathstoClearAndSpawnItem(std::list<Pixel*> _list)
 			}
 		}
 		it->state = CLEARED;
+		EffectManager::GetInstance()->SpawnEffect(it->position, EFLASH);
 	}
 
 	// 일단 전부 다 소진되어있으면
@@ -342,7 +343,7 @@ void Board::Initalize()
 
 	vim->position = pixels[playerX][playerY]->position; // NEW1
 
-	Sound::GetInstance()->PlaySFX(L"BGM", true);
+	//Sound::GetInstance()->PlaySFX(L"BGM", true);
 	Sound::GetInstance()->StopSFX(L"Win");
 }
 
@@ -400,6 +401,7 @@ void Board::Update(void)
 			if (CheckPathPlayerAndVirusCollision(VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
 			{
 				VirusManager::GetInstance()->virusVector[i]->isHit = true;
+				EffectManager::GetInstance()->SpawnEffect(VirusManager::GetInstance()->virusVector[i]->position, EGETATTACK);
 				Sound::GetInstance()->PlaySFX(L"Collision");
 			}
 		}
@@ -413,6 +415,7 @@ void Board::Update(void)
 				if (vim->immunetime <= 0)
 					--vim->HP;
 				Sound::GetInstance()->PlaySFX(L"Collision");
+				EffectManager::GetInstance()->SpawnEffect(pixels[playerX][playerY]->position, EGETATTACK);
 			}
 
 			playerX = pathStartposX;
@@ -448,6 +451,7 @@ void Board::Update(void)
 			if (CheckPlayerAndVirusCollision(VirusManager::GetInstance()->virusVector[i]->pixelpos) == true)
 			{
 				Sound::GetInstance()->PlaySFX(L"Collision");
+				EffectManager::GetInstance()->SpawnEffect(VirusManager::GetInstance()->virusVector[i]->position, EGETATTACK);
 				VirusManager::GetInstance()->virusVector[i]->isHit = true;
 			}
 		}

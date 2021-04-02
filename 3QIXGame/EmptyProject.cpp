@@ -76,21 +76,6 @@ void CALLBACK OnD3D9LostDevice( void* pUserContext )
 {
 }
 
-void CALLBACK OnMouse(bool bLeftButtonDown, bool bRightButtonDown, bool bMiddleButtonDown, bool bSideButton1Down, bool bSideButton2Down, int nMouseWheelDelta, int xPos, int yPos, void* pUserContext)
-{
-    // 변수 하나 잡아서, 0상태는 눌리기 <시작> 한 상태
-    // 1상태는 눌른 상태
-    // 2상태는 뗀 상태
-    if (bLeftButtonDown == true)
-    {
-        Director::GetInstance()->mouse = 1;
-    }
-    else if (bLeftButtonDown == false)
-    {
-        Director::GetInstance()->mouse = 3;
-    }
-}
-
 //--------------------------------------------------------------------------------------
 // Release D3D9 resources created in the OnD3D9CreateDevice callback 
 //--------------------------------------------------------------------------------------
@@ -133,7 +118,6 @@ int main(void)
     DXUTSetCallbackD3D9DeviceLost( OnD3D9LostDevice );
     DXUTSetCallbackD3D9DeviceDestroyed( OnD3D9DestroyDevice );
     DXUTSetCallbackFrameMove( OnFrameMove );
-    DXUTSetCallbackMouse( OnMouse );
 
     // TODO: Perform any application-level initialization here
 

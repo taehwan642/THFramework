@@ -36,10 +36,6 @@ void Director::UpdateScene()
 		Renderer::GetInstance()->Render();
 	}
 	Camera::GetInstance()->CameraUpdate();
-	if (mouse == 1)
-		mouse = 2;
-	if (mouse == 3)
-		mouse = 0;
 }
 
 void Director::ReleaseAllScenes()

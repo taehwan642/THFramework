@@ -19,10 +19,15 @@ void Effects::Update()
 	{
 	case EFLASH:
 		if (Animation(L"flash", 0.1f, 4))
-		{
-			std::cout << "¿ì¿Õ¿ì¿Õ" << std::endl;
 			isactive = false;
-		}
+		break;
+	case EGETATTACK:
+		if (Animation(L"getattack", 0.1f, 3))
+			isactive = false; 
+		break;
+	case EHEAL:
+		if (Animation(L"heal", 0.1f, 3))
+			isactive = false; 
 		break;
 	default:
 		break;
@@ -53,6 +58,12 @@ void EffectManager::SpawnEffect(Vec2 _position, EFFECTTAG _tag)
 			{
 			case EFLASH:
 				effects[i]->SetTexture(L"flash (1).png");
+				break;
+			case EGETATTACK:
+				effects[i]->SetTexture(L"getattack (1).png");
+				break;
+			case EHEAL:
+				effects[i]->SetTexture(L"heal (1).png");
 				break;
 			default:
 				break;
