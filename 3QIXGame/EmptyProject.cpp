@@ -16,7 +16,6 @@
 #include "Virus.h"
 #include "Effects.h"
 #include "Sound.h"
-#include "Camera.h"
 
 //--------------------------------------------------------------------------------------
 // Create any D3D9 resources that will live through a device reset (D3DPOOL_MANAGED)
@@ -84,7 +83,6 @@ void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
     Director::GetInstance()->ReleaseAllScenes();
     Director::DeleteInstance();
     Renderer::DeleteInstance();
-    Camera::DeleteInstance();
     TextureManager::GetInstance()->ReleaseAllTexture();
     TextureManager::DeleteInstance();
     ItemManager::GetInstance()->DeleteItem();

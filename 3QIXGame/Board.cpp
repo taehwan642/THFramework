@@ -261,8 +261,8 @@ void Board::Initalize()
 			pixels[i][j]->indexX = i;
 			pixels[i][j]->indexY = j;
 			pixels[i][j]->position =
-			{ 300 + ((float)i * 13),
-			  20 + ((float)j * 13) };
+			{ 300 + ((float)i * 12.8f),
+			  20 + ((float)j * 12.8f) };
 			pixels[i][j]->state = NONE;
 			VirusManager::GetInstance()->pixels[i][j] = pixels[i][j]; // NEW1
 		}

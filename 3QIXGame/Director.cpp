@@ -5,7 +5,6 @@
 void Director::Init()
 {
 	D3DXCreateSprite(DXUTGetD3D9Device(), &sprite);
-	Camera::GetInstance()->CameraInit();
 }
 
 void Director::AddScene(SceneTag _sceneTag, Scene* _scene)
@@ -35,7 +34,6 @@ void Director::UpdateScene()
 		currentScene->Update();
 		Renderer::GetInstance()->Render();
 	}
-	Camera::GetInstance()->CameraUpdate();
 }
 
 void Director::ReleaseAllScenes()

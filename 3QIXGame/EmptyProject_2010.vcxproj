@@ -385,7 +385,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="DXUT\Optional\SDKsound.cpp" />
     <ClCompile Include="DXUT\Optional\SDKwavefile.cpp" />
@@ -407,7 +406,6 @@
     <ClCompile Include="VIM.cpp" />
     <ClCompile Include="Virus.cpp" />
     <ClInclude Include="Board.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="DXUT\Optional\SDKsound.h" />
     <ClInclude Include="DXUT\Optional\SDKwavefile.h" />

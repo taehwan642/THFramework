@@ -42,9 +42,6 @@
     <Filter Include="Client">
       <UniqueIdentifier>{3abd2021-ad97-4129-a99a-a1e20f36e904}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Camera">
-      <UniqueIdentifier>{795936a7-7e94-427f-915c-4741490ec453}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Sound">
       <UniqueIdentifier>{5de2b166-3844-47d2-a590-807a58f2a0d7}</UniqueIdentifier>
     </Filter>
@@ -170,9 +167,6 @@
       <Filter>Core\Texture</Filter>
     </ClCompile>
     <ClCompile Include="EmptyProject.cpp" />
-    <ClCompile Include="Camera.cpp">
-      <Filter>Core\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="DXUT\Optional\SDKsound.cpp">
       <Filter>Default\DXUT</Filter>
     </ClCompile>
@@ -237,9 +231,6 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Core\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Core\Camera</Filter>
     </ClInclude>
     <ClInclude Include="DXUT\Optional\SDKsound.h">
       <Filter>Default\DXUT</Filter>

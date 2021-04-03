@@ -55,8 +55,7 @@ void Sprite::Draw()
 		return;
 	if (texture == nullptr)
 		return;
-	isui ? Director::GetInstance()->sprite->Begin(D3DXSPRITE_ALPHABLEND) :
-		Director::GetInstance()->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
+	Director::GetInstance()->sprite->Begin(D3DXSPRITE_ALPHABLEND);
 	Director::GetInstance()->sprite->SetTransform(&GetMatrix());
 	Vec3 center = { texture->info.Width * pivot.x, texture->info.Height * pivot.y, 0 };
 	Director::GetInstance()->sprite->Draw(texture->texture, &imageRect, &center, nullptr, color);

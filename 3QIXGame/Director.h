@@ -1,5 +1,4 @@
 #include "Scene.h"
-#include "Camera.h"
 #include "Singleton.h"
 #pragma once
 class Director : // 총 관리자. 씬의 이동 변경을 담당합니다.

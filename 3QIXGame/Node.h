@@ -18,7 +18,6 @@ public:
 	int layer = 0; // 클수록 앞에 온다!
 	float rotation = 0;
 	bool isactive = true; // 살아있나? 죽었나?
-	bool isui = false; // 이 객체가 UI인가? 아니면 오브젝트인가?
 	Color color = Color(1, 1, 1, 1);
 	RECT imageRect;
 
