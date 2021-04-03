@@ -24,20 +24,6 @@ RECT Sprite::GetRect()
 	r.left = position.x - (texture->info.Width / 2 * scale.x);
 	r.top = position.y - (texture->info.Height / 2 * scale.y);
 	r.bottom = position.y + (texture->info.Height / 2 * scale.y);
-
-	if (scale.x < 0)
-	{
-		float temp = r.right;
-		r.right = r.left;
-		r.left = temp;
-	}
-
-	if (scale.y < 0)
-	{
-		float temp = r.top;
-		r.top = r.bottom;
-		r.bottom = temp;
-	}
 	return r;
 }
 
