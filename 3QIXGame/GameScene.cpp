@@ -34,7 +34,8 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
-	if (b->score >= 2000 && b->boardclear < 0) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
+	std::cout << b->score << std::endl;
+	if (b->score >= 2000 && b->boardclear == true) //장애물은 2500개의 픽셀들 속에서 500개 미만이어야함.
 	{
 		b->vim->immunetime = FLT_MAX;
 		// 결과창 띄워주고

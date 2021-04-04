@@ -42,7 +42,7 @@ private:
     bool clearedBoard = false;
 protected:
 public:
-    float boardclear = 2.f;
+    bool boardclear = false;
     float cleartime = 180.f;
     VIM* vim = nullptr;
 

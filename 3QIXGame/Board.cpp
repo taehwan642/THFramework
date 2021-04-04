@@ -590,7 +590,11 @@ void Board::Update(void)
 
 	if (score >= 2000)
 	{
-		boardclear -= DXUTGetElapsedTime();
+		//boardclear -= DXUTGetElapsedTime();
+		if (Animation(L"desert", 0.3f, 9))
+		{
+			boardclear = true;
+		}
 		if (clearedBoard == false)
 		{
 			Sound::GetInstance()->PlaySFX(L"Win");
