@@ -4,6 +4,7 @@
 #include "Items.h"
 #include "Virus.h"
 #include "Effects.h"
+#include "Font.h"
 #include "Sprite.h"
 
 class Board :
@@ -40,6 +41,10 @@ private:
     void Initalize();
 
     bool clearedBoard = false;
+
+    Font* UI = nullptr;
+
+
 protected:
 public:
     bool boardclear = false;

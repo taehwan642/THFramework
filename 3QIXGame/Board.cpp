@@ -345,6 +345,10 @@ void Board::Initalize()
 
 	//Sound::GetInstance()->PlaySFX(L"BGM", true);
 	Sound::GetInstance()->StopSFX(L"Win");
+	UI = new Font();
+	UI->position = { 50, 200 };
+	UI->Createfont(1, 1, L"Arial");
+	UI->SetFont("A");
 }
 
 Board::Board(void)
@@ -366,11 +370,15 @@ Board::~Board(void)
 	VirusManager::GetInstance()->DeleteVirus();
 	EffectManager::GetInstance()->DeleteEffect();
 	Sound::GetInstance()->StopSFX(L"BGM");
+	delete UI;
 }
 
 void Board::Update(void)
 {
-	//std::cout << position.x << " " << position.y << std::endl;
+	char buffer[256];
+	sprintf(buffer, "Score : %d\nHP : %d\nSpeed : %.2f\nShield : %d\nImmuneTime : %.1f", 
+		score, vim->HP, vim->movementspeed, vim->barriervalue, (vim->immunetime < 0) ? 0 : vim->immunetime );
+	UI->SetFont(buffer);
 	ItemManager::GetInstance()->CheckItem(playerX, playerY, vim);
 	MovePlayer();
 
