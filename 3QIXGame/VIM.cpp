@@ -5,7 +5,7 @@ VIM::VIM()
 {
 	layer = 3;
 	scale = { 0.3f, 0.3f };
-	SetTexture(L"bluePlayer (1).png"); // NEW1
+	SetTexture(L"bluePlayer (1).png");
 }
 
 VIM::~VIM()
@@ -16,7 +16,6 @@ void VIM::Update()
 {
 	immunetime -= DXUTGetElapsedTime();
 
-	// NEW1
 	switch (HP)
 	{
 	case 5:
@@ -37,5 +36,4 @@ void VIM::Update()
 	default:
 		break;
 	}
-	// NEW1
 }
