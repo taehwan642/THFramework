@@ -9,7 +9,7 @@
 #define DXUT_COUNTER_STAT_LENGTH 2048
 #undef min // use __min instead inside this source file
 #undef max // use __max instead inside this source file
-
+auto __vsnwprintf = _vsnwprintf;
 #ifndef ARRAYSIZE
 extern "C++" // templates cannot be declared to have 'C' linkage
 template <typename T, size_t N>

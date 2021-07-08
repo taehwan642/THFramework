@@ -1,90 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns:atg="http://atg.xbox.com" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<ItemGroup>
-<Filter Include="Resource Files">
-<UniqueIdentifier>{8e114980-c1a3-4ada-ad7c-83caadf5daeb}</UniqueIdentifier>
-<Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
-</Filter>
-<Filter Include="DXUT">
-<UniqueIdentifier>{a43c5c25-0e86-4a20-b64a-883785ff74fd}</UniqueIdentifier>
-</Filter>
-<Filter Include="Shaders">
-<UniqueIdentifier>{2c3d4c8c-5d1a-459a-a05a-a4e4b608a44e}</UniqueIdentifier>
-<Extensions>fx;fxh;hlsl</Extensions>
-</Filter>
-</ItemGroup>
-<ItemGroup>
-<None Include="DXUT\Optional\directx.ico">
-<Filter>Resource Files</Filter>
-</None>
-<ClInclude Include="DXUT\Core\DXUT.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Core\DXUTenum.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Core\DXUTmisc.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClCompile Include="DXUT\Core\DXUT.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Core\DXUTenum.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Core\DXUTmisc.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClInclude Include="DXUT\Optional\DXUTcamera.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\DXUTgui.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\DXUTres.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\DXUTsettingsdlg.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\SDKmesh.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\SDKmisc.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClCompile Include="DXUT\Optional\DXUTcamera.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\DXUTgui.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\DXUTres.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\DXUTsettingsdlg.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\SDKmesh.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\SDKmisc.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-</ItemGroup>
-<ItemGroup>
-      <ClCompile Include="THFramework.cpp" />
+  <ItemGroup>
+    <Filter Include="0.Default">
+      <UniqueIdentifier>{de8e8388-8efa-4a39-910d-f3a3d65f01c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="0.Default\Resource Files">
+      <UniqueIdentifier>{8e114980-c1a3-4ada-ad7c-83caadf5daeb}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="0.Default\Shaders">
+      <UniqueIdentifier>{2c3d4c8c-5d1a-459a-a05a-a4e4b608a44e}</UniqueIdentifier>
+      <Extensions>fx;fxh;hlsl</Extensions>
+    </Filter>
+    <Filter Include="0.Default\DXUT">
+      <UniqueIdentifier>{a43c5c25-0e86-4a20-b64a-883785ff74fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client">
+      <UniqueIdentifier>{2b8edaf8-ba20-462f-8951-c46edf5db2d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core">
+      <UniqueIdentifier>{501aaf38-7ccc-4db8-913d-8a625b500534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\0.Scene">
+      <UniqueIdentifier>{54c34a35-df0b-4de8-8fb1-7798c06b00fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\1.Singleton">
+      <UniqueIdentifier>{bd34858d-8986-4458-be35-701ad0e330fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\0.Scene">
+      <UniqueIdentifier>{9dc7a44a-ec75-4e4a-8cf2-c8995a5e41ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\0.Scene\0.MenuScene">
+      <UniqueIdentifier>{81396e4d-9972-4c27-bc6c-7894df1a1a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.Objects">
+      <UniqueIdentifier>{14175f04-79a4-4467-ab90-af4a01877518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\2.SceneManager">
+      <UniqueIdentifier>{f8e4af05-614d-4cbc-8cd6-81ae2c117348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\3.Object">
+      <UniqueIdentifier>{988fa6bc-14a6-4a87-8b2a-63ca3adc4a2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\4.Texture">
+      <UniqueIdentifier>{e2ce95b6-ba16-48e7-89de-d7b3f14ed38c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\6.Sprite">
+      <UniqueIdentifier>{431d6059-4f8b-467f-b7fe-19f04323deea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\7.TileMap">
+      <UniqueIdentifier>{21cb39cc-b171-4567-82eb-3f29c4a2cb08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\5.RenderManager">
+      <UniqueIdentifier>{11589e7f-51b9-4684-9f81-2bf1daec6fe1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
-<ItemGroup>
+  <ItemGroup>
+    <None Include="DXUT\Optional\directx.ico">
+      <Filter>0.Default\Resource Files</Filter>
+    </None>
+    <ClInclude Include="DXUT\Core\DXUT.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Core\DXUTenum.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Core\DXUTmisc.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClCompile Include="DXUT\Core\DXUT.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Core\DXUTenum.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Core\DXUTmisc.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClInclude Include="DXUT\Optional\DXUTcamera.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTgui.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTres.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTsettingsdlg.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKmesh.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKmisc.h">
+      <Filter>0.Default\DXUT</Filter>
+    </ClInclude>
+    <ClCompile Include="DXUT\Optional\DXUTcamera.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTgui.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTres.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTsettingsdlg.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKmesh.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKmisc.cpp">
+      <Filter>0.Default\DXUT</Filter>
+    </ClCompile>
   </ItemGroup>
-<ItemGroup>
-      <CLInclude Include="resource.h">
-<Filter>Resource Files</Filter>
-</CLInclude>
-      <ResourceCompile Include="THFramework.rc">
-<Filter>Resource Files</Filter>
-</ResourceCompile>
+  <ItemGroup>
+    <ClCompile Include="THFramework.cpp" />
+    <ClCompile Include="Client\MenuScene.cpp">
+      <Filter>2.Client\0.Scene\0.MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SceneManager.cpp">
+      <Filter>1.Core\2.SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Object.cpp">
+      <Filter>1.Core\3.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Texture.cpp">
+      <Filter>1.Core\4.Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\RenderManager.cpp">
+      <Filter>1.Core\5.RenderManager</Filter>
+    </ClCompile>
   </ItemGroup>
-<ItemGroup>
-</ItemGroup>
+  <ItemGroup>
+    <CLInclude Include="resource.h">
+      <Filter>0.Default\Resource Files</Filter>
+    </CLInclude>
+    <ResourceCompile Include="THFramework.rc">
+      <Filter>0.Default\Resource Files</Filter>
+    </ResourceCompile>
+    <ClInclude Include="Core\Scene.h">
+      <Filter>1.Core\0.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\MenuScene.h">
+      <Filter>2.Client\0.Scene\0.MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Include.h">
+      <Filter>1.Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Singleton.h">
+      <Filter>1.Core\1.Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SceneManager.h">
+      <Filter>1.Core\2.SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Object.h">
+      <Filter>1.Core\3.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Texture.h">
+      <Filter>1.Core\4.Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RenderManager.h">
+      <Filter>1.Core\5.RenderManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
 </Project>
