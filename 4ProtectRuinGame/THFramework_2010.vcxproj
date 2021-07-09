@@ -387,6 +387,7 @@
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="Client\MenuScene.h" />
+    <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\Include.h" />
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\RenderManager.h" />
@@ -400,9 +401,7 @@
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
     <ClCompile Include="Client\MenuScene.cpp" />
-    <ClCompile Include="Core\Object.cpp" />
-    <ClCompile Include="Core\RenderManager.cpp" />
-    <ClCompile Include="Core\SceneManager.cpp" />
+    <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\Sprite.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\TileMapManager.cpp" />

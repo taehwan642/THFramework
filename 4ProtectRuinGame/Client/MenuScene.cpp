@@ -3,15 +3,16 @@
 
 void MenuScene::Init()
 {
-	std::cout << "ÀÌ´Ö" << std::endl;
+	sp = new Sprite;
+	sp->position = { 256,256 };
+	sp->SetTexture(L"1.png");
 }
 
 void MenuScene::Update()
 {
-	std::cout << "¾÷µ«" << std::endl;
 }
 
 void MenuScene::Exit()
 {
-	std::cout << "¿¢½Ë" << std::endl;
+	delete sp;
 }

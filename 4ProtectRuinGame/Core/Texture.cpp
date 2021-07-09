@@ -1,7 +1,8 @@
 #include "DXUT.h"
 #include "Texture.h"
 
-Texture* TextureManager::LoadTexture(const std::wstring& path)
+Texture* 
+TextureManager::LoadTexture(const std::wstring& path)
 {
 	for (auto& iter : texturelist)
 		if (iter->tag == path)
@@ -31,14 +32,4 @@ Texture* TextureManager::LoadTexture(const std::wstring& path)
 		texturelist.emplace_back(tex);
 		return tex;
 	}
-}
-
-void TextureManager::ReleaseAllTexture()
-{
-	for (auto& iter : texturelist)
-	{
-		iter->texture->Release();
-		delete iter;
-	}
-	texturelist.clear();
 }

@@ -11,7 +11,7 @@ protected:
 	void operator=(const Singleton&) = delete;
 
 public:
-	static __forceinline T& GetInstance()
+	[[nodiscard]] static __forceinline T& GetInstance()
 	{
 		if (instance == nullptr)
 			instance = new T;

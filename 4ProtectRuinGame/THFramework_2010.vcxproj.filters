@@ -122,23 +122,17 @@
     <ClCompile Include="Client\MenuScene.cpp">
       <Filter>2.Client\0.Scene\0.MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SceneManager.cpp">
-      <Filter>1.Core\2.SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Object.cpp">
-      <Filter>1.Core\3.Object</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Texture.cpp">
       <Filter>1.Core\4.Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Core\RenderManager.cpp">
-      <Filter>1.Core\5.RenderManager</Filter>
+    <ClCompile Include="Core\TileMapManager.cpp">
+      <Filter>1.Core\8.TileMapManager</Filter>
     </ClCompile>
     <ClCompile Include="Core\Sprite.cpp">
       <Filter>1.Core\6.Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Core\TileMapManager.cpp">
-      <Filter>1.Core\8.TileMapManager</Filter>
+    <ClCompile Include="Core\Camera.cpp">
+      <Filter>1.Core\7.Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +171,9 @@
     </ClInclude>
     <ClInclude Include="Core\TileMapManager.h">
       <Filter>1.Core\8.TileMapManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Camera.h">
+      <Filter>1.Core\7.Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

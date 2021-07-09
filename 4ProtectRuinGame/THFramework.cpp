@@ -2,9 +2,12 @@
 #include "resource.h"
 #include "SceneManager.h"
 #include "Texture.h"
+#include "RenderManager.h"
 #include "MenuScene.h"
+#include "Sprite.h"
 
 SceneManager& sm = SceneManager::GetInstance();
+RenderManager& rm = RenderManager::GetInstance();
 
 HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
@@ -25,6 +28,7 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
 
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
     {
+        rm.Render();
         V( pd3dDevice->EndScene() );
     }
 }
@@ -34,8 +38,14 @@ void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
    sm.ClearScenes();
    sm.DeleteInstance();
 
-   TextureManager::GetInstance().ReleaseAllTexture();
-   TextureManager::GetInstance().DeleteInstance();
+   TextureManager& tm = TextureManager::GetInstance();
+   tm.ReleaseAllTexture();
+   tm.DeleteInstance();
+
+   rm.ClearAll();
+   rm.DeleteInstance();
+
+   Sprite::sprite->Release();
 }
 
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )

@@ -15,7 +15,18 @@ private:
 	std::list<Texture*> texturelist;
 
 public:
-	[[nodiscard]] Texture* LoadTexture(const std::wstring& path);
-	void ReleaseAllTexture();
+	[[nodiscard]] Texture* 
+		LoadTexture(const std::wstring& path);
+
+	__forceinline void 
+		ReleaseAllTexture() 
+	{
+		for (auto& iter : texturelist)
+		{
+			iter->texture->Release();
+			delete iter;
+		}
+		texturelist.clear();
+	};
 };
 
