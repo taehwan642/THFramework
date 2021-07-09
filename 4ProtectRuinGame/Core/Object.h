@@ -1,8 +1,10 @@
 #pragma once
 class Object
 {
-public:
+protected:
 	Object() = default;
+
+public:
 	virtual ~Object() = default;
 
 	Vec2 position = { 0.f, 0.f };
@@ -20,7 +22,14 @@ public:
 	RECT imgRect;
 
 	virtual void Update() {};
-	virtual void Draw() {};
+	virtual void Render() {};
 
-	D3DXMATRIX GetMatrix();
+	[[nodiscard]] __forceinline D3DXMATRIX GetMatrix() const
+	{
+		D3DXMATRIX result;
+
+		D3DXMatrixTransformation2D(&result, nullptr, 0, &scale, nullptr, rotation, &position);
+
+		return result;
+	};
 };

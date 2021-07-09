@@ -10,8 +10,20 @@ private:
     __forceinline static bool Comp(Object* a, Object* b) { return a < b; }
 
 public:
-    __forceinline void AddRenderObjects(Object* obj);
-    __forceinline void DeleteRender(Object* obj);
-    __forceinline void Sort();
+    __forceinline void AddRenderObjects(Object* obj)
+    {
+        renderObjects.emplace_back(obj);
+    };
+    
+    __forceinline void RemoveRender(Object* obj)
+    {
+        renderObjects.remove(obj);
+    };
+    
+    __forceinline void Sort()
+    {
+        renderObjects.sort(Comp);
+    };
+    
     void Render();
 };

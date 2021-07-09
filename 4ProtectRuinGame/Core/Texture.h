@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton.h"
 
-struct Texture
+struct Texture final
 {
 	D3DXIMAGE_INFO info;
 	LPDIRECT3DTEXTURE9 texture;
@@ -15,7 +15,7 @@ private:
 	std::list<Texture*> texturelist;
 
 public:
-	__forceinline Texture* LoadTexture(const std::wstring& path);
+	[[nodiscard]] Texture* LoadTexture(const std::wstring& path);
 	void ReleaseAllTexture();
 };
 

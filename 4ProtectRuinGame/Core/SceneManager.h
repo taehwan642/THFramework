@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "Scene.h"
-class SceneManager :
+class SceneManager final :
     public Singleton<SceneManager>
 {
 private:

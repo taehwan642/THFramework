@@ -3,12 +3,12 @@
 
 Texture* TextureManager::LoadTexture(const std::wstring& path)
 {
-	for (auto it : texturelist)
-		if (it->tag == path)
-			return it;
+	for (auto& iter : texturelist)
+		if (iter->tag == path)
+			return iter;
 
 	Texture* tex = new Texture();
-	auto route = L"Resources/" + path;
+	const auto& route = L"Resources/" + path;
 	tex->tag = path;
 
 	if (FAILED(D3DXCreateTextureFromFileEx(
