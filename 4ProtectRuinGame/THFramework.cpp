@@ -9,18 +9,22 @@
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
 
-HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
+HRESULT CALLBACK 
+OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
 {
+    D3DXCreateSprite(DXUTGetD3D9Device(), &Sprite::sprite);
     return S_OK;
 }
 
-void CALLBACK OnFrameMove( double fTime, float fElapsedTime, void* pUserContext )
+void CALLBACK 
+OnFrameMove( double fTime, float fElapsedTime, void* pUserContext )
 {
    sm.UpdateScene();
 }
 
-void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, float fElapsedTime, void* pUserContext )
+void CALLBACK 
+OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, float fElapsedTime, void* pUserContext )
 {
     HRESULT hr;
 
@@ -33,7 +37,8 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
     }
 }
 
-void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
+void CALLBACK 
+OnD3D9DestroyDevice( void* pUserContext )
 {
    sm.ClearScenes();
    sm.DeleteInstance();
@@ -49,7 +54,8 @@ void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
 }
 
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
-int main(void)
+int 
+main(void)
 {
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );

@@ -5,7 +5,7 @@ class MenuScene final :
     public Scene
 {
 private:
-    Sprite* sp{ nullptr };
+    Sprite* block[30];
 
 public:
     void Init() override;

@@ -26,6 +26,14 @@ public:
 	virtual void Update() {};
 	virtual void Render() {};
 
+	template<typename T>
+	__forceinline void 
+		SetPosition(T x, T y)
+	{
+		position.x = x;
+		position.y = y;
+	}
+
 	[[nodiscard]] __forceinline D3DXMATRIX 
 		GetMatrix() const
 	{

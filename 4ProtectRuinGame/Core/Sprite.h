@@ -11,11 +11,12 @@ private:
     static LPD3DXSPRITE sprite;
     Texture* texture;
 
+    friend HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
+        void* pUserContext);
     friend void CALLBACK OnD3D9DestroyDevice(void* pUserContext);
 
 public:
-    Sprite() : texture(0)
-    { D3DXCreateSprite(DXUTGetD3D9Device(), &sprite); };
+    Sprite() : texture(0) {};
 
     __forceinline ~Sprite()
     { RenderManager::GetInstance().RemoveRender(this); };
@@ -28,7 +29,13 @@ public:
         RenderManager::GetInstance().AddRenderObjects(this);
     };
 
-    __forceinline RECT
+    [[nodiscard]] __forceinline const Texture*
+        GetTexture() const
+    {
+        return texture;
+    }
+
+    [[nodiscard]] __forceinline RECT
         GetRect() const
     {
         RECT r;
