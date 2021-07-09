@@ -1,0 +1,6 @@
+﻿  Sprite.cpp
+C:\Users\taehw\Documents\GitHub\THFramework\4ProtectRuinGame\Core\Sprite.cpp(1,1): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "DXUT.h"'을(를) 소스에 추가하시겠습니까?
+  Texture.cpp
+C:\Users\taehw\Documents\GitHub\THFramework\4ProtectRuinGame\Core\Texture.cpp(14,5): warning C4245: '인수': 'int'에서 'UINT'(으)로의 변환입니다. signed 또는 unsigned가 일치하지 않습니다.
+  TileMapManager.cpp
+  코드를 생성하고 있습니다...

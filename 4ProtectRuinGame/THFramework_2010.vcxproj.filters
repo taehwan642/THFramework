@@ -48,11 +48,14 @@
     <Filter Include="1.Core\6.Sprite">
       <UniqueIdentifier>{431d6059-4f8b-467f-b7fe-19f04323deea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1.Core\7.TileMap">
-      <UniqueIdentifier>{21cb39cc-b171-4567-82eb-3f29c4a2cb08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.Core\5.RenderManager">
       <UniqueIdentifier>{11589e7f-51b9-4684-9f81-2bf1daec6fe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\7.Camera">
+      <UniqueIdentifier>{e96375aa-0998-4af4-aba0-a2e68fe5df94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\8.TileMapManager">
+      <UniqueIdentifier>{21cb39cc-b171-4567-82eb-3f29c4a2cb08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +134,12 @@
     <ClCompile Include="Core\RenderManager.cpp">
       <Filter>1.Core\5.RenderManager</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Sprite.cpp">
+      <Filter>1.Core\6.Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\TileMapManager.cpp">
+      <Filter>1.Core\8.TileMapManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -162,6 +171,12 @@
     </ClInclude>
     <ClInclude Include="Core\RenderManager.h">
       <Filter>1.Core\5.RenderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Sprite.h">
+      <Filter>1.Core\6.Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\TileMapManager.h">
+      <Filter>1.Core\8.TileMapManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

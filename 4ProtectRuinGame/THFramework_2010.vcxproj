@@ -392,7 +392,9 @@
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\Singleton.h" />
+    <ClInclude Include="Core\Sprite.h" />
     <ClInclude Include="Core\Texture.h" />
+    <ClInclude Include="Core\TileMapManager.h" />
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
@@ -400,7 +402,9 @@
     <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\RenderManager.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
+    <ClCompile Include="Core\Sprite.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
+    <ClCompile Include="Core\TileMapManager.cpp" />
     <ClCompile Include="DXUT\Core\DXUT.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

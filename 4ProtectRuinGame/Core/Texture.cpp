@@ -8,7 +8,7 @@ Texture* TextureManager::LoadTexture(const std::wstring& path)
 			return it;
 
 	Texture* tex = new Texture();
-	auto route = L"Res/" + path;
+	auto route = L"Resources/" + path;
 	tex->tag = path;
 
 	if (FAILED(D3DXCreateTextureFromFileEx(
