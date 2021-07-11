@@ -33,7 +33,7 @@ TileMapManager::TileMapManager() : blockScale(0.5f)
 }
 
 void
-TileMapManager::CheckMouseCollision()
+TileMapManager::UpdateManager()
 {
 	POINT pnt;
 	GetCursorPos(&pnt);
@@ -43,29 +43,15 @@ TileMapManager::CheckMouseCollision()
 	{
 		for (int j = 0; j < std::size(blockss[i]); ++j)
 		{
+
 			if (PtInRect(&blockss[i][j]->GetRect(), pnt))
 			{
 				if (DXUTIsMouseButtonDown(VK_LEFT))
 				{
-					blockTypes[i][j]= BlockType::FLOOR;
+					blockTypes[i][j] = BlockType::FLOOR;
 				}
 			}
-		}
-	}
-}
 
-void
-TileMapManager::ChangeBlockType()
-{
-}
-
-void
-TileMapManager::UpdateManager()
-{
-	for (int i = 0; i < std::size(blockss); ++i)
-	{
-		for (int j = 0; j < std::size(blockss[i]); ++j)
-		{
 			switch (blockTypes[i][j])
 			{
 			case BlockType::NONE: 
@@ -92,37 +78,95 @@ TileMapManager::UpdateManager()
 	}
 }
 
+std::vector<Block>& TileMapManager::GetBlockVector()
+{
+	return blocks;
+}
+
 void
 TileMapManager::SaveBlocks()
 {
+	std::ofstream oin("map.txt");
 
+	for (int i = 0; i < std::size(blockss); ++i)
+	{
+		for (int j = 0; j < std::size(blockss[i]); ++j)
+		{
+			int typeValue = static_cast<int>(blockTypes[i][j]);
+			oin << std::to_string(typeValue);
+		}
+	}
+
+	oin.close();
 }
 
 void
 TileMapManager::LoadBlocks()
 {
-#if GAMEON == true
-	true;
-	// 타입이 없는 로드한 블록은 없는 블록으로 건너뛰고, 타입이 있다면 동적할당
-#else
-	false;
-	// 타입이 없는 블록이라도 동적할당. box.png로 텍스처 입히기 
-#endif 
-
 	std::ifstream fin("map.txt");
 	if (fin.fail())
 	{
-		std::cout << "파일이 없습니다. 새로 만듭니다." << std::endl;
-		
+		std::cout << "파일이 없습니다." << std::endl;
+		return;
 	}
-	// 한줄씩 읽기
-	// 그 줄에 해당하는 타입을 읽고, NONE 타입이라면 넘기기
-	// NONE 타입이 아니라면 큐브 만들고 배치.
+
+	char typeValue;
+	int x = 0;
+	int y = 0;
+	while (fin.get(typeValue)) 
+	{
+		int chartoint = atoi(&typeValue);
+		BlockType type = static_cast<BlockType>(chartoint);
+
+		if (x > (std::size(blockss[0]) - 1))
+		{
+			x = 0;
+			++y;
+		}
+
+#if GAMEON == true
+		if (type == BlockType::NONE)
+		{
+			++x;
+			continue;
+		}
+#endif 
+		Block block;
+		block.type = type;
+		block.sprite = new Sprite();
+		block.sprite->scale = { blockScale, blockScale };
+
+		switch (type)
+		{
+		case BlockType::NONE:
+			block.sprite->SetTexture(L"box.png");
+			break;
+		case BlockType::FLOOR:
+			block.sprite->SetTexture(L"block.png");
+			break;
+		case BlockType::OBSTICLE:
+			block.sprite->SetTexture(L"block2.png");
+			break;
+		default:
+			break;
+		}
+
+		const Texture* t = block.sprite->GetTexture();
+
+		block.sprite->SetPosition(
+			((block.sprite->scale.x * t->info.Width) / 2) + (x * t->info.Width * block.sprite->scale.x),
+			((block.sprite->scale.y * t->info.Height) / 2) + (y * t->info.Height * block.sprite->scale.y));
+
+		blocks.push_back(block);
+
+		++x;
+	}
 
 	fin.close();
 }
 
-void TileMapManager::DeleteBlocks()
+void 
+TileMapManager::DeleteBlocks()
 {
 	for (int i = 0; i < std::size(blockss); ++i)
 	{
@@ -130,5 +174,10 @@ void TileMapManager::DeleteBlocks()
 		{
 			delete blockss[i][j];
 		}
+	}
+
+	for (auto& iter : blocks)
+	{
+		delete iter.sprite;
 	}
 }

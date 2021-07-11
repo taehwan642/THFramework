@@ -57,6 +57,12 @@
     <Filter Include="1.Core\8.TileMapManager">
       <UniqueIdentifier>{21cb39cc-b171-4567-82eb-3f29c4a2cb08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2.Client\0.Scene\1.TileMapScene">
+      <UniqueIdentifier>{b9a0bf65-c164-4deb-81fa-7a72d2dc40ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\0.Scene\2.Stage1">
+      <UniqueIdentifier>{ceaffdca-40ad-4dc7-80f9-b8172ce11002}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -134,6 +140,12 @@
     <ClCompile Include="Core\Camera.cpp">
       <Filter>1.Core\7.Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Client\TileMapScene.cpp">
+      <Filter>2.Client\0.Scene\1.TileMapScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Stage1.cpp">
+      <Filter>2.Client\0.Scene\2.Stage1</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -174,6 +186,12 @@
     </ClInclude>
     <ClInclude Include="Core\Camera.h">
       <Filter>1.Core\7.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\TileMapScene.h">
+      <Filter>2.Client\0.Scene\1.TileMapScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Stage1.h">
+      <Filter>2.Client\0.Scene\2.Stage1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

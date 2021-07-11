@@ -9,6 +9,12 @@ enum class BlockType
 	OBSTICLE
 };
 
+struct Block
+{
+	BlockType type;
+	Sprite* sprite;
+};
+
 #define Row 3
 #define Column 10
 
@@ -20,18 +26,20 @@ class TileMapManager :
 	// 3. 특정 키 누르면 txt파일로 저장
 	// 4. 특정 키 누르면 txt파일 불러오기
 
+private:
+	std::vector<Block> blocks;
 
-public:
 	Sprite* blockss[Row][Column];
 	BlockType blockTypes[Row][Column];
-
+	
 	float blockScale;
-
+public:
 	TileMapManager();
 
-	void CheckMouseCollision();
-	void ChangeBlockType();
 	void UpdateManager();
+
+	std::vector<Block>& GetBlockVector();
+
 	void SaveBlocks();
 	void LoadBlocks();
 

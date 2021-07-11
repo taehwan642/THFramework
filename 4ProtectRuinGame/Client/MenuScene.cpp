@@ -9,10 +9,6 @@ MenuScene::Init()
 void 
 MenuScene::Update()
 {
-	TileMapManager& tmm = TileMapManager::GetInstance();
-	tmm.CheckMouseCollision();
-	tmm.UpdateManager();
-	
 }
 
 void 

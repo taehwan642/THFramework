@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include "RenderManager.h"
 #include "Scene.h"
 class SceneManager final :
     public Singleton<SceneManager>
@@ -23,6 +24,8 @@ public:
     {
         if (currentScene != nullptr)
             currentScene->Exit();
+
+        RenderManager::GetInstance().ClearAll();
 
         currentScene = sceneMap[sceneName];
         currentScene->Init();

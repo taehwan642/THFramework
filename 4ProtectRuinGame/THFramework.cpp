@@ -6,6 +6,8 @@
 #include "MenuScene.h"
 #include "TileMapManager.h"
 #include "Sprite.h"
+#include "TileMapScene.h"
+#include "Stage1.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
@@ -78,7 +80,9 @@ main(void)
     DXUTCreateDevice( true, screenwidth, screenheight );
 
     sm.AddScene(L"Menu", new MenuScene);
-    sm.ChangeScene(L"Menu");
+    sm.AddScene(L"TileMap", new TileMapScene);
+    sm.AddScene(L"Stage1", new Stage1);
+    sm.ChangeScene(L"TileMap");
 
     DXUTMainLoop();
 
