@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "RenderManager.h"
 #include "MenuScene.h"
+#include "TileMapManager.h"
 #include "Sprite.h"
 
 SceneManager& sm = SceneManager::GetInstance();
@@ -46,6 +47,10 @@ OnD3D9DestroyDevice( void* pUserContext )
    TextureManager& tm = TextureManager::GetInstance();
    tm.ReleaseAllTexture();
    tm.DeleteInstance();
+
+   TileMapManager& tmm = TileMapManager::GetInstance();
+   tmm.DeleteBlocks();
+   tmm.DeleteInstance();
 
    rm.ClearAll();
    rm.DeleteInstance();

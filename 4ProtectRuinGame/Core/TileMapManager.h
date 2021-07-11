@@ -2,16 +2,15 @@
 #include "Sprite.h"
 #include "Singleton.h"
 
-struct Block
+enum class BlockType
 {
-	enum class BlockType
-	{
-		FLOOR,
-		OBSTICLE
-	};
-
-	BlockType type;
+	NONE,
+	FLOOR,
+	OBSTICLE
 };
+
+#define Row 3
+#define Column 10
 
 class TileMapManager :
 	public Singleton<TileMapManager>
@@ -21,17 +20,20 @@ class TileMapManager :
 	// 3. 특정 키 누르면 txt파일로 저장
 	// 4. 특정 키 누르면 txt파일 불러오기
 
+
 public:
-	std::vector<Block> blocks;
-	Sprite* blockss[6][20];
+	Sprite* blockss[Row][Column];
+	BlockType blockTypes[Row][Column];
 
 	float blockScale;
 
 	TileMapManager();
 
 	void CheckMouseCollision();
-	void PlaceBlock(Vec2 position);
 	void ChangeBlockType();
+	void UpdateManager();
 	void SaveBlocks();
 	void LoadBlocks();
+
+	void DeleteBlocks();
 };
