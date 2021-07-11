@@ -7,6 +7,7 @@ class RenderManager :
 {
 private:
     std::list<Object*> renderObjects;
+
     __forceinline static bool 
         Comp(Object* a, Object* b) 
     { return a < b; }

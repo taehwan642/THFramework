@@ -3,6 +3,12 @@
 
 TileMapManager::TileMapManager() : blockScale(0.5f)
 {
+	
+}
+
+void 
+TileMapManager::Initialize()
+{
 	int x = 0;
 	int y = 0;
 	for (int i = 0; i < std::size(blockss); ++i)

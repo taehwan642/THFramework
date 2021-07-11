@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "TileMapScene.h"
 #include "Stage1.h"
+#include "Camera.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
@@ -56,6 +57,9 @@ OnD3D9DestroyDevice( void* pUserContext )
 
    rm.ClearAll();
    rm.DeleteInstance();
+
+   Camera& c = Camera::GetInstance();
+   c.DeleteInstance();
 
    Sprite::sprite->Release();
 }

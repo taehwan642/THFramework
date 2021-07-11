@@ -36,6 +36,8 @@ private:
 public:
 	TileMapManager();
 
+	void Initialize();
+
 	void UpdateManager();
 
 	std::vector<Block>& GetBlockVector();

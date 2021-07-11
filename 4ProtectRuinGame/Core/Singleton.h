@@ -6,7 +6,7 @@ private:
 	static T* instance;
 
 protected:
-	Singleton() = default;
+	explicit Singleton() = default;
 	Singleton(const Singleton&) = delete;
 	void operator=(const Singleton&) = delete;
 

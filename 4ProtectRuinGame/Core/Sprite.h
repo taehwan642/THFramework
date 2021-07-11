@@ -16,7 +16,7 @@ private:
     friend void CALLBACK OnD3D9DestroyDevice(void* pUserContext);
 
 public:
-    Sprite() : texture(0) {};
+    explicit Sprite() : texture(0) {};
 
     __forceinline ~Sprite()
     { RenderManager::GetInstance().RemoveRender(this); };

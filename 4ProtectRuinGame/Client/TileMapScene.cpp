@@ -5,6 +5,8 @@
 void 
 TileMapScene::Init()
 {
+	TileMapManager& tmm = TileMapManager::GetInstance();
+	tmm.Initialize();
 }
 
 void 

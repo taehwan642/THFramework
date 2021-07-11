@@ -4,7 +4,7 @@
 class Object
 {
 protected:
-	Object() = default;
+	explicit Object() = default;
 
 public:
 	virtual ~Object() = default;

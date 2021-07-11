@@ -2,7 +2,7 @@
 class Scene
 {
 protected:
-	Scene() = default;
+	explicit Scene() = default;
 
 public:
 	virtual ~Scene() = default;
