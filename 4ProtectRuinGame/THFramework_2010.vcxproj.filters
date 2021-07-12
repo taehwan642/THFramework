@@ -63,6 +63,24 @@
     <Filter Include="2.Client\0.Scene\2.Stage1">
       <UniqueIdentifier>{ceaffdca-40ad-4dc7-80f9-b8172ce11002}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2.Client\1.Objects\0.Player">
+      <UniqueIdentifier>{09715fe3-c039-43ba-8661-e5629dac7ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.Objects\1.Monster">
+      <UniqueIdentifier>{77054b89-e071-4d80-9dbc-083df04b802d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.Objects\0.Player\0.Player">
+      <UniqueIdentifier>{ea5451c9-b36d-48f1-bc0c-d1d82a215a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.Objects\0.Player\1.PlayerState">
+      <UniqueIdentifier>{75dcb860-b904-4505-b2dd-a06126d23432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\6.Sprite\0.Sprite">
+      <UniqueIdentifier>{1df298af-2fbd-4d76-bc87-ba9b2b17e358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Core\6.Sprite\1.AniSprite">
+      <UniqueIdentifier>{dab44969-8784-40d6-ab39-9aa4a040fde3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -134,9 +152,6 @@
     <ClCompile Include="Core\TileMapManager.cpp">
       <Filter>1.Core\8.TileMapManager</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Sprite.cpp">
-      <Filter>1.Core\6.Sprite</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Camera.cpp">
       <Filter>1.Core\7.Camera</Filter>
     </ClCompile>
@@ -145,6 +160,18 @@
     </ClCompile>
     <ClCompile Include="Client\Stage1.cpp">
       <Filter>2.Client\0.Scene\2.Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Player.cpp">
+      <Filter>2.Client\1.Objects\0.Player\0.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\PlayerState.cpp">
+      <Filter>2.Client\1.Objects\0.Player\1.PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Sprite.cpp">
+      <Filter>1.Core\6.Sprite\0.Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\AniSprite.cpp">
+      <Filter>1.Core\6.Sprite\1.AniSprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,9 +205,6 @@
     <ClInclude Include="Core\RenderManager.h">
       <Filter>1.Core\5.RenderManager</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Sprite.h">
-      <Filter>1.Core\6.Sprite</Filter>
-    </ClInclude>
     <ClInclude Include="Core\TileMapManager.h">
       <Filter>1.Core\8.TileMapManager</Filter>
     </ClInclude>
@@ -192,6 +216,18 @@
     </ClInclude>
     <ClInclude Include="Client\Stage1.h">
       <Filter>2.Client\0.Scene\2.Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Player.h">
+      <Filter>2.Client\1.Objects\0.Player\0.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\PlayerState.h">
+      <Filter>2.Client\1.Objects\0.Player\1.PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Sprite.h">
+      <Filter>1.Core\6.Sprite\0.Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\AniSprite.h">
+      <Filter>1.Core\6.Sprite\1.AniSprite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

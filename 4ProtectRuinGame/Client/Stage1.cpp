@@ -7,6 +7,8 @@ Stage1::Init()
 {
 	Camera& cam = Camera::GetInstance();
 	cam.Initialize();
+
+	player = new Player();
 }
 
 void 
@@ -20,19 +22,19 @@ Stage1::Update()
 
 	if (DXUTIsKeyDown('W'))
 	{
-		camPos.y -= 100.f * DXUTGetElapsedTime();
+		camPos.y -= 500.f * DXUTGetElapsedTime();
 	}
 	if (DXUTIsKeyDown('S'))
 	{
-		camPos.y += 100.f * DXUTGetElapsedTime();
+		camPos.y += 500.f * DXUTGetElapsedTime();
 	}
 	if (DXUTIsKeyDown('A'))
 	{
-		camPos.x -= 100.f * DXUTGetElapsedTime();
+		camPos.x -= 500.f * DXUTGetElapsedTime();
 	}
 	if (DXUTIsKeyDown('D'))
 	{
-		camPos.x += 100.f * DXUTGetElapsedTime();
+		camPos.x += 500.f * DXUTGetElapsedTime();
 	}
 
 	cam.SetPosition(camPos);
@@ -44,4 +46,5 @@ Stage1::Update()
 void 
 Stage1::Exit()
 {
+	delete player;
 }

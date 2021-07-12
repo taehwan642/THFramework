@@ -18,7 +18,7 @@ struct Block
 #define Row 6
 #define Column 20
 
-class TileMapManager :
+class TileMapManager final :
 	public Singleton<TileMapManager>
 {
 	// 1. 마우스로 클릭하면 거기에 가장 가까운 자리에 놓아지기

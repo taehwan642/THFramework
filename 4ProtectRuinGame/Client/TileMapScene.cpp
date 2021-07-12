@@ -23,19 +23,19 @@ TileMapScene::Update()
 
 	if (DXUTIsKeyDown('W'))
 	{
-		camPos.y -= 100.f * DXUTGetElapsedTime();
+		camPos.y -= 1000.f * DXUTGetElapsedTime();
 	}
 	if (DXUTIsKeyDown('S'))
 	{
-		camPos.y += 100.f * DXUTGetElapsedTime();
+		camPos.y += 1000.f * DXUTGetElapsedTime();
 	}
 	if (DXUTIsKeyDown('A'))
 	{
-		camPos.x -= 100.f * DXUTGetElapsedTime();
+		camPos.x -= 1000.f * DXUTGetElapsedTime();
 	}
 	if (DXUTIsKeyDown('D'))
 	{
-		camPos.x += 100.f * DXUTGetElapsedTime();
+		camPos.x += 1000.f * DXUTGetElapsedTime();
 	}
 
 	cam.SetPosition(camPos);

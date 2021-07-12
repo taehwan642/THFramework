@@ -46,22 +46,6 @@ public:
         return r;
     };
     
-    void Render() override
-    {
-        if (isactive == false)
-            return;
-
-        if (texture == nullptr)
-            return;
-
-        sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
-        sprite->SetTransform(&GetMatrix());
-        Vec3 center = {
-            texture->info.Width * pivot.x,
-            texture->info.Height * pivot.y,
-            0 };
-        sprite->Draw(texture->texture, &imgRect, &center, nullptr, color);
-        sprite->End();
-    };
+    void Render() override final;
 };
 

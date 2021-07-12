@@ -18,10 +18,12 @@ public:
 	float rotation = 0.f;
 
 	bool isactive = true;
+	bool isUI = false;
 
 	Color color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
 	RECT imgRect;
+
 
 	virtual void Update() {};
 	virtual void Render() {};
