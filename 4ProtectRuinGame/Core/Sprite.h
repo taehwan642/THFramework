@@ -9,11 +9,13 @@ class Sprite :
 {
 private:
     static LPD3DXSPRITE sprite;
-    Texture* texture;
 
     friend HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
         void* pUserContext);
     friend void CALLBACK OnD3D9DestroyDevice(void* pUserContext);
+
+protected:
+    Texture* texture;
 
 public:
     explicit Sprite() : texture(0) {};
@@ -22,10 +24,18 @@ public:
     { RenderManager::GetInstance().RemoveRender(this); };
 
     __forceinline void 
-        SetTexture(std::wstring tag)
+        SetTexture(const std::wstring& tag)
     {
         texture = TextureManager::GetInstance().LoadTexture(tag);
         SetRect(&imgRect, 0, 0, texture->info.Width, texture->info.Height);
+        RenderManager::GetInstance().AddRenderObjects(this);
+    };
+
+    __forceinline void
+        SetTexture(Texture* texture)
+    {
+        this->texture = texture;
+        SetRect(&imgRect, 0, 0, this->texture->info.Width, this->texture->info.Height);
         RenderManager::GetInstance().AddRenderObjects(this);
     };
 

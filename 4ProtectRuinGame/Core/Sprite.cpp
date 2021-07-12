@@ -3,7 +3,8 @@
 
 LPD3DXSPRITE Sprite::sprite = nullptr;
 
-void Sprite::Render()
+void 
+Sprite::Render()
 {
 	if (isactive == false)
 		return;

@@ -5,9 +5,14 @@ class AniSprite :
 {
 private:
     std::wstring currentAnimationTag;
-    float delta;
+    std::pair<float, std::vector<Texture*>> currentAnimation;
+    int currentFrame;
+    float currentTick;
+
+    std::map<std::wstring, std::pair<float, std::vector<Texture*>>> animationMap;
 
 public:
-    bool Animation();
+    explicit AniSprite();
+    void CreateAnimation(const std::wstring& tag, int frameCount, float tickTime);
+    bool PlayAnimation(const std::wstring& tag);
 };
-

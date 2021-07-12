@@ -21,19 +21,19 @@ TileMapScene::Update()
 
 	Vec2 camPos = cam.GetPosition();
 
-	if (DXUTIsKeyDown('W'))
+	if (DXUTIsKeyDown(VK_UP))
 	{
 		camPos.y -= 1000.f * DXUTGetElapsedTime();
 	}
-	if (DXUTIsKeyDown('S'))
+	if (DXUTIsKeyDown(VK_DOWN))
 	{
 		camPos.y += 1000.f * DXUTGetElapsedTime();
 	}
-	if (DXUTIsKeyDown('A'))
+	if (DXUTIsKeyDown(VK_LEFT))
 	{
 		camPos.x -= 1000.f * DXUTGetElapsedTime();
 	}
-	if (DXUTIsKeyDown('D'))
+	if (DXUTIsKeyDown(VK_RIGHT))
 	{
 		camPos.x += 1000.f * DXUTGetElapsedTime();
 	}

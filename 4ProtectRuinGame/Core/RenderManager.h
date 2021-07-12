@@ -15,7 +15,10 @@ private:
 public:
     __forceinline void 
         AddRenderObjects(Object* obj)
-    { renderObjects.emplace_back(obj); };
+    { 
+        if (find(renderObjects.begin(), renderObjects.end(), obj) == renderObjects.end())
+            renderObjects.emplace_back(obj);
+    };
     
     __forceinline void 
         RemoveRender(Object* obj)

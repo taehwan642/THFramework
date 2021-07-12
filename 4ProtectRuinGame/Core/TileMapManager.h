@@ -40,7 +40,10 @@ public:
 
 	void UpdateManager();
 
-	std::vector<Block>& GetBlockVector();
+	[[nodiscard]] __forceinline std::vector<Block>& GetBlockVector()
+	{
+		return blocks;
+	};
 
 	void SaveBlocks();
 	void LoadBlocks();

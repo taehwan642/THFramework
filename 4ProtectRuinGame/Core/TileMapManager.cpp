@@ -90,11 +90,6 @@ TileMapManager::UpdateManager()
 	}
 }
 
-std::vector<Block>& TileMapManager::GetBlockVector()
-{
-	return blocks;
-}
-
 void
 TileMapManager::SaveBlocks()
 {

@@ -28,7 +28,7 @@ public:
     }
 
     __forceinline void
-        SetPosition(Vec2 pos)
+        SetPosition(const Vec2& pos)
     {
         camPos = pos;
     }

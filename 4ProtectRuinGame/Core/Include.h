@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <ostream>
+#include <cmath>
 
 constexpr int screenwidth = 1280;
 constexpr int screenheight = 720;
@@ -16,3 +17,6 @@ using Color = D3DXCOLOR;
 using Matrix = D3DXMATRIX;
 
 #define GAMEON true
+
+#include "PlayerState.h"
+#include "Player.h"
