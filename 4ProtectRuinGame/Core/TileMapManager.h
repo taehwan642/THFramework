@@ -15,8 +15,8 @@ struct Block
 	Sprite* sprite;
 };
 
-#define Row 3
-#define Column 10
+#define Row 6
+#define Column 20
 
 class TileMapManager :
 	public Singleton<TileMapManager>

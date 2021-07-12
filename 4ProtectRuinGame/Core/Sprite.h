@@ -54,7 +54,7 @@ public:
         if (texture == nullptr)
             return;
 
-        sprite->Begin(D3DXSPRITE_ALPHABLEND);
+        sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
         sprite->SetTransform(&GetMatrix());
         Vec3 center = {
             texture->info.Width * pivot.x,

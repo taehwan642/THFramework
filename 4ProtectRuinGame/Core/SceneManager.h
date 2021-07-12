@@ -1,6 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "RenderManager.h"
+#include "Camera.h"
 #include "Scene.h"
 class SceneManager final :
     public Singleton<SceneManager>
@@ -35,6 +36,9 @@ public:
     {
         if (currentScene != nullptr)
             currentScene->Update();
+
+        Camera& cam = Camera::GetInstance();
+        cam.Update();
     };
 
     __forceinline void 

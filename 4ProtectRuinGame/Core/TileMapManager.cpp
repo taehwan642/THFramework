@@ -1,4 +1,5 @@
 #include "DXUT.h"
+#include "Camera.h"
 #include "TileMapManager.h"
 
 TileMapManager::TileMapManager() : blockScale(0.5f)
@@ -45,6 +46,11 @@ TileMapManager::UpdateManager()
 	GetCursorPos(&pnt);
 	ScreenToClient(DXUTGetHWND(), &pnt);
 
+	Camera& cam = Camera::GetInstance();
+	Vec2 camPos = cam.GetPosition();
+	pnt.x = (camPos.x - screenwidth / 2) + pnt.x;
+	pnt.y = (camPos.y - screenheight / 2) + pnt.y;
+
 	for (int i = 0; i < std::size(blockss); ++i)
 	{
 		for (int j = 0; j < std::size(blockss[i]); ++j)
@@ -52,7 +58,7 @@ TileMapManager::UpdateManager()
 
 			if (PtInRect(&blockss[i][j]->GetRect(), pnt))
 			{
-				if (DXUTIsMouseButtonDown(VK_LEFT))
+				if (DXUTIsKeyDown(VK_SPACE))
 				{
 					blockTypes[i][j] = BlockType::FLOOR;
 				}
