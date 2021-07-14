@@ -70,4 +70,4 @@ PlayerStates JumpState::handleInput()
 	}
 
 	return PlayerStates::JUMP;
-}	
+}

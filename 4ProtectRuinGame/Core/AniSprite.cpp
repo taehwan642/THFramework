@@ -33,7 +33,7 @@ AniSprite::PlayAnimation(const std::wstring& tag)
 		currentAnimationTag = tag;
 		currentAnimation = animationMap[tag];
 		currentTick = 0;
-		currentFrame = 0;
+		currentFrame = 1;
 		SetTexture(currentAnimation.second[0]);
 	}
 
