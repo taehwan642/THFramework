@@ -7,6 +7,8 @@ private:
     PlayerState* statechanger;
     PlayerStates currentstate;
 
+    Sprite* collider;
+
 public:
     explicit Player();
     virtual ~Player();

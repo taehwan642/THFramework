@@ -4,7 +4,8 @@ enum class PlayerStates
 {
 	IDLE,
 	RUN,
-	ATTACK
+	ATTACK,
+	JUMP
 };
 
 class Player;
@@ -32,7 +33,7 @@ public:
 class RunState final :
 	public PlayerState
 {
-	int keys[4];
+	int keys[2];
 
 public:
 	explicit RunState(Player* p) : PlayerState(p) {};
@@ -45,6 +46,15 @@ class AttackState final :
 {
 public:
 	explicit AttackState(Player* p) : PlayerState(p) {};
+	[[nodiscard]] PlayerStates
+		handleInput() override;
+};
+
+class JumpState final :
+	public PlayerState
+{
+public:
+	explicit JumpState(Player* p) : PlayerState(p) {};
 	[[nodiscard]] PlayerStates
 		handleInput() override;
 };

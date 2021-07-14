@@ -8,6 +8,7 @@ Player::Player()
 	CreateAnimation(L"run", 6, 0.1f);
 	CreateAnimation(L"attack", 3, 0.1f);
 	CreateAnimation(L"idle", 2, 0.6f);
+	CreateAnimation(L"jump", 3, 0.15f);
 	PlayAnimation(L"idle");
 }
 
@@ -65,6 +66,9 @@ Player::Update()
 			break;
 		case PlayerStates::ATTACK:
 			statechanger = new AttackState(this);
+			break;
+		case PlayerStates::JUMP:
+			statechanger = new JumpState(this);
 			break;
 		default:
 			break;

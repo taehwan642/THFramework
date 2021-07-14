@@ -4,15 +4,14 @@
 PlayerStates 
 IdleState::handleInput()
 {
-	if (DXUTWasKeyPressed('W')
-		|| DXUTWasKeyPressed('A')
-		|| DXUTWasKeyPressed('S')
-		|| DXUTWasKeyPressed('D'))
-	{
+	if (DXUTIsKeyDown('A')
+		|| DXUTIsKeyDown('D'))
 		return PlayerStates::RUN;
-	}
 
-	if (DXUTWasKeyPressed(VK_SPACE))
+	if (DXUTIsKeyDown('W'))
+		return PlayerStates::JUMP;
+
+	if (DXUTIsKeyDown(VK_SPACE))
 		return PlayerStates::ATTACK;
 
 	player->PlayAnimation(L"idle");
@@ -23,38 +22,27 @@ IdleState::handleInput()
 PlayerStates 
 RunState::handleInput()
 {
-	if (DXUTIsKeyDown('W'))
+	if (DXUTIsKeyDown('A'))
 	{
 		keys[0] = 1;
-		player->position.y -= 300.f * DXUTGetElapsedTime();
+		player->position.x -= 300.f * DXUTGetElapsedTime();
 	}
 	else keys[0] = 0;
 
-	if (DXUTIsKeyDown('A'))
-	{
-		keys[1] = 1;
-		player->position.x -= 300.f * DXUTGetElapsedTime();
+	if (DXUTIsKeyDown('D')) 
+	{ 
+		keys[1] = 1; 
+		player->position.x += 300.f * DXUTGetElapsedTime();
 	}
 	else keys[1] = 0;
 
-	if (DXUTIsKeyDown('S')) 
-	{ 
-		keys[2] = 1;
-		player->position.y += 300.f * DXUTGetElapsedTime();
-	}
-	else keys[2] = 0;
-
-	if (DXUTIsKeyDown('D')) 
-	{ 
-		keys[3] = 1; 
-		player->position.x += 300.f * DXUTGetElapsedTime();
-	}
-	else keys[3] = 0;
-
-	int result = keys[0] + keys[1] + keys[2] + keys[3];
+	int result = keys[0] + keys[1];
 
 	if (result == 0)
 		return PlayerStates::IDLE;
+
+	if (DXUTIsKeyDown('W'))
+		return PlayerStates::JUMP;
 
 	if (DXUTWasKeyPressed(VK_SPACE))
 		return PlayerStates::ATTACK;
@@ -71,3 +59,15 @@ AttackState::handleInput()
 		return PlayerStates::IDLE;
 	return PlayerStates::ATTACK;
 }
+
+PlayerStates JumpState::handleInput()
+{
+	if (player->PlayAnimation(L"jump"))
+		return PlayerStates::IDLE;
+	else
+	{
+		// ¶Ù±â
+	}
+
+	return PlayerStates::JUMP;
+}	
