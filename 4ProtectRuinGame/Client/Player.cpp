@@ -2,9 +2,7 @@
 #include "TileMapManager.h"
 #include "Player.h"
 
-Player::Player() :
-	gravity(true),
-	isonfloor(false)
+Player::Player() 
 {
 	statechanger = new IdleState(this);
 	CreateAnimation(L"run", 6, 0.1f);
@@ -14,69 +12,18 @@ Player::Player() :
 	CreateAnimation(L"jumpend", 1, 0.15f);
 	PlayAnimation(L"idle");
 
-	collider = new Sprite();
-	collider->SetTexture(L"box.png");
 	collider->scale = { 0.6f, 1 };
 }
 
 Player::~Player()
 {
 	delete statechanger;
-	delete collider;
 }
 
 void
-Player::CheckCollision()
+Player::Action()
 {
-	std::vector<Block> v = TileMapManager::GetInstance().GetBlockVector();
-
-	for (const auto& iter : v)
-	{
-		Sprite* bs = iter.sprite;
-		RECT result;
-		RECT boxRect = bs->GetRect();
-		RECT myRect = collider->GetRect();
-		if (IntersectRect(&result, &myRect, &boxRect))
-		{
-			SetRect(&result, 0, 0, result.right - result.left, result.bottom - result.top);
-			if (result.right > result.bottom)
-			{
-				if ((myRect.bottom + myRect.top) / 2 < (boxRect.bottom + boxRect.top) / 2)
-				{
-					isonfloor = true;
-					collider->position.y -= result.bottom;
-				}
-				else
-					collider->position.y += result.bottom;
-			}
-			else
-			{
-				if ((myRect.right + myRect.left) / 2 <= (boxRect.right + boxRect.left) / 2)
-				{
-					collider->position.x -= result.right;
-				}
-				else
-				{
-					// 충돌처리 계산의 치명적인 부분을 손봐줄 야매 코드.
-					if (result.bottom > 20)
-						collider->position.x += result.right;
-				}
-			}
-		}
-	}
-}
-
-void
-Player::Update()
-{
-	if (gravity == true)
-		collider->position.y += 1000.f * DXUTGetElapsedTime();
-
-	CheckCollision();
-	
 	PlayerStates ps = statechanger->handleInput();
-
-	position = collider->position;
 
 	if (ps != currentstate)
 	{

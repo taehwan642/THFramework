@@ -1,16 +1,12 @@
 #pragma once
-#include "AniSprite.h"
+#include "GameObject.h"
+
 class Player final :
-    public AniSprite
+    public GameObject
 {
 private:
-    bool gravity;
-    bool isonfloor;
-
     PlayerState* statechanger;
     PlayerStates currentstate;
-
-    Sprite* collider;
 
     friend class IdleState;
     friend class RunState;
@@ -22,8 +18,6 @@ public:
     explicit Player();
     virtual ~Player();
 
-    void CheckCollision();
-
-    void Update() override;
+    void Action() override;
 };
 

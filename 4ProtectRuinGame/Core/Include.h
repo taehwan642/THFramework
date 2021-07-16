@@ -18,5 +18,9 @@ using Matrix = D3DXMATRIX;
 
 #define GAMEON true
 
+#include "GameObjectState.h"
+#include "GameObject.h"
+
 #include "PlayerState.h"
 #include "Player.h"
+

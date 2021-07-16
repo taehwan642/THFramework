@@ -33,9 +33,6 @@
     <Filter Include="2.Client\0.Scene\0.MenuScene">
       <UniqueIdentifier>{81396e4d-9972-4c27-bc6c-7894df1a1a5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Client\1.Objects">
-      <UniqueIdentifier>{14175f04-79a4-4467-ab90-af4a01877518}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.Core\2.SceneManager">
       <UniqueIdentifier>{f8e4af05-614d-4cbc-8cd6-81ae2c117348}</UniqueIdentifier>
     </Filter>
@@ -63,23 +60,35 @@
     <Filter Include="2.Client\0.Scene\2.Stage1">
       <UniqueIdentifier>{ceaffdca-40ad-4dc7-80f9-b8172ce11002}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Client\1.Objects\0.Player">
-      <UniqueIdentifier>{09715fe3-c039-43ba-8661-e5629dac7ae5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2.Client\1.Objects\1.Monster">
-      <UniqueIdentifier>{77054b89-e071-4d80-9dbc-083df04b802d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2.Client\1.Objects\0.Player\0.Player">
-      <UniqueIdentifier>{ea5451c9-b36d-48f1-bc0c-d1d82a215a75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2.Client\1.Objects\0.Player\1.PlayerState">
-      <UniqueIdentifier>{75dcb860-b904-4505-b2dd-a06126d23432}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.Core\6.Sprite\0.Sprite">
       <UniqueIdentifier>{1df298af-2fbd-4d76-bc87-ba9b2b17e358}</UniqueIdentifier>
     </Filter>
     <Filter Include="1.Core\6.Sprite\1.AniSprite">
       <UniqueIdentifier>{dab44969-8784-40d6-ab39-9aa4a040fde3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects">
+      <UniqueIdentifier>{14175f04-79a4-4467-ab90-af4a01877518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\1.Player">
+      <UniqueIdentifier>{09715fe3-c039-43ba-8661-e5629dac7ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\1.Player\0.Player">
+      <UniqueIdentifier>{ea5451c9-b36d-48f1-bc0c-d1d82a215a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\1.Player\1.PlayerState">
+      <UniqueIdentifier>{75dcb860-b904-4505-b2dd-a06126d23432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\2.Monster">
+      <UniqueIdentifier>{77054b89-e071-4d80-9dbc-083df04b802d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\0.GameObject">
+      <UniqueIdentifier>{c3a980d5-e87c-4ede-b890-e2a91eeada0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\0.GameObject\0.GameObject">
+      <UniqueIdentifier>{7d4da27b-cbd4-495a-a960-134d3603fc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\0.GameObject\1.GameObjectState">
+      <UniqueIdentifier>{c7cce23b-a9af-4768-98f1-c05cc8d30935}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,10 +171,10 @@
       <Filter>2.Client\0.Scene\2.Stage1</Filter>
     </ClCompile>
     <ClCompile Include="Client\Player.cpp">
-      <Filter>2.Client\1.Objects\0.Player\0.Player</Filter>
+      <Filter>2.Client\1.GameObjects\1.Player\0.Player</Filter>
     </ClCompile>
     <ClCompile Include="Client\PlayerState.cpp">
-      <Filter>2.Client\1.Objects\0.Player\1.PlayerState</Filter>
+      <Filter>2.Client\1.GameObjects\1.Player\1.PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Core\Sprite.cpp">
       <Filter>1.Core\6.Sprite\0.Sprite</Filter>
@@ -174,7 +183,13 @@
       <Filter>1.Core\6.Sprite\1.AniSprite</Filter>
     </ClCompile>
     <ClCompile Include="Client\Monster.cpp">
-      <Filter>2.Client\1.Objects\1.Monster</Filter>
+      <Filter>2.Client\1.GameObjects\2.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\GameObjectState.cpp">
+      <Filter>2.Client\1.GameObjects\0.GameObject\1.GameObjectState</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\GameObject.cpp">
+      <Filter>2.Client\1.GameObjects\0.GameObject\0.GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,10 +236,10 @@
       <Filter>2.Client\0.Scene\2.Stage1</Filter>
     </ClInclude>
     <ClInclude Include="Client\Player.h">
-      <Filter>2.Client\1.Objects\0.Player\0.Player</Filter>
+      <Filter>2.Client\1.GameObjects\1.Player\0.Player</Filter>
     </ClInclude>
     <ClInclude Include="Client\PlayerState.h">
-      <Filter>2.Client\1.Objects\0.Player\1.PlayerState</Filter>
+      <Filter>2.Client\1.GameObjects\1.Player\1.PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="Core\Sprite.h">
       <Filter>1.Core\6.Sprite\0.Sprite</Filter>
@@ -233,7 +248,13 @@
       <Filter>1.Core\6.Sprite\1.AniSprite</Filter>
     </ClInclude>
     <ClInclude Include="Client\Monster.h">
-      <Filter>2.Client\1.Objects\1.Monster</Filter>
+      <Filter>2.Client\1.GameObjects\2.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\GameObjectState.h">
+      <Filter>2.Client\1.GameObjects\0.GameObject\1.GameObjectState</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\GameObject.h">
+      <Filter>2.Client\1.GameObjects\0.GameObject\0.GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
