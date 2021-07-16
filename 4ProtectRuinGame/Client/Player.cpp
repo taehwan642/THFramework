@@ -2,7 +2,10 @@
 #include "TileMapManager.h"
 #include "Player.h"
 
-Player::Player()
+Player::Player() :
+	gravity(true),
+	velocity(0, 0),
+	isonfloor(false)
 {
 	statechanger = new IdleState(this);
 	CreateAnimation(L"run", 6, 0.1f);
@@ -10,18 +13,23 @@ Player::Player()
 	CreateAnimation(L"idle", 2, 0.6f);
 	CreateAnimation(L"jump", 3, 0.15f);
 	PlayAnimation(L"idle");
+
+	collider = new Sprite();
+	collider->SetTexture(L"box.png");
+
 }
 
 Player::~Player()
 {
 	delete statechanger;
+	delete collider;
 }
 
-void 
+void
 Player::CheckCollision()
 {
 	std::vector<Block> v = TileMapManager::GetInstance().GetBlockVector();
-	
+
 	for (const auto& iter : v)
 	{
 		Sprite* bs = iter.sprite;
@@ -34,24 +42,37 @@ Player::CheckCollision()
 			if (result.right > result.bottom)
 			{
 				if ((myRect.bottom + myRect.top) / 2 < (boxRect.bottom + boxRect.top) / 2)
+				{
+					isonfloor = true;
 					position.y -= result.bottom;
+				}
 				else
 					position.y += result.bottom;
 			}
 			else
 			{
-				if ((myRect.right + myRect.left) / 2 < (boxRect.right + boxRect.left) / 2)
+				if ((myRect.right + myRect.left) / 2 <= (boxRect.right + boxRect.left) / 2)
+				{
 					position.x -= result.right;
+				}
 				else
-					position.x += result.right;
+				{
+					// 충돌처리 계산의 치명적인 부분을 손봐줄 야매 코드.
+					if (result.bottom > 20)
+						position.x += result.right;
+				}
 			}
 		}
 	}
 }
 
-void 
+void
 Player::Update()
 {
+	if (gravity == true)
+		position.y += 1000.f * DXUTGetElapsedTime();
+
+	CheckCollision();
 	PlayerStates ps = statechanger->handleInput();
 	if (ps != currentstate)
 	{
@@ -75,5 +96,5 @@ Player::Update()
 		}
 		currentstate = ps;
 	}
-	CheckCollision();
+	collider->position = position;
 }

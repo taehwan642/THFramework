@@ -8,13 +8,15 @@ IdleState::handleInput()
 		|| DXUTIsKeyDown('D'))
 		return PlayerStates::RUN;
 
-	if (DXUTIsKeyDown('W'))
+	if (DXUTIsKeyDown('W') && player->isonfloor == true)
 		return PlayerStates::JUMP;
 
 	if (DXUTIsKeyDown(VK_SPACE))
 		return PlayerStates::ATTACK;
 
 	player->PlayAnimation(L"idle");
+
+	player->velocity = { 0,0 };
 
 	return PlayerStates::IDLE;
 }
@@ -26,6 +28,7 @@ RunState::handleInput()
 	{
 		keys[0] = 1;
 		player->position.x -= 300.f * DXUTGetElapsedTime();
+		player->velocity = { -1,0 };
 	}
 	else keys[0] = 0;
 
@@ -33,6 +36,7 @@ RunState::handleInput()
 	{ 
 		keys[1] = 1; 
 		player->position.x += 300.f * DXUTGetElapsedTime();
+		player->velocity = { 1, 0 };
 	}
 	else keys[1] = 0;
 
@@ -41,7 +45,7 @@ RunState::handleInput()
 	if (result == 0)
 		return PlayerStates::IDLE;
 
-	if (DXUTIsKeyDown('W'))
+	if (DXUTIsKeyDown('W') && player->isonfloor == true)
 		return PlayerStates::JUMP;
 
 	if (DXUTWasKeyPressed(VK_SPACE))
@@ -57,16 +61,34 @@ AttackState::handleInput()
 {
 	if (player->PlayAnimation(L"attack"))
 		return PlayerStates::IDLE;
+	player->velocity = { 0,0 };
 	return PlayerStates::ATTACK;
 }
 
-PlayerStates JumpState::handleInput()
+PlayerStates 
+JumpState::handleInput()
 {
 	if (player->PlayAnimation(L"jump"))
+	{
+		player->gravity = true;
 		return PlayerStates::IDLE;
+	}
 	else
 	{
-		// ¶Ù±â
+		player->gravity = false;
+		player->isonfloor = false;
+		player->position.y -= 500.f * DXUTGetElapsedTime();
+		player->velocity = { 0, 1 };
+		if (DXUTIsKeyDown('A'))
+		{
+			player->position.x -= 300.f * DXUTGetElapsedTime();
+			player->velocity.x = -1;
+		}
+		if (DXUTIsKeyDown('D'))
+		{
+			player->position.x += 300.f * DXUTGetElapsedTime();
+			player->velocity.x = 1;
+		}
 	}
 
 	return PlayerStates::JUMP;
