@@ -16,8 +16,7 @@ private:
     friend class RunState;
     friend class AttackState;
     friend class JumpState;
-
-    Vec2 velocity;
+    friend class JumpEndState;
 
 public:
     explicit Player();

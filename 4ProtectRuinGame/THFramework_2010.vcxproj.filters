@@ -173,6 +173,9 @@
     <ClCompile Include="Core\AniSprite.cpp">
       <Filter>1.Core\6.Sprite\1.AniSprite</Filter>
     </ClCompile>
+    <ClCompile Include="Client\Monster.cpp">
+      <Filter>2.Client\1.Objects\1.Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -228,6 +231,9 @@
     </ClInclude>
     <ClInclude Include="Core\AniSprite.h">
       <Filter>1.Core\6.Sprite\1.AniSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Monster.h">
+      <Filter>2.Client\1.Objects\1.Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

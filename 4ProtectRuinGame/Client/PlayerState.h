@@ -5,7 +5,8 @@ enum class PlayerStates
 	IDLE,
 	RUN,
 	ATTACK,
-	JUMP
+	JUMP,
+	JUMPEND
 };
 
 class Player;
@@ -55,6 +56,15 @@ class JumpState final :
 {
 public:
 	explicit JumpState(Player* p) : PlayerState(p) {};
+	[[nodiscard]] PlayerStates
+		handleInput() override;
+};
+
+class JumpEndState final :
+	public PlayerState
+{
+public:
+	explicit JumpEndState(Player* p) : PlayerState(p) {};
 	[[nodiscard]] PlayerStates
 		handleInput() override;
 };

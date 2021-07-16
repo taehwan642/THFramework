@@ -387,6 +387,7 @@
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="Client\MenuScene.h" />
+    <ClInclude Include="Client\Monster.h" />
     <ClInclude Include="Client\Player.h" />
     <ClInclude Include="Client\PlayerState.h" />
     <ClInclude Include="Client\Stage1.h" />
@@ -406,6 +407,7 @@
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
     <ClCompile Include="Client\MenuScene.cpp" />
+    <ClCompile Include="Client\Monster.cpp" />
     <ClCompile Include="Client\Player.cpp" />
     <ClCompile Include="Client\PlayerState.cpp" />
     <ClCompile Include="Client\Stage1.cpp" />

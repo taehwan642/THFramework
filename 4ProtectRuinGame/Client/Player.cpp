@@ -4,14 +4,14 @@
 
 Player::Player() :
 	gravity(true),
-	velocity(0, 0),
 	isonfloor(false)
 {
 	statechanger = new IdleState(this);
 	CreateAnimation(L"run", 6, 0.1f);
 	CreateAnimation(L"attack", 3, 0.1f);
 	CreateAnimation(L"idle", 2, 0.6f);
-	CreateAnimation(L"jump", 3, 0.15f);
+	CreateAnimation(L"jump", 2, 0.15f);
+	CreateAnimation(L"jumpend", 1, 0.15f);
 	PlayAnimation(L"idle");
 
 	collider = new Sprite();
@@ -94,6 +94,9 @@ Player::Update()
 			break;
 		case PlayerStates::JUMP:
 			statechanger = new JumpState(this);
+			break;
+		case PlayerStates::JUMPEND:
+			statechanger = new JumpEndState(this);
 			break;
 		default:
 			break;
