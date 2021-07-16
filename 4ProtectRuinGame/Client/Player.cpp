@@ -16,7 +16,7 @@ Player::Player() :
 
 	collider = new Sprite();
 	collider->SetTexture(L"box.png");
-
+	collider->scale = { 0.6f, 1 };
 }
 
 Player::~Player()
@@ -35,7 +35,7 @@ Player::CheckCollision()
 		Sprite* bs = iter.sprite;
 		RECT result;
 		RECT boxRect = bs->GetRect();
-		RECT myRect = GetRect();
+		RECT myRect = collider->GetRect();
 		if (IntersectRect(&result, &myRect, &boxRect))
 		{
 			SetRect(&result, 0, 0, result.right - result.left, result.bottom - result.top);
@@ -44,22 +44,22 @@ Player::CheckCollision()
 				if ((myRect.bottom + myRect.top) / 2 < (boxRect.bottom + boxRect.top) / 2)
 				{
 					isonfloor = true;
-					position.y -= result.bottom;
+					collider->position.y -= result.bottom;
 				}
 				else
-					position.y += result.bottom;
+					collider->position.y += result.bottom;
 			}
 			else
 			{
 				if ((myRect.right + myRect.left) / 2 <= (boxRect.right + boxRect.left) / 2)
 				{
-					position.x -= result.right;
+					collider->position.x -= result.right;
 				}
 				else
 				{
 					// 충돌처리 계산의 치명적인 부분을 손봐줄 야매 코드.
 					if (result.bottom > 20)
-						position.x += result.right;
+						collider->position.x += result.right;
 				}
 			}
 		}
@@ -70,10 +70,14 @@ void
 Player::Update()
 {
 	if (gravity == true)
-		position.y += 1000.f * DXUTGetElapsedTime();
+		collider->position.y += 1000.f * DXUTGetElapsedTime();
 
 	CheckCollision();
+	
 	PlayerStates ps = statechanger->handleInput();
+
+	position = collider->position;
+
 	if (ps != currentstate)
 	{
 		delete statechanger;
@@ -96,5 +100,4 @@ Player::Update()
 		}
 		currentstate = ps;
 	}
-	collider->position = position;
 }

@@ -27,7 +27,7 @@ RunState::handleInput()
 	if (DXUTIsKeyDown('A'))
 	{
 		keys[0] = 1;
-		player->position.x -= 300.f * DXUTGetElapsedTime();
+		player->collider->position.x -= 300.f * DXUTGetElapsedTime();
 		player->velocity = { -1,0 };
 	}
 	else keys[0] = 0;
@@ -35,7 +35,7 @@ RunState::handleInput()
 	if (DXUTIsKeyDown('D')) 
 	{ 
 		keys[1] = 1; 
-		player->position.x += 300.f * DXUTGetElapsedTime();
+		player->collider->position.x += 300.f * DXUTGetElapsedTime();
 		player->velocity = { 1, 0 };
 	}
 	else keys[1] = 0;
@@ -77,16 +77,16 @@ JumpState::handleInput()
 	{
 		player->gravity = false;
 		player->isonfloor = false;
-		player->position.y -= 500.f * DXUTGetElapsedTime();
+		player->collider->position.y -= 500.f * DXUTGetElapsedTime();
 		player->velocity = { 0, 1 };
 		if (DXUTIsKeyDown('A'))
 		{
-			player->position.x -= 300.f * DXUTGetElapsedTime();
+			player->collider->position.x -= 300.f * DXUTGetElapsedTime();
 			player->velocity.x = -1;
 		}
 		if (DXUTIsKeyDown('D'))
 		{
-			player->position.x += 300.f * DXUTGetElapsedTime();
+			player->collider->position.x += 300.f * DXUTGetElapsedTime();
 			player->velocity.x = 1;
 		}
 	}
