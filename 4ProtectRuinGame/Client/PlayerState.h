@@ -23,48 +23,48 @@ public:
 };
 
 class IdleState final :
-	public PlayerState
+	public GameObjectState
 {
 public:
-	explicit IdleState(Player* p) : PlayerState(p) {};
-	[[nodiscard]] PlayerStates
+	explicit IdleState(GameObject* p) : GameObjectState(p) {};
+	[[nodiscard]] void*
 		handleInput() override;
 };
 
 class RunState final :
-	public PlayerState
+	public GameObjectState
 {
 	int keys[2];
 
 public:
-	explicit RunState(Player* p) : PlayerState(p) {};
-	[[nodiscard]] PlayerStates
+	explicit RunState(GameObject* p) : GameObjectState(p) {};
+	[[nodiscard]] void*
 		handleInput() override;
 };
 
 class AttackState final :
-	public PlayerState
+	public GameObjectState
 {
 public:
-	explicit AttackState(Player* p) : PlayerState(p) {};
-	[[nodiscard]] PlayerStates
+	explicit AttackState(GameObject* p) : GameObjectState(p) {};
+	[[nodiscard]] void*
 		handleInput() override;
 };
 
 class JumpState final :
-	public PlayerState
+	public GameObjectState
 {
 public:
-	explicit JumpState(Player* p) : PlayerState(p) {};
-	[[nodiscard]] PlayerStates
+	explicit JumpState(GameObject* p) : GameObjectState(p) {};
+	[[nodiscard]] void*
 		handleInput() override;
 };
 
 class JumpEndState final :
-	public PlayerState
+	public GameObjectState
 {
 public:
-	explicit JumpEndState(Player* p) : PlayerState(p) {};
-	[[nodiscard]] PlayerStates
+	explicit JumpEndState(GameObject* p) : GameObjectState(p) {};
+	[[nodiscard]] void*
 		handleInput() override;
 };

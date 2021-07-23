@@ -1,6 +1,6 @@
 #pragma once
 
-#define CASTVOIDPNT(obj) reinterpret_cast<void*>(obj)
+#define CASTVOIDP(obj) reinterpret_cast<void*>(obj)
 class GameObject;
 
 class GameObjectState

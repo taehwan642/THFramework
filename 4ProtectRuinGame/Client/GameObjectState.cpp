@@ -5,9 +5,9 @@ void* TestIdleState::handleInput()
 {
 	if (DXUTIsKeyDown('A')
 		|| DXUTIsKeyDown('D'))
-		return CASTVOIDPNT(TestState::RUN);
+		return CASTVOIDP(TestState::RUN);
 	std::cout << "??" << std::endl;
-	return CASTVOIDPNT(TestState::IDLE);
+	return CASTVOIDP(TestState::IDLE);
 }
 
 void* TestRunState::handleInput()
@@ -28,6 +28,6 @@ void* TestRunState::handleInput()
 	std::cout << "!!" << std::endl;
 
 	if (result == 0)
-		return CASTVOIDPNT(TestState::IDLE);
-	return CASTVOIDPNT(TestState::RUN);
+		return CASTVOIDP(TestState::IDLE);
+	return CASTVOIDP(TestState::RUN);
 }

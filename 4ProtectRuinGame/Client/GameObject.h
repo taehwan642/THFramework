@@ -13,6 +13,12 @@ protected:
 
     StateManager* stm;
 
+    friend class IdleState;
+    friend class RunState;
+    friend class AttackState;
+    friend class JumpState;
+    friend class JumpEndState;
+
 public:
     virtual ~GameObject();
 

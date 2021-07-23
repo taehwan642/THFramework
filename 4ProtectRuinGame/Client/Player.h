@@ -5,9 +5,6 @@ class Player final :
     public GameObject
 {
 private:
-    PlayerState* statechanger;
-    PlayerStates currentstate;
-
     friend class IdleState;
     friend class RunState;
     friend class AttackState;

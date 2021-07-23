@@ -1,106 +1,106 @@
 #include "DXUT.h"
 #include "PlayerState.h"
 
-PlayerStates 
+void*
 IdleState::handleInput()
 {
 	if (DXUTIsKeyDown('A')
 		|| DXUTIsKeyDown('D'))
-		return PlayerStates::RUN;
+		return CASTVOIDP(PlayerStates::RUN);
 
-	if (DXUTIsKeyDown('W') && player->isonfloor == true)
-		return PlayerStates::JUMP;
+	if (DXUTIsKeyDown('W') && object->isonfloor == true)
+		return CASTVOIDP(PlayerStates::JUMP);
 
 	if (DXUTIsKeyDown(VK_SPACE))
-		return PlayerStates::ATTACK;
+		return CASTVOIDP(PlayerStates::ATTACK);
 
-	player->PlayAnimation(L"idle");
+	object->PlayAnimation(L"idle");
 
-	return PlayerStates::IDLE;
+	return CASTVOIDP(PlayerStates::IDLE);
 }
 
-PlayerStates 
+void*
 RunState::handleInput()
 {
 	if (DXUTIsKeyDown('A'))
 	{
 		keys[0] = 1;
-		player->collider->position.x -= 300.f * DXUTGetElapsedTime();
+		object->collider->position.x -= 300.f * DXUTGetElapsedTime();
 	}
 	else keys[0] = 0;
 
 	if (DXUTIsKeyDown('D')) 
 	{ 
 		keys[1] = 1; 
-		player->collider->position.x += 300.f * DXUTGetElapsedTime();
+		object->collider->position.x += 300.f * DXUTGetElapsedTime();
 	}
 	else keys[1] = 0;
 
 	int result = keys[0] + keys[1];
 
 	if (result == 0)
-		return PlayerStates::IDLE;
+		return CASTVOIDP(PlayerStates::IDLE);
 
-	if (DXUTIsKeyDown('W') && player->isonfloor == true)
-		return PlayerStates::JUMP;
+	if (DXUTIsKeyDown('W') && object->isonfloor == true)
+		return CASTVOIDP(PlayerStates::JUMP);
 
 	if (DXUTWasKeyPressed(VK_SPACE))
-		return PlayerStates::ATTACK;
+		return CASTVOIDP(PlayerStates::ATTACK);
 
-	player->PlayAnimation(L"run");
+	object->PlayAnimation(L"run");
 
-	return PlayerStates::RUN;
+	return CASTVOIDP(PlayerStates::RUN);
 }
 
-PlayerStates 
+void*
 AttackState::handleInput()
 {
-	if (player->PlayAnimation(L"attack"))
-		return PlayerStates::IDLE;
-	return PlayerStates::ATTACK;
+	if (object->PlayAnimation(L"attack"))
+		return CASTVOIDP(PlayerStates::IDLE);
+	return CASTVOIDP(PlayerStates::ATTACK);
 }
 
-PlayerStates 
+void*
 JumpState::handleInput()
 {
-	if (player->PlayAnimation(L"jump"))
+	if (object->PlayAnimation(L"jump"))
 	{
-		player->gravity = true;
-		return PlayerStates::JUMPEND;
+		object->gravity = true;
+		return CASTVOIDP(PlayerStates::JUMPEND);
 	}
 	else
 	{
-		player->gravity = false;
-		player->isonfloor = false;
-		player->collider->position.y -= 500.f * DXUTGetElapsedTime();
+		object->gravity = false;
+		object->isonfloor = false;
+		object->collider->position.y -= 500.f * DXUTGetElapsedTime();
 		if (DXUTIsKeyDown('A'))
 		{
-			player->collider->position.x -= 300.f * DXUTGetElapsedTime();
+			object->collider->position.x -= 300.f * DXUTGetElapsedTime();
 		}
 		if (DXUTIsKeyDown('D'))
 		{
-			player->collider->position.x += 300.f * DXUTGetElapsedTime();
+			object->collider->position.x += 300.f * DXUTGetElapsedTime();
 		}
 	}
 
-	return PlayerStates::JUMP;
+	return CASTVOIDP(PlayerStates::JUMP);
 }
 
-PlayerStates 
+void*
 JumpEndState::handleInput()
 {
-	if (player->isonfloor)
+	if (object->isonfloor)
 	{
-		if (player->PlayAnimation(L"jumpend"))
-			return PlayerStates::IDLE;
+		if (object->PlayAnimation(L"jumpend"))
+			return CASTVOIDP(PlayerStates::IDLE);
 	}
 	if (DXUTIsKeyDown('A'))
 	{
-		player->collider->position.x -= 300.f * DXUTGetElapsedTime();
+		object->collider->position.x -= 300.f * DXUTGetElapsedTime();
 	}
 	if (DXUTIsKeyDown('D'))
 	{
-		player->collider->position.x += 300.f * DXUTGetElapsedTime();
+		object->collider->position.x += 300.f * DXUTGetElapsedTime();
 	}
-	return PlayerStates::JUMPEND;
+	return CASTVOIDP(PlayerStates::JUMPEND);
 }

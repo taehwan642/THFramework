@@ -4,7 +4,6 @@
 
 Player::Player() 
 {
-	statechanger = new IdleState(this);
 	CreateAnimation(L"run", 6, 0.1f);
 	CreateAnimation(L"attack", 3, 0.1f);
 	CreateAnimation(L"idle", 2, 0.6f);
@@ -13,41 +12,20 @@ Player::Player()
 	PlayAnimation(L"idle");
 
 	collider->scale = { 0.6f, 1 };
+
+	stm->AddState(CASTVOIDP(PlayerStates::IDLE), new IdleState(this));
+	stm->AddState(CASTVOIDP(PlayerStates::RUN), new RunState(this));
+	stm->AddState(CASTVOIDP(PlayerStates::JUMP), new JumpState(this));
+	stm->AddState(CASTVOIDP(PlayerStates::JUMPEND), new JumpEndState(this));
+	stm->AddState(CASTVOIDP(PlayerStates::ATTACK), new AttackState(this));
+	stm->ChangeState(CASTVOIDP(PlayerStates::IDLE));
 }
 
 Player::~Player()
 {
-	delete statechanger;
 }
 
 void
 Player::Action()
 {
-	PlayerStates ps = statechanger->handleInput();
-
-	if (ps != currentstate)
-	{
-		delete statechanger;
-		switch (ps)
-		{
-		case PlayerStates::IDLE:
-			statechanger = new IdleState(this);
-			break;
-		case PlayerStates::RUN:
-			statechanger = new RunState(this);
-			break;
-		case PlayerStates::ATTACK:
-			statechanger = new AttackState(this);
-			break;
-		case PlayerStates::JUMP:
-			statechanger = new JumpState(this);
-			break;
-		case PlayerStates::JUMPEND:
-			statechanger = new JumpEndState(this);
-			break;
-		default:
-			break;
-		}
-		currentstate = ps;
-	}
 }

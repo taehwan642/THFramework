@@ -10,9 +10,7 @@ GameObject::GameObject() :
 	collider->SetTexture(L"box.png");
 
 	stm = new StateManager;
-	stm->AddState(CASTVOIDPNT(TestState::IDLE), new TestIdleState(this));
-	stm->AddState(CASTVOIDPNT(TestState::RUN), new TestRunState(this));
-	stm->ChangeState(CASTVOIDPNT(TestState::IDLE));
+	
 }
 
 GameObject::~GameObject()
