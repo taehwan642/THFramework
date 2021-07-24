@@ -11,7 +11,6 @@ Monster::~Monster()
 }
 
 void 
-Monster::Update()
+Monster::Action()
 {
-
 }

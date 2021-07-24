@@ -26,6 +26,6 @@ public:
 
     virtual void Action() PURE;
 
-    void Update() override;
+    void Update() override final;
 };
 

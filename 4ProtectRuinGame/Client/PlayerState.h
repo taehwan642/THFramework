@@ -9,19 +9,6 @@ enum class PlayerStates
 	JUMPEND
 };
 
-class Player;
-
-class PlayerState
-{
-protected:
-	Player* player;
-
-public:
-	explicit PlayerState(Player* p) : player(p) {};
-	[[nodiscard]] virtual PlayerStates 
-		handleInput() PURE;
-};
-
 class IdleState final :
 	public GameObjectState
 {

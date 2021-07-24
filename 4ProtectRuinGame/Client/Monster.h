@@ -1,11 +1,11 @@
 #pragma once
-#include "AniSprite.h"
+#include "GameObject.h"
 class Monster :
-    public AniSprite
+    public GameObject
 {
 public:
     explicit Monster();
     virtual ~Monster();
 
-    void Update() override;
+    void Action() override;
 };

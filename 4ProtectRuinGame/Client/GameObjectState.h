@@ -15,32 +15,6 @@ public:
 		handleInput() PURE;
 };
 
-enum class TestState
-{
-	IDLE,
-	RUN
-};
-
-class TestIdleState :
-	public GameObjectState
-{
-public:
-	explicit TestIdleState(GameObject* obj) : GameObjectState(obj) {};
-	[[nodiscard]] virtual void*
-		handleInput();
-};
-
-class TestRunState :
-	public GameObjectState
-{
-private:
-	int keys[2];
-public:
-	explicit TestRunState(GameObject* obj) : GameObjectState(obj) {};
-	[[nodiscard]] virtual void*
-		handleInput();
-};
-
 class StateManager
 {
 private:
@@ -78,5 +52,3 @@ public:
 		}
 	};
 };
-
-// map으로 key, value key(state enum) value (state pointer -> 자식 포인터)
