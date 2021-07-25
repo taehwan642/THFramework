@@ -60,9 +60,14 @@ GameObject::CheckCollision()
 	}
 }
 
-void 
+
+
+void
 GameObject::Update()
 {
+	if (false == isactive)
+		return;
+
 	if (gravity == true)
 		collider->position.y += 1000.f * DXUTGetElapsedTime();
 

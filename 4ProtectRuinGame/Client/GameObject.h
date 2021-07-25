@@ -26,6 +26,14 @@ public:
 
     virtual void Action() PURE;
 
+    __forceinline constexpr void
+        SetPosition(const Vec2& pos);
+
     void Update() override final;
 };
 
+constexpr void 
+GameObject::SetPosition(const Vec2& pos)
+{
+    collider->position = pos;
+}

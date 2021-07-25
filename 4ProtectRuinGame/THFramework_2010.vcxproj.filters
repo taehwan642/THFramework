@@ -90,6 +90,15 @@
     <Filter Include="2.Client\1.GameObjects\0.GameObject\1.GameObjectState">
       <UniqueIdentifier>{c7cce23b-a9af-4768-98f1-c05cc8d30935}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2.Client\1.GameObjects\2.Monster\0.Octopus">
+      <UniqueIdentifier>{5c283089-a957-49d2-98d1-c2acfb7c2855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\2.Manager">
+      <UniqueIdentifier>{2735feac-443c-4cfb-a957-1f69ef59f3bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\2.Manager\0.MonsterManager">
+      <UniqueIdentifier>{4c36bb57-5ec3-4d27-b782-982be08d1eb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -191,6 +200,15 @@
     <ClCompile Include="Client\GameObject.cpp">
       <Filter>2.Client\1.GameObjects\0.GameObject\0.GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Client\MonsterManager.cpp">
+      <Filter>2.Client\2.Manager\0.MonsterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Octopus.cpp">
+      <Filter>2.Client\1.GameObjects\2.Monster\0.Octopus</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\OctopusState.cpp">
+      <Filter>2.Client\1.GameObjects\2.Monster\0.Octopus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -255,6 +273,15 @@
     </ClInclude>
     <ClInclude Include="Client\GameObject.h">
       <Filter>2.Client\1.GameObjects\0.GameObject\0.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\MonsterManager.h">
+      <Filter>2.Client\2.Manager\0.MonsterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Octopus.h">
+      <Filter>2.Client\1.GameObjects\2.Monster\0.Octopus</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\OctopusState.h">
+      <Filter>2.Client\1.GameObjects\2.Monster\0.Octopus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

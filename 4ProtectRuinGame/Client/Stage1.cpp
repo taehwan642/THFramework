@@ -9,6 +9,8 @@ Stage1::Init()
 	cam.Initialize();
 
 	player = new Player();
+
+	mm.CreateMonster();
 }
 
 void 
@@ -41,10 +43,14 @@ Stage1::Update()
 
 	if (DXUTWasKeyPressed('P'))
 		tmm.LoadBlocks();
+
+	if (DXUTWasKeyPressed('Z'))
+		mm.SpawnMonster(MonsterTag::OCTOPUS, camPos);
 }
 
 void 
 Stage1::Exit()
 {
 	delete player;
+	mm.DeleteMonster();
 }

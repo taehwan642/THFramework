@@ -4,6 +4,7 @@
 
 Monster::Monster()
 {
+	
 }
 
 Monster::~Monster()

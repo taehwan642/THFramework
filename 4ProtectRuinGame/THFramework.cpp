@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "TileMapScene.h"
 #include "Stage1.h"
+#include "MonsterManager.h"
 #include "Camera.h"
 
 SceneManager& sm = SceneManager::GetInstance();
@@ -62,6 +63,8 @@ OnD3D9DestroyDevice( void* pUserContext )
    c.DeleteInstance();
 
    Sprite::sprite->Release();
+
+   MonsterManager::GetInstance().DeleteInstance();
 }
 
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )

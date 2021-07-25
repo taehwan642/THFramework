@@ -19,8 +19,8 @@ class StateManager
 {
 private:
 	std::map<void*, GameObjectState*> stateMap;
-	GameObjectState* currentState;
-	void* currentKey;
+	GameObjectState* currentState = nullptr;
+	void* currentKey = nullptr;
 
 public:
 	explicit StateManager() = default;
@@ -45,6 +45,9 @@ public:
 
 	void UpdateState()
 	{
+		if (nullptr == currentState)
+			return;
+
 		void* statekey = currentState->handleInput();
 		if (currentKey != statekey)
 		{
