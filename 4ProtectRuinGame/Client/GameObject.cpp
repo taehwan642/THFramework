@@ -4,7 +4,16 @@
 
 GameObject::GameObject() :
 	gravity(true),
-	isonfloor(false)
+	isonfloor(false),
+	HP(5),
+	moveSpeed(1),
+	barrierCount(0),
+	level(1),
+	exp(0),
+	attackLevel(1),
+	attackSpeed(1),
+	lookingRight(true),
+	wallcollided(false)
 {
 	collider = new Sprite();
 	collider->SetTexture(L"box.png");
@@ -16,6 +25,7 @@ GameObject::GameObject() :
 GameObject::~GameObject()
 {
 	delete collider;
+	stm->DeleteStates();
 	delete stm;
 }
 
@@ -23,7 +33,7 @@ void
 GameObject::CheckCollision()
 {
 	std::vector<Block> v = TileMapManager::GetInstance().GetBlockVector();
-
+	wallcollided = false;
 	for (const auto& iter : v)
 	{
 		Sprite* bs = iter.sprite;
@@ -45,21 +55,26 @@ GameObject::CheckCollision()
 			}
 			else
 			{
+				bool col = false;
 				if ((myRect.right + myRect.left) / 2 <= (boxRect.right + boxRect.left) / 2)
 				{
 					collider->position.x -= result.right;
+					col = true;
 				}
 				else
 				{
 					// 충돌처리 계산의 치명적인 부분을 손봐줄 야매 코드.
 					if (result.bottom > 20)
+					{
 						collider->position.x += result.right;
+						col = true;
+					}
 				}
+				wallcollided = col;
 			}
 		}
 	}
 }
-
 
 
 void
@@ -78,4 +93,15 @@ GameObject::Update()
 	stm->UpdateState();
 
 	position = collider->position;
+}
+
+void GameObject::GetAttack(int damage)
+{
+	if (barrierCount != 0)
+	{
+		barrierCount -= 1;
+		return;
+	}
+	HP -= damage;
+	Damaged();
 }

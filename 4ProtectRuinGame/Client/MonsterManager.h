@@ -8,11 +8,12 @@ enum class MonsterTag
     OCTOPUS
 };
 
-class MonsterManager :
+class MonsterManager final :
     public Singleton<MonsterManager>
 {
-    std::vector<Monster*> monsters;
 public:
+    Player* player;
+    std::vector<Monster*> monsters;
     __forceinline void 
         CreateMonster()
     {
@@ -33,7 +34,7 @@ public:
                 switch (tag)
                 {
                 case MonsterTag::OCTOPUS:
-                    monsters[i] = new Octopus;
+                    monsters[i] = new Octopus(player);
                     break;
                 default:
                     break;

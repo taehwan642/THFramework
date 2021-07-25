@@ -412,7 +412,6 @@
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
     <ClCompile Include="Client\GameObject.cpp" />
-    <ClCompile Include="Client\GameObjectState.cpp" />
     <ClCompile Include="Client\MenuScene.cpp" />
     <ClCompile Include="Client\Monster.cpp" />
     <ClCompile Include="Client\MonsterManager.cpp" />

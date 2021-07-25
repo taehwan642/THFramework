@@ -194,9 +194,6 @@
     <ClCompile Include="Client\Monster.cpp">
       <Filter>2.Client\1.GameObjects\2.Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Client\GameObjectState.cpp">
-      <Filter>2.Client\1.GameObjects\0.GameObject\1.GameObjectState</Filter>
-    </ClCompile>
     <ClCompile Include="Client\GameObject.cpp">
       <Filter>2.Client\1.GameObjects\0.GameObject\0.GameObject</Filter>
     </ClCompile>

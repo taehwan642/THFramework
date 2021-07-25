@@ -10,6 +10,7 @@ Stage1::Init()
 
 	player = new Player();
 
+	mm.player = player;
 	mm.CreateMonster();
 }
 

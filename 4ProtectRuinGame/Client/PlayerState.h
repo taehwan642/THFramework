@@ -6,7 +6,8 @@ enum class PlayerStates
 	RUN,
 	ATTACK,
 	JUMP,
-	JUMPEND
+	JUMPEND,
+	DAMAGED
 };
 
 class IdleState final :
@@ -52,6 +53,18 @@ class JumpEndState final :
 {
 public:
 	explicit JumpEndState(GameObject* p) : GameObjectState(p) {};
+	[[nodiscard]] void*
+		handleInput() override;
+};
+
+class DamagedState final :
+	public GameObjectState
+{
+	float deltatime;
+public:
+	explicit DamagedState(GameObject* p) : 
+		GameObjectState(p), deltatime(0.f)
+	{};
 	[[nodiscard]] void*
 		handleInput() override;
 };

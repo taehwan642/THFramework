@@ -4,11 +4,6 @@ class GameObject :
     public AniSprite
 {
 protected:
-    bool gravity;
-    bool isonfloor;
-
-    Sprite* collider;
-
     explicit GameObject();
 
     StateManager* stm;
@@ -18,8 +13,27 @@ protected:
     friend class AttackState;
     friend class JumpState;
     friend class JumpEndState;
+    friend class DamagedState;
 
 public:
+    bool gravity;
+    bool isonfloor;
+
+    int HP;
+    float moveSpeed;
+    int barrierCount;
+
+    int level;
+    int exp;
+
+    int attackLevel;
+    float attackSpeed;
+    bool lookingRight; // 오른쪽을 바라보고 있냐?
+
+    bool wallcollided;
+
+    Sprite* collider;
+
     virtual ~GameObject();
 
     void CheckCollision();
@@ -28,6 +42,10 @@ public:
 
     __forceinline constexpr void
         SetPosition(const Vec2& pos);
+
+    void GetAttack(int damage);
+
+    virtual void Damaged() PURE;
 
     void Update() override final;
 };

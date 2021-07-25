@@ -4,8 +4,11 @@ class Monster :
     public GameObject
 {
 public:
-    explicit Monster();
+    Player* player;
+    explicit Monster(Player* p) : player(p) {};
     virtual ~Monster();
+
+    void Damaged() override {};
 
     void Action() override;
 };

@@ -19,6 +19,7 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
                                      void* pUserContext )
 {
     D3DXCreateSprite(DXUTGetD3D9Device(), &Sprite::sprite);
+    srand(time(NULL));
     return S_OK;
 }
 

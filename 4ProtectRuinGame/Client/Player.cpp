@@ -1,4 +1,5 @@
 #include "DXUT.h"
+#include "MonsterManager.h"
 #include "TileMapManager.h"
 #include "Player.h"
 
@@ -18,6 +19,7 @@ Player::Player()
 	stm->AddState(CASTVOIDP(PlayerStates::JUMP), new JumpState(this));
 	stm->AddState(CASTVOIDP(PlayerStates::JUMPEND), new JumpEndState(this));
 	stm->AddState(CASTVOIDP(PlayerStates::ATTACK), new AttackState(this));
+	stm->AddState(CASTVOIDP(PlayerStates::DAMAGED), new DamagedState(this));
 	stm->ChangeState(CASTVOIDP(PlayerStates::IDLE));
 }
 
@@ -28,4 +30,27 @@ Player::~Player()
 void
 Player::Action()
 {
+	MonsterManager& mm = MonsterManager::GetInstance();
+	for (auto& iter : mm.monsters)
+	{
+		if (nullptr == iter ||iter->isactive == false)
+			continue;
+		
+		RECT temp;
+		if (IntersectRect(&temp, &collider->GetRect(), &iter->collider->GetRect()))
+		{
+			GetAttack(iter->attackLevel);
+		}
+
+		float distance = fabs(collider->position.x - iter->collider->position.x);
+		if (distance <= 300)
+		{
+			
+		}
+	}
+}
+
+void Player::Damaged()
+{
+	stm->ChangeState(CASTVOIDP(PlayerStates::DAMAGED));
 }

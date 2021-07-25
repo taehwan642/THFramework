@@ -7,6 +7,8 @@
 #include <fstream>
 #include <ostream>
 #include <cmath>
+#include <random>
+#include <ctime>
 
 constexpr int screenwidth = 1280;
 constexpr int screenheight = 720;
@@ -24,3 +26,5 @@ using Matrix = D3DXMATRIX;
 #include "PlayerState.h"
 #include "Player.h"
 
+#include "OctopusState.h"
+#include "Octopus.h"

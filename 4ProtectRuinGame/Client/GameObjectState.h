@@ -1,6 +1,8 @@
 #pragma once
+#include "DXUT.h"
 
 #define CASTVOIDP(obj) reinterpret_cast<void*>(obj)
+
 class GameObject;
 
 class GameObjectState
@@ -54,4 +56,14 @@ public:
 			ChangeState(statekey);
 		}
 	};
+
+	__forceinline void 
+		DeleteStates()
+	{
+		for (auto& iter : stateMap)
+		{
+			delete iter.second;
+		}
+		stateMap.clear();
+	}
 };

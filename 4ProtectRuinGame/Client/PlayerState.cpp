@@ -1,4 +1,5 @@
 #include "DXUT.h"
+#include "MonsterManager.h"
 #include "PlayerState.h"
 
 void*
@@ -26,6 +27,7 @@ RunState::handleInput()
 	{
 		keys[0] = 1;
 		object->collider->position.x -= 300.f * DXUTGetElapsedTime();
+		object->lookingRight = false;
 	}
 	else keys[0] = 0;
 
@@ -33,6 +35,7 @@ RunState::handleInput()
 	{ 
 		keys[1] = 1; 
 		object->collider->position.x += 300.f * DXUTGetElapsedTime();
+		object->lookingRight = true;
 	}
 	else keys[1] = 0;
 
@@ -56,7 +59,37 @@ void*
 AttackState::handleInput()
 {
 	if (object->PlayAnimation(L"attack"))
+	{
+		MonsterManager& mm = MonsterManager::GetInstance();
+		for (auto& iter : mm.monsters)
+		{
+			if (nullptr == iter || iter->isactive == false)
+				continue;
+
+			float distance = fabs(object->collider->position.x - iter->collider->position.x);
+			
+			if (distance <= 300)
+			{
+				if (object->collider->position.x < iter->collider->position.x)
+				{
+					if (object->lookingRight == true)
+					{
+						iter->GetAttack(object->attackLevel);
+					}
+				}
+				else
+				{
+					if (object->lookingRight == false)
+					{
+						iter->GetAttack(object->attackLevel);
+					}
+				}
+			}
+		}
+
 		return CASTVOIDP(PlayerStates::IDLE);
+	}
+
 	return CASTVOIDP(PlayerStates::ATTACK);
 }
 
@@ -76,10 +109,12 @@ JumpState::handleInput()
 		if (DXUTIsKeyDown('A'))
 		{
 			object->collider->position.x -= 300.f * DXUTGetElapsedTime();
+			object->lookingRight = false;
 		}
 		if (DXUTIsKeyDown('D'))
 		{
 			object->collider->position.x += 300.f * DXUTGetElapsedTime();
+			object->lookingRight = true;
 		}
 	}
 
@@ -97,10 +132,39 @@ JumpEndState::handleInput()
 	if (DXUTIsKeyDown('A'))
 	{
 		object->collider->position.x -= 300.f * DXUTGetElapsedTime();
+		object->lookingRight = false;
 	}
 	if (DXUTIsKeyDown('D'))
 	{
 		object->collider->position.x += 300.f * DXUTGetElapsedTime();
+		object->lookingRight = true;
 	}
 	return CASTVOIDP(PlayerStates::JUMPEND);
+}
+
+void* 
+DamagedState::handleInput()
+{
+	deltatime += DXUTGetElapsedTime();
+	object->gravity = true;
+	if (deltatime > 0.3f)
+	{
+		deltatime = 0;
+		object->color = D3DCOLOR_RGBA(255, 255, 255, 255);
+		return CASTVOIDP(PlayerStates::IDLE);
+	}
+	object->color = D3DCOLOR_RGBA(255, 0, 0, 255);
+
+	if (DXUTIsKeyDown('A'))
+	{
+		object->collider->position.x -= 300.f * DXUTGetElapsedTime();
+		object->lookingRight = false;
+	}
+	if (DXUTIsKeyDown('D'))
+	{
+		object->collider->position.x += 300.f * DXUTGetElapsedTime();
+		object->lookingRight = true;
+	}
+
+	return CASTVOIDP(PlayerStates::DAMAGED);
 }
