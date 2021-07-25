@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "TileMapManager.h"
 
-TileMapManager::TileMapManager() : blockScale(0.5f)
+TileMapManager::TileMapManager() : blockScale(0.5f), currentBlocktype(BlockType::FLOOR)
 {
 	
 }
@@ -42,6 +42,7 @@ TileMapManager::Initialize()
 void
 TileMapManager::UpdateManager()
 {
+	ChangeBlocks();
 	POINT pnt;
 	GetCursorPos(&pnt);
 	ScreenToClient(DXUTGetHWND(), &pnt);
@@ -60,7 +61,7 @@ TileMapManager::UpdateManager()
 			{
 				if (DXUTIsKeyDown(VK_SPACE))
 				{
-					blockTypes[i][j] = BlockType::FLOOR;
+					blockTypes[i][j] = currentBlocktype;
 				}
 			}
 
@@ -83,6 +84,18 @@ TileMapManager::UpdateManager()
 				break; 
 			}
 			
+			case BlockType::OCTOPUS:
+			{
+				blockss[i][j]->SetTexture(L"octoidle (1).png");
+				break;
+			}
+
+			case BlockType::PLAYER:
+			{
+				blockss[i][j]->SetTexture(L"idle (1).png");
+				break;
+			}
+
 			default:
 				break;
 			}
@@ -131,13 +144,25 @@ TileMapManager::LoadBlocks()
 			++y;
 		}
 
-#if GAMEON == true
-		if (type == BlockType::NONE)
+		if (type == BlockType::NONE ||
+			type == BlockType::PLAYER ||
+			type == BlockType::OCTOPUS)
 		{
+			if (type == BlockType::PLAYER)
+			{
+				playerPos = { ((blockScale * 256.f) / 2) + (x * 256.f * blockScale), 
+					((blockScale * 256.f) / 2) + (y * 256.f * blockScale) };
+			}
+			
+			if (type == BlockType::OCTOPUS)
+			{
+				enemyPos.emplace_back(((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
+					((blockScale * 256.f) / 2) + (y * 256.f * blockScale));
+			}
 			++x;
 			continue;
 		}
-#endif 
+
 		Block block;
 		block.type = type;
 		block.sprite = new Sprite();
@@ -170,6 +195,24 @@ TileMapManager::LoadBlocks()
 	}
 
 	fin.close();
+}
+
+void TileMapManager::ChangeBlocks()
+{
+	if (DXUTWasKeyPressed(VK_F1))
+	{
+		currentBlocktype = BlockType::FLOOR;
+	}
+
+	if (DXUTWasKeyPressed(VK_F2)) // ÇÃ·¹ÀÌ¾î ÁÂÇ¥
+	{
+		currentBlocktype = BlockType::PLAYER;
+	}
+
+	if (DXUTWasKeyPressed(VK_F3)) // Àû ÁÂÇ¥
+	{
+		currentBlocktype = BlockType::OCTOPUS;
+	}
 }
 
 void 

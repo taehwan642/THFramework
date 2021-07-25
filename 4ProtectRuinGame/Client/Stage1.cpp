@@ -8,16 +8,23 @@ Stage1::Init()
 	Camera& cam = Camera::GetInstance();
 	cam.Initialize();
 
+	TileMapManager& tmm = TileMapManager::GetInstance();
+	tmm.LoadBlocks();
+	
 	player = new Player();
+	player->collider->position = tmm.playerPos;
 
 	mm.player = player;
 	mm.CreateMonster();
+	for (auto& iter : tmm.enemyPos)
+	{
+		mm.SpawnMonster(MonsterTag::OCTOPUS, iter);
+	}
 }
 
 void 
 Stage1::Update()
 {
-	TileMapManager& tmm = TileMapManager::GetInstance();
 
 	Camera& cam = Camera::GetInstance();
 
@@ -41,12 +48,6 @@ Stage1::Update()
 	}
 
 	cam.SetPosition(camPos);
-
-	if (DXUTWasKeyPressed('P'))
-		tmm.LoadBlocks();
-
-	if (DXUTWasKeyPressed('Z'))
-		mm.SpawnMonster(MonsterTag::OCTOPUS, camPos);
 }
 
 void 
