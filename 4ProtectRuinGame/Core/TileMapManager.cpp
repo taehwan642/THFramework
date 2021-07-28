@@ -129,7 +129,8 @@ TileMapManager::LoadBlocks()
 		std::cout << "파일이 없습니다." << std::endl;
 		return;
 	}
-
+	float temp = blockScale;
+	blockScale = 1;
 	char typeValue;
 	int x = 0;
 	int y = 0;
@@ -195,6 +196,7 @@ TileMapManager::LoadBlocks()
 	}
 
 	fin.close();
+	blockScale = temp;
 }
 
 void TileMapManager::ChangeBlocks()

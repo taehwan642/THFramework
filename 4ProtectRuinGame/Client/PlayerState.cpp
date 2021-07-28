@@ -2,25 +2,28 @@
 #include "MonsterManager.h"
 #include "PlayerState.h"
 
-void*
+int
 IdleState::handleInput()
 {
 	if (DXUTIsKeyDown('A')
 		|| DXUTIsKeyDown('D'))
-		return CASTVOIDP(PlayerStates::RUN);
+		return STC(PlayerStates::RUN);
 
 	if (DXUTIsKeyDown('W') && object->isonfloor == true)
-		return CASTVOIDP(PlayerStates::JUMP);
+		return STC(PlayerStates::JUMP);
 
 	if (DXUTIsKeyDown(VK_SPACE))
-		return CASTVOIDP(PlayerStates::ATTACK);
+		return STC(PlayerStates::ATTACK);
+
+	if (DXUTIsKeyDown(VK_LSHIFT))
+		return STC(PlayerStates::DODGE);
 
 	object->PlayAnimation(L"idle");
 
-	return CASTVOIDP(PlayerStates::IDLE);
+	return STC(PlayerStates::IDLE);
 }
 
-void*
+int
 RunState::handleInput()
 {
 	if (DXUTIsKeyDown('A'))
@@ -42,20 +45,20 @@ RunState::handleInput()
 	int result = keys[0] + keys[1];
 
 	if (result == 0)
-		return CASTVOIDP(PlayerStates::IDLE);
+		return STC(PlayerStates::IDLE);
 
 	if (DXUTIsKeyDown('W') && object->isonfloor == true)
-		return CASTVOIDP(PlayerStates::JUMP);
+		return STC(PlayerStates::JUMP);
 
 	if (DXUTWasKeyPressed(VK_SPACE))
-		return CASTVOIDP(PlayerStates::ATTACK);
+		return STC(PlayerStates::ATTACK);
 
 	object->PlayAnimation(L"run");
 
-	return CASTVOIDP(PlayerStates::RUN);
+	return STC(PlayerStates::RUN);
 }
 
-void*
+int
 AttackState::handleInput()
 {
 	if (object->PlayAnimation(L"attack"))
@@ -87,25 +90,25 @@ AttackState::handleInput()
 			}
 		}
 
-		return CASTVOIDP(PlayerStates::IDLE);
+		return STC(PlayerStates::IDLE);
 	}
 
-	return CASTVOIDP(PlayerStates::ATTACK);
+	return STC(PlayerStates::ATTACK);
 }
 
-void*
+int
 JumpState::handleInput()
 {
 	if (object->PlayAnimation(L"jump"))
 	{
 		object->gravity = true;
-		return CASTVOIDP(PlayerStates::JUMPEND);
+		return STC(PlayerStates::JUMPEND);
 	}
 	else
 	{
 		object->gravity = false;
 		object->isonfloor = false;
-		object->collider->position.y -= 500.f * DXUTGetElapsedTime();
+		object->collider->position.y -= 1500.f * DXUTGetElapsedTime();
 		if (DXUTIsKeyDown('A'))
 		{
 			object->collider->position.x -= 300.f * DXUTGetElapsedTime();
@@ -118,16 +121,16 @@ JumpState::handleInput()
 		}
 	}
 
-	return CASTVOIDP(PlayerStates::JUMP);
+	return STC(PlayerStates::JUMP);
 }
 
-void*
+int
 JumpEndState::handleInput()
 {
 	if (object->isonfloor)
 	{
 		if (object->PlayAnimation(L"jumpend"))
-			return CASTVOIDP(PlayerStates::IDLE);
+			return STC(PlayerStates::IDLE);
 	}
 	if (DXUTIsKeyDown('A'))
 	{
@@ -139,10 +142,10 @@ JumpEndState::handleInput()
 		object->collider->position.x += 300.f * DXUTGetElapsedTime();
 		object->lookingRight = true;
 	}
-	return CASTVOIDP(PlayerStates::JUMPEND);
+	return STC(PlayerStates::JUMPEND);
 }
 
-void* 
+int
 DamagedState::handleInput()
 {
 	deltatime += DXUTGetElapsedTime();
@@ -151,7 +154,7 @@ DamagedState::handleInput()
 	{
 		deltatime = 0;
 		object->color = D3DCOLOR_RGBA(255, 255, 255, 255);
-		return CASTVOIDP(PlayerStates::IDLE);
+		return STC(PlayerStates::IDLE);
 	}
 	object->color = D3DCOLOR_RGBA(255, 0, 0, 255);
 
@@ -166,5 +169,18 @@ DamagedState::handleInput()
 		object->lookingRight = true;
 	}
 
-	return CASTVOIDP(PlayerStates::DAMAGED);
+	return STC(PlayerStates::DAMAGED);
+}
+
+int DodgeState::handleInput()
+{
+	if (object->PlayAnimation(L"roll"))
+	{
+		static_cast<Player*>(object)->isDodging = false;
+		return STC(PlayerStates::IDLE);
+	}
+	int xWay = (true == object->lookingRight) ? 1 : -1;
+	object->collider->position.x += xWay * DXUTGetElapsedTime() * 300.f;
+	static_cast<Player*>(object)->isDodging = true;
+	return STC(PlayerStates::DODGE);
 }

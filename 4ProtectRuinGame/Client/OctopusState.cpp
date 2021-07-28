@@ -1,14 +1,15 @@
 #include "DXUT.h"
 #include "OctopusState.h"
 
-void* OctopusIdleState::handleInput()
+int
+OctopusIdleState::handleInput()
 {
 	idleTime += DXUTGetElapsedTime();
 
 	if (idleTime >= 2)
 	{
 		idleTime = 0;
-		return CASTVOIDP(OctopusState::WALK);
+		return STC(OctopusState::WALK);
 	}
 
 	object->gravity = true;
@@ -16,15 +17,16 @@ void* OctopusIdleState::handleInput()
 	float distance = fabs(object->collider->position.x - static_cast<Octopus*>(object)->player->collider->position.x); // 500
 	if (distance < 500)
 	{
-		return CASTVOIDP(OctopusState::FOLLOW);
+		return STC(OctopusState::FOLLOW);
 	}
 
 	object->PlayAnimation(L"octoidle");
 
-	return CASTVOIDP(OctopusState::IDLE);
+	return STC(OctopusState::IDLE);
 }
 
-void* OctopusAttackState::handleInput()
+int
+OctopusAttackState::handleInput()
 {
 	deltatime += DXUTGetElapsedTime();
 	object->gravity = true;
@@ -39,13 +41,14 @@ void* OctopusAttackState::handleInput()
 				static_cast<Octopus*>(object)->player->GetAttack(object->attackLevel);
 			}
 			deltatime = 0;
-			return CASTVOIDP(OctopusState::IDLE);
+			return STC(OctopusState::IDLE);
 		}
 	}
-	return CASTVOIDP(OctopusState::ATTACK);
+	return STC(OctopusState::ATTACK);
 }
 
-void* OctopusWalkState::handleInput()
+int
+OctopusWalkState::handleInput()
 {
 	if (false == isWalkStart)
 	{
@@ -59,7 +62,7 @@ void* OctopusWalkState::handleInput()
 	{
 		walktime = 0;
 		isWalkStart = false;
-		return CASTVOIDP(OctopusState::IDLE);
+		return STC(OctopusState::IDLE);
 	}
 
 	if (true == object->wallcollided)
@@ -71,24 +74,25 @@ void* OctopusWalkState::handleInput()
 
 	object->PlayAnimation(L"octowalk");
 
-	return CASTVOIDP(OctopusState::WALK);
+	return STC(OctopusState::WALK);
 }
 
-void* OctopusFollowState::handleInput()
+int
+OctopusFollowState::handleInput()
 {
 	float distance = fabs(object->collider->position.x - static_cast<Octopus*>(object)->player->collider->position.x); // 500
 	if (distance > 500)
 	{
-		return CASTVOIDP(OctopusState::IDLE);
+		return STC(OctopusState::IDLE);
 	}
 	else if (distance < 300)
 	{
-		return CASTVOIDP(OctopusState::ATTACK);
+		return STC(OctopusState::ATTACK);
 	}
 
 	if (true == object->wallcollided)
 	{
-		object->collider->position.y -= DXUTGetElapsedTime() * 300.f;
+		object->collider->position.y -= DXUTGetElapsedTime() * 1500.f;
 		object->gravity = false;
 		object->isonfloor = false;
 	}
@@ -103,5 +107,5 @@ void* OctopusFollowState::handleInput()
 	}
 	object->PlayAnimation(L"octowalk");
 
-	return CASTVOIDP(OctopusState::FOLLOW);
+	return STC(OctopusState::FOLLOW);
 }

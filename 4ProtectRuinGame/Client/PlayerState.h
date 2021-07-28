@@ -7,7 +7,8 @@ enum class PlayerStates
 	ATTACK,
 	JUMP,
 	JUMPEND,
-	DAMAGED
+	DAMAGED,
+	DODGE
 };
 
 class IdleState final :
@@ -15,7 +16,7 @@ class IdleState final :
 {
 public:
 	explicit IdleState(GameObject* p) : GameObjectState(p) {};
-	[[nodiscard]] void*
+	[[nodiscard]] int
 		handleInput() override;
 };
 
@@ -26,7 +27,7 @@ class RunState final :
 
 public:
 	explicit RunState(GameObject* p) : GameObjectState(p) {};
-	[[nodiscard]] void*
+	[[nodiscard]] int
 		handleInput() override;
 };
 
@@ -35,7 +36,7 @@ class AttackState final :
 {
 public:
 	explicit AttackState(GameObject* p) : GameObjectState(p) {};
-	[[nodiscard]] void*
+	[[nodiscard]] int
 		handleInput() override;
 };
 
@@ -44,7 +45,7 @@ class JumpState final :
 {
 public:
 	explicit JumpState(GameObject* p) : GameObjectState(p) {};
-	[[nodiscard]] void*
+	[[nodiscard]] int
 		handleInput() override;
 };
 
@@ -53,7 +54,7 @@ class JumpEndState final :
 {
 public:
 	explicit JumpEndState(GameObject* p) : GameObjectState(p) {};
-	[[nodiscard]] void*
+	[[nodiscard]] int
 		handleInput() override;
 };
 
@@ -65,6 +66,17 @@ public:
 	explicit DamagedState(GameObject* p) : 
 		GameObjectState(p), deltatime(0.f)
 	{};
-	[[nodiscard]] void*
+	[[nodiscard]] int
+		handleInput() override;
+};
+
+class DodgeState final :
+	public GameObjectState
+{
+public:
+	explicit DodgeState(GameObject* p) :
+		GameObjectState(p)
+	{};
+	[[nodiscard]] int
 		handleInput() override;
 };

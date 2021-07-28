@@ -11,6 +11,8 @@ TileMapScene::Init()
 
 	Camera& cam = Camera::GetInstance();
 	cam.Initialize();
+
+	cam.SetCameraSize(1.f);
 }
 
 void 

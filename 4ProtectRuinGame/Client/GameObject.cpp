@@ -64,7 +64,7 @@ GameObject::CheckCollision()
 				else
 				{
 					// 충돌처리 계산의 치명적인 부분을 손봐줄 야매 코드.
-					if (result.bottom > 20)
+					if (result.bottom > 40)
 					{
 						collider->position.x += result.right;
 						col = true;
@@ -84,7 +84,14 @@ GameObject::Update()
 		return;
 
 	if (gravity == true)
-		collider->position.y += 1000.f * DXUTGetElapsedTime();
+	{
+		collider->position.y += 1500.f * DXUTGetElapsedTime();
+		if (collider->position.y > 1408.f)
+		{
+			collider->position.y = 1408.f;
+			isonfloor = true;
+		}
+	}
 
 	CheckCollision();
 
@@ -97,9 +104,12 @@ GameObject::Update()
 
 void GameObject::GetAttack(int damage)
 {
+	if (false == Check_CanGetAttack())
+		return;
+
 	if (barrierCount != 0)
 	{
-		barrierCount -= 1;
+		--barrierCount;
 		return;
 	}
 	HP -= damage;

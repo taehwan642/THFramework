@@ -1,7 +1,7 @@
 #pragma once
 #include "DXUT.h"
 
-#define CASTVOIDP(obj) reinterpret_cast<void*>(obj)
+#define STC(en) static_cast<int>(en)
 
 class GameObject;
 
@@ -13,21 +13,21 @@ protected:
 public:
 	explicit GameObjectState(GameObject* obj) : object(obj) {};
 	virtual ~GameObjectState() = default;
-	[[nodiscard]] virtual void*
+	[[nodiscard]] virtual int
 		handleInput() PURE;
 };
 
 class StateManager
 {
 private:
-	std::map<void*, GameObjectState*> stateMap;
+	std::map<int, GameObjectState*> stateMap;
 	GameObjectState* currentState = nullptr;
-	void* currentKey = nullptr;
+	int currentKey = -1;
 
 public:
 	explicit StateManager() = default;
 	__forceinline void
-		ChangeState(void* key)
+		ChangeState(int key)
 	{
 		if (stateMap.find(key) != stateMap.end())
 		{
@@ -37,7 +37,7 @@ public:
 	};
 
 	__forceinline void
-		AddState(void* key, GameObjectState* state)
+		AddState(int key, GameObjectState* state)
 	{
 		if (stateMap.find(key) == stateMap.end())
 		{
@@ -50,7 +50,7 @@ public:
 		if (nullptr == currentState)
 			return;
 
-		void* statekey = currentState->handleInput();
+		int statekey = currentState->handleInput();
 		if (currentKey != statekey)
 		{
 			ChangeState(statekey);

@@ -43,6 +43,8 @@ public:
     __forceinline constexpr void
         SetPosition(const Vec2& pos);
 
+    virtual bool Check_CanGetAttack() { return true; }
+
     void GetAttack(int damage);
 
     virtual void Damaged() PURE;

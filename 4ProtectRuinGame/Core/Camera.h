@@ -33,6 +33,12 @@ public:
         camPos = pos;
     }
 
+    __forceinline void
+        SetCameraSize(float size)
+    {
+        camSize = size;
+    }
+
     void Update();
 
 };

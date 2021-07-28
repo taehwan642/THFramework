@@ -9,12 +9,12 @@ Octopus::Octopus(Player* p) :
 	CreateAnimation(L"octoattack", 2, 0.3f);
 	PlayAnimation(L"octoidle");
 
-	stm->AddState(CASTVOIDP(OctopusState::IDLE), new OctopusIdleState(this));
-	stm->AddState(CASTVOIDP(OctopusState::ATTACK), new OctopusAttackState(this));
-	stm->AddState(CASTVOIDP(OctopusState::WALK), new OctopusWalkState(this));
-	stm->AddState(CASTVOIDP(OctopusState::FOLLOW), new OctopusFollowState(this));
-	stm->ChangeState(CASTVOIDP(OctopusState::IDLE));
-	attackSpeed = 5.f;
+	stm->AddState(STC(OctopusState::IDLE), new OctopusIdleState(this));
+	stm->AddState(STC(OctopusState::ATTACK), new OctopusAttackState(this));
+	stm->AddState(STC(OctopusState::WALK), new OctopusWalkState(this));
+	stm->AddState(STC(OctopusState::FOLLOW), new OctopusFollowState(this));
+	stm->ChangeState(STC(OctopusState::IDLE));
+	attackSpeed = 1.f;
 }
 
 Octopus::~Octopus()

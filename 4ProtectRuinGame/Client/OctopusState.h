@@ -19,7 +19,7 @@ public:
         idleTime(0.f)
     {};
 
-    [[nodiscard]] void*
+    [[nodiscard]] int
         handleInput() override;
 };
 
@@ -29,7 +29,7 @@ class OctopusAttackState final :
     float deltatime;
 public:
     explicit OctopusAttackState(GameObject* p) : GameObjectState(p), deltatime(0.f) {};
-    [[nodiscard]] void*
+    [[nodiscard]] int
         handleInput() override;
 };
 
@@ -46,7 +46,7 @@ public:
         isWalkStart(false), 
         xWay(0) {};
 
-    [[nodiscard]] void*
+    [[nodiscard]] int
         handleInput() override;
 };
 
@@ -55,6 +55,6 @@ class OctopusFollowState final :
 {
 public:
     explicit OctopusFollowState(GameObject* p) : GameObjectState(p) {};
-    [[nodiscard]] void*
+    [[nodiscard]] int
         handleInput() override;
 };

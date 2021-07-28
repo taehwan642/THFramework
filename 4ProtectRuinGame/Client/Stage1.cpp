@@ -8,6 +8,8 @@ Stage1::Init()
 	Camera& cam = Camera::GetInstance();
 	cam.Initialize();
 
+	cam.SetCameraSize(2.f);
+
 	TileMapManager& tmm = TileMapManager::GetInstance();
 	tmm.LoadBlocks();
 	

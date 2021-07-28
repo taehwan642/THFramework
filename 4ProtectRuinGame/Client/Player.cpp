@@ -10,17 +10,19 @@ Player::Player()
 	CreateAnimation(L"idle", 2, 0.6f);
 	CreateAnimation(L"jump", 2, 0.15f);
 	CreateAnimation(L"jumpend", 1, 0.15f);
+	CreateAnimation(L"roll", 5, 0.07f);
 	PlayAnimation(L"idle");
 
 	collider->scale = { 0.6f, 1 };
 
-	stm->AddState(CASTVOIDP(PlayerStates::IDLE), new IdleState(this));
-	stm->AddState(CASTVOIDP(PlayerStates::RUN), new RunState(this));
-	stm->AddState(CASTVOIDP(PlayerStates::JUMP), new JumpState(this));
-	stm->AddState(CASTVOIDP(PlayerStates::JUMPEND), new JumpEndState(this));
-	stm->AddState(CASTVOIDP(PlayerStates::ATTACK), new AttackState(this));
-	stm->AddState(CASTVOIDP(PlayerStates::DAMAGED), new DamagedState(this));
-	stm->ChangeState(CASTVOIDP(PlayerStates::IDLE));
+	stm->AddState(STC(PlayerStates::IDLE), new IdleState(this));
+	stm->AddState(STC(PlayerStates::RUN), new RunState(this));
+	stm->AddState(STC(PlayerStates::JUMP), new JumpState(this));
+	stm->AddState(STC(PlayerStates::JUMPEND), new JumpEndState(this));
+	stm->AddState(STC(PlayerStates::ATTACK), new AttackState(this));
+	stm->AddState(STC(PlayerStates::DAMAGED), new DamagedState(this));
+	stm->AddState(STC(PlayerStates::DODGE), new DodgeState(this));
+	stm->ChangeState(STC(PlayerStates::IDLE));
 }
 
 Player::~Player()
@@ -41,16 +43,19 @@ Player::Action()
 		{
 			GetAttack(iter->attackLevel);
 		}
-
-		float distance = fabs(collider->position.x - iter->collider->position.x);
-		if (distance <= 300)
-		{
-			
-		}
 	}
 }
 
-void Player::Damaged()
+void 
+Player::Damaged()
 {
-	stm->ChangeState(CASTVOIDP(PlayerStates::DAMAGED));
+	stm->ChangeState(STC(PlayerStates::DAMAGED));
+}
+
+bool 
+Player::Check_CanGetAttack()
+{
+	if (true == isDodging)
+		return false;
+	return true;
 }
