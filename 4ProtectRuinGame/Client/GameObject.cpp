@@ -58,6 +58,7 @@ GameObject::CheckCollision()
 				bool col = false;
 				if ((myRect.right + myRect.left) / 2 <= (boxRect.right + boxRect.left) / 2)
 				{
+					std::cout << result.right << " " << result.bottom << std::endl;
 					collider->position.x -= result.right;
 					col = true;
 				}
@@ -102,7 +103,7 @@ GameObject::Update()
 	position = collider->position;
 }
 
-void GameObject::GetAttack(int damage)
+void GameObject::GetAttack(int damage, const Vec2& pushDir)
 {
 	if (false == Check_CanGetAttack())
 		return;
@@ -113,5 +114,6 @@ void GameObject::GetAttack(int damage)
 		return;
 	}
 	HP -= damage;
+	pushDirection = pushDir;
 	Damaged();
 }

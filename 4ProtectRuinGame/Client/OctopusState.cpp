@@ -4,6 +4,9 @@
 int
 OctopusIdleState::handleInput()
 {
+	if (true == object->isDamaged)
+		return STC(OctopusState::DAMAGED);
+
 	idleTime += Monster::GetDT();
 
 	if (idleTime >= 2)
@@ -11,8 +14,6 @@ OctopusIdleState::handleInput()
 		idleTime = 0;
 		return STC(OctopusState::WALK);
 	}
-
-	object->gravity = true;
 
 	float distance = fabs(object->collider->position.x - static_cast<Octopus*>(object)->player->collider->position.x); // 500
 	if (distance < 500)
@@ -28,17 +29,34 @@ OctopusIdleState::handleInput()
 int
 OctopusAttackState::handleInput()
 {
+	if (true == object->isDamaged)
+		return STC(OctopusState::DAMAGED);
+
 	deltatime += Monster::GetDT();
-	object->gravity = true;
+
+	Player* pl = static_cast<Octopus*>(object)->player;
 
 	if (deltatime > object->attackSpeed)
 	{
 		if (static_cast<Monster*>(object)->PlayAnimationM(L"octoattack"))
 		{
-			float distance = fabs(object->collider->position.x - static_cast<Octopus*>(object)->player->collider->position.x); // 500
+			float distance = fabs(object->collider->position.x - pl->collider->position.x); // 500
 			if (distance < 300)
 			{
-				static_cast<Octopus*>(object)->player->GetAttack(object->attackLevel);
+				if (object->collider->position.x < pl->collider->position.x)
+				{
+					if (true == object->lookingRight)
+					{
+						pl->GetAttack(object->attackLevel, Vec2(1.f, 0));
+					}
+				}
+				else
+				{
+					if (false == object->lookingRight)
+					{
+						pl->GetAttack(object->attackLevel, Vec2(-1.f, 0));
+					}
+				}
 			}
 			deltatime = 0;
 			return STC(OctopusState::IDLE);
@@ -50,11 +68,15 @@ OctopusAttackState::handleInput()
 int
 OctopusWalkState::handleInput()
 {
+	if (true == object->isDamaged)
+		return STC(OctopusState::DAMAGED);
+
 	if (false == isWalkStart)
 	{
 		isWalkStart = true;
 		int res = std::rand() % 2;
-		xWay = (res == 0 ? 1 : -1);
+		object->lookingRight = res;
+		xWay = (res == 1 ? 1 : -1);
 	}
 	walktime += Monster::GetDT();
 
@@ -80,13 +102,21 @@ OctopusWalkState::handleInput()
 int
 OctopusFollowState::handleInput()
 {
+	if (true == object->isDamaged)
+	{
+		object->gravity = true;
+		return STC(OctopusState::DAMAGED);
+	}
+
 	float distance = fabs(object->collider->position.x - static_cast<Octopus*>(object)->player->collider->position.x); // 500
 	if (distance > 500)
 	{
+		object->gravity = true;
 		return STC(OctopusState::IDLE);
 	}
 	else if (distance < 300)
 	{
+		object->gravity = true;
 		return STC(OctopusState::ATTACK);
 	}
 
@@ -95,17 +125,42 @@ OctopusFollowState::handleInput()
 		object->collider->position.y -= Monster::GetDT() * 1500.f;
 		object->gravity = false;
 		object->isonfloor = false;
+		delta = 0;
+	}
+	else
+	{
+		delta += Monster::GetDT();
+		if (delta > 0.3f)
+		{
+			object->gravity = true;
+			delta = 0;
+		}
 	}
 	
 	if (object->collider->position.x > static_cast<Octopus*>(object)->player->collider->position.x)
 	{
 		object->collider->position.x -= Monster::GetDT() * 100.f;
+		object->lookingRight = false;
 	}
 	else
 	{
 		object->collider->position.x += Monster::GetDT() * 100.f;
+		object->lookingRight = true;
 	}
 	static_cast<Monster*>(object)->PlayAnimationM(L"octowalk");
 
 	return STC(OctopusState::FOLLOW);
+}
+
+int OctopusDamagedState::handleInput()
+{
+	if (static_cast<Monster*>(object)->PlayAnimationM(L"octohurt"))
+	{
+		object->isDamaged = false;
+		return STC(OctopusState::IDLE);
+	}
+	
+	object->collider->position.x += object->pushDirection.x * Monster::GetDT() * 100.f;
+
+	return STC(OctopusState::DAMAGED);
 }

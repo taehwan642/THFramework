@@ -8,8 +8,6 @@ public:
     explicit Monster(Player* p) : player(p) {};
     virtual ~Monster();
 
-    void Damaged() override {};
-    
     static float monstertimeScale;
 
     __forceinline static float 

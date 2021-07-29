@@ -12,6 +12,7 @@ Player::Player()
 	CreateAnimation(L"jumpend", 1, 0.15f);
 	CreateAnimation(L"roll", 5, 0.07f);
 	CreateAnimation(L"super", 2, 0.3f);
+	CreateAnimation(L"hurt", 2, 0.1f);
 	PlayAnimation(L"idle");
 
 	collider->scale = { 0.6f, 1 };
@@ -43,15 +44,12 @@ Player::Action()
 		RECT temp;
 		if (IntersectRect(&temp, &collider->GetRect(), &iter->collider->GetRect()))
 		{
-			GetAttack(iter->attackLevel);
+			Vec2 dir = Vec2(1.f, 0.f);
+			if (collider->position.x < iter->collider->position.x)
+				dir.x *= -1.f;
+			GetAttack(iter->attackLevel, dir);
 		}
 	}
-}
-
-void 
-Player::Damaged()
-{
-	stm->ChangeState(STC(PlayerStates::DAMAGED));
 }
 
 bool 

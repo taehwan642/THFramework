@@ -12,8 +12,6 @@ public:
 
     void Action() override;
 
-    void Damaged() override;
-
     bool Check_CanGetAttack() override;
 };
 

@@ -32,7 +32,11 @@ public:
 
     bool wallcollided;
 
+    bool isDamaged = false;
+
     Sprite* collider;
+
+    Vec2 pushDirection;
 
     virtual ~GameObject();
 
@@ -45,9 +49,9 @@ public:
 
     virtual bool Check_CanGetAttack() { return true; }
 
-    void GetAttack(int damage);
+    void GetAttack(int damage, const Vec2& pushDir);
 
-    virtual void Damaged() PURE;
+    virtual void Damaged() { isDamaged = true; };
 
     void Update() override final;
 };

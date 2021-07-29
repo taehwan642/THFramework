@@ -5,6 +5,9 @@
 int
 IdleState::handleInput()
 {
+	if (true == object->isDamaged)
+		return STC(PlayerStates::DAMAGED);
+
 	if (DXUTIsKeyDown('A')
 		|| DXUTIsKeyDown('D'))
 		return STC(PlayerStates::RUN);
@@ -15,7 +18,7 @@ IdleState::handleInput()
 	if (DXUTIsKeyDown(VK_SPACE))
 		return STC(PlayerStates::ATTACK);
 
-	if (DXUTIsKeyDown(VK_LSHIFT))
+	if (DXUTWasKeyPressed('Q'))
 		return STC(PlayerStates::DODGE);
 
 	if (DXUTWasKeyPressed('E'))
@@ -29,6 +32,9 @@ IdleState::handleInput()
 int
 RunState::handleInput()
 {
+	if (true == object->isDamaged)
+		return STC(PlayerStates::DAMAGED);
+
 	if (DXUTIsKeyDown('A'))
 	{
 		keys[0] = 1;
@@ -80,14 +86,14 @@ AttackState::handleInput()
 				{
 					if (object->lookingRight == true)
 					{
-						iter->GetAttack(object->attackLevel);
+						iter->GetAttack(object->attackLevel, Vec2(1.f, 0));
 					}
 				}
 				else
 				{
 					if (object->lookingRight == false)
 					{
-						iter->GetAttack(object->attackLevel);
+						iter->GetAttack(object->attackLevel, Vec2(-1.f, 0));
 					}
 				}
 			}
@@ -102,6 +108,12 @@ AttackState::handleInput()
 int
 JumpState::handleInput()
 {
+	if (true == object->isDamaged)
+	{
+		object->gravity = true;
+		return STC(PlayerStates::DAMAGED);
+	}
+
 	if (object->PlayAnimation(L"jump"))
 	{
 		object->gravity = true;
@@ -151,7 +163,7 @@ JumpEndState::handleInput()
 int
 DamagedState::handleInput()
 {
-	deltatime += DXUTGetElapsedTime();
+	/*deltatime += DXUTGetElapsedTime();
 	object->gravity = true;
 	if (deltatime > 0.3f)
 	{
@@ -170,7 +182,14 @@ DamagedState::handleInput()
 	{
 		object->collider->position.x += 300.f * DXUTGetElapsedTime();
 		object->lookingRight = true;
+	}*/
+	if (object->PlayAnimation(L"hurt"))
+	{
+		object->isDamaged = false;
+		return STC(PlayerStates::IDLE);
 	}
+
+	object->collider->position.x += object->pushDirection.x * DXUTGetElapsedTime() * 100.f;
 
 	return STC(PlayerStates::DAMAGED);
 }
