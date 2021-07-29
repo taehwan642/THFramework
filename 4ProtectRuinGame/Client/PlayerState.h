@@ -8,7 +8,8 @@ enum class PlayerStates
 	JUMP,
 	JUMPEND,
 	DAMAGED,
-	DODGE
+	DODGE,
+	SUPER
 };
 
 class IdleState final :
@@ -75,6 +76,17 @@ class DodgeState final :
 {
 public:
 	explicit DodgeState(GameObject* p) :
+		GameObjectState(p)
+	{};
+	[[nodiscard]] int
+		handleInput() override;
+};
+
+class SuperState final :
+	public GameObjectState
+{
+public:
+	explicit SuperState(GameObject* p) :
 		GameObjectState(p)
 	{};
 	[[nodiscard]] int

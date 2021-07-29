@@ -9,6 +9,14 @@ public:
     virtual ~Monster();
 
     void Damaged() override {};
+    
+    static float monstertimeScale;
+
+    __forceinline static float 
+        GetDT() { return DXUTGetElapsedTime() * monstertimeScale; };
+
+    bool PlayAnimationM(const std::wstring& tag);
 
     void Action() override;
 };
+

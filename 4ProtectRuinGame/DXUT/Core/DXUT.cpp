@@ -672,6 +672,7 @@ UINT DXUTGetBackBufferWidthFromDS( DXUTDeviceSettings* pNewDeviceSettings )     
 UINT DXUTGetBackBufferHeightFromDS( DXUTDeviceSettings* pNewDeviceSettings )    { return DXUTIsD3D9(pNewDeviceSettings) ? pNewDeviceSettings->d3d9.pp.BackBufferHeight : pNewDeviceSettings->d3d10.sd.BufferDesc.Height; }
 bool DXUTGetIsWindowedFromDS( DXUTDeviceSettings* pNewDeviceSettings )          { if (!pNewDeviceSettings) return true; return ((DXUTIsD3D9(pNewDeviceSettings) ? pNewDeviceSettings->d3d9.pp.Windowed : pNewDeviceSettings->d3d10.sd.Windowed) == 1); }
 
+float timeScale = 1.f;
 
 //--------------------------------------------------------------------------------------
 // External state access functions
@@ -696,7 +697,7 @@ LONG WINAPI DXUTGetWindowHeight()                          { RECT rc = DXUTGetWi
 RECT WINAPI DXUTGetWindowClientRectAtModeChange()          { RECT rc = { 0, 0, GetDXUTState().GetWindowBackBufferWidthAtModeChange(), GetDXUTState().GetWindowBackBufferHeightAtModeChange() }; return rc; }
 RECT WINAPI DXUTGetFullsceenClientRectAtModeChange()       { RECT rc = { 0, 0, GetDXUTState().GetFullScreenBackBufferWidthAtModeChange(), GetDXUTState().GetFullScreenBackBufferHeightAtModeChange() }; return rc; }
 double WINAPI DXUTGetTime()                                { return GetDXUTState().GetTime(); }
-float WINAPI DXUTGetElapsedTime()                          { return GetDXUTState().GetElapsedTime(); }
+float WINAPI DXUTGetElapsedTime()                          { return timeScale * GetDXUTState().GetElapsedTime(); }
 float WINAPI DXUTGetFPS()                                  { return GetDXUTState().GetFPS(); }
 LPCWSTR WINAPI DXUTGetWindowTitle()                        { return GetDXUTState().GetWindowTitle(); }
 LPCWSTR WINAPI DXUTGetDeviceStats()                        { return GetDXUTState().GetDeviceStats(); }

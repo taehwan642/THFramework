@@ -18,6 +18,9 @@ IdleState::handleInput()
 	if (DXUTIsKeyDown(VK_LSHIFT))
 		return STC(PlayerStates::DODGE);
 
+	if (DXUTWasKeyPressed('E'))
+		return STC(PlayerStates::SUPER);
+
 	object->PlayAnimation(L"idle");
 
 	return STC(PlayerStates::IDLE);
@@ -183,4 +186,21 @@ int DodgeState::handleInput()
 	object->collider->position.x += xWay * DXUTGetElapsedTime() * 300.f;
 	static_cast<Player*>(object)->isDodging = true;
 	return STC(PlayerStates::DODGE);
+}
+
+int 
+SuperState::handleInput()
+{
+	if (object->PlayAnimation(L"super"))
+	{
+		object->gravity = true;
+		static_cast<Player*>(object)->isDodging = false;
+		Monster::monstertimeScale = 1.f;
+		return STC(PlayerStates::IDLE);
+	}
+	object->gravity = false;
+	object->collider->position.y -= 300 * DXUTGetElapsedTime();
+	Monster::monstertimeScale = 0.f;
+	static_cast<Player*>(object)->isDodging = true;
+	return STC(PlayerStates::SUPER);
 }

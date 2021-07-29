@@ -11,6 +11,7 @@ Player::Player()
 	CreateAnimation(L"jump", 2, 0.15f);
 	CreateAnimation(L"jumpend", 1, 0.15f);
 	CreateAnimation(L"roll", 5, 0.07f);
+	CreateAnimation(L"super", 2, 0.3f);
 	PlayAnimation(L"idle");
 
 	collider->scale = { 0.6f, 1 };
@@ -22,6 +23,7 @@ Player::Player()
 	stm->AddState(STC(PlayerStates::ATTACK), new AttackState(this));
 	stm->AddState(STC(PlayerStates::DAMAGED), new DamagedState(this));
 	stm->AddState(STC(PlayerStates::DODGE), new DodgeState(this));
+	stm->AddState(STC(PlayerStates::SUPER), new SuperState(this));
 	stm->ChangeState(STC(PlayerStates::IDLE));
 }
 

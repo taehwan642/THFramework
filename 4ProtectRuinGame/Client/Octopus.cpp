@@ -7,7 +7,7 @@ Octopus::Octopus(Player* p) :
 	CreateAnimation(L"octoidle", 2, 0.1f);
 	CreateAnimation(L"octowalk", 2, 0.1f);
 	CreateAnimation(L"octoattack", 2, 0.3f);
-	PlayAnimation(L"octoidle");
+	PlayAnimationM(L"octoidle");
 
 	stm->AddState(STC(OctopusState::IDLE), new OctopusIdleState(this));
 	stm->AddState(STC(OctopusState::ATTACK), new OctopusAttackState(this));

@@ -4,7 +4,7 @@
 int
 OctopusIdleState::handleInput()
 {
-	idleTime += DXUTGetElapsedTime();
+	idleTime += Monster::GetDT();
 
 	if (idleTime >= 2)
 	{
@@ -20,7 +20,7 @@ OctopusIdleState::handleInput()
 		return STC(OctopusState::FOLLOW);
 	}
 
-	object->PlayAnimation(L"octoidle");
+	static_cast<Monster*>(object)->PlayAnimationM(L"octoidle");
 
 	return STC(OctopusState::IDLE);
 }
@@ -28,12 +28,12 @@ OctopusIdleState::handleInput()
 int
 OctopusAttackState::handleInput()
 {
-	deltatime += DXUTGetElapsedTime();
+	deltatime += Monster::GetDT();
 	object->gravity = true;
 
 	if (deltatime > object->attackSpeed)
 	{
-		if (object->PlayAnimation(L"octoattack"))
+		if (static_cast<Monster*>(object)->PlayAnimationM(L"octoattack"))
 		{
 			float distance = fabs(object->collider->position.x - static_cast<Octopus*>(object)->player->collider->position.x); // 500
 			if (distance < 300)
@@ -56,7 +56,7 @@ OctopusWalkState::handleInput()
 		int res = std::rand() % 2;
 		xWay = (res == 0 ? 1 : -1);
 	}
-	walktime += DXUTGetElapsedTime();
+	walktime += Monster::GetDT();
 
 	if (walktime >= 1)
 	{
@@ -70,9 +70,9 @@ OctopusWalkState::handleInput()
 		xWay *= -1;
 	}
 
-	object->collider->position.x += xWay * DXUTGetElapsedTime() * 100.f;
+	object->collider->position.x += xWay * Monster::GetDT() * 100.f;
 
-	object->PlayAnimation(L"octowalk");
+	static_cast<Monster*>(object)->PlayAnimationM(L"octowalk");
 
 	return STC(OctopusState::WALK);
 }
@@ -92,20 +92,20 @@ OctopusFollowState::handleInput()
 
 	if (true == object->wallcollided)
 	{
-		object->collider->position.y -= DXUTGetElapsedTime() * 1500.f;
+		object->collider->position.y -= Monster::GetDT() * 1500.f;
 		object->gravity = false;
 		object->isonfloor = false;
 	}
 	
 	if (object->collider->position.x > static_cast<Octopus*>(object)->player->collider->position.x)
 	{
-		object->collider->position.x -= DXUTGetElapsedTime() * 100.f;
+		object->collider->position.x -= Monster::GetDT() * 100.f;
 	}
 	else
 	{
-		object->collider->position.x += DXUTGetElapsedTime() * 100.f;
+		object->collider->position.x += Monster::GetDT() * 100.f;
 	}
-	object->PlayAnimation(L"octowalk");
+	static_cast<Monster*>(object)->PlayAnimationM(L"octowalk");
 
 	return STC(OctopusState::FOLLOW);
 }

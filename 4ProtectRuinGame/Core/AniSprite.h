@@ -7,9 +7,11 @@ private:
     std::wstring currentAnimationTag;
     std::pair<float, std::vector<Texture*>> currentAnimation;
     int currentFrame;
+    std::map<std::wstring, std::pair<float, std::vector<Texture*>>> animationMap;
+
+protected:
     float currentTick;
 
-    std::map<std::wstring, std::pair<float, std::vector<Texture*>>> animationMap;
 
 public:
     explicit AniSprite();
