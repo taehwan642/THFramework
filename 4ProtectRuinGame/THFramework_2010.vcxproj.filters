@@ -99,6 +99,12 @@
     <Filter Include="2.Client\2.Manager\0.MonsterManager">
       <UniqueIdentifier>{4c36bb57-5ec3-4d27-b782-982be08d1eb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2.Client\3.UI">
+      <UniqueIdentifier>{cf431566-4f5c-43bf-a861-6ebfcae3e624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\3.UI\0.Minimap">
+      <UniqueIdentifier>{1da62f63-d53b-4c74-9db3-3c20836a34d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -206,6 +212,9 @@
     <ClCompile Include="Client\OctopusState.cpp">
       <Filter>2.Client\1.GameObjects\2.Monster\0.Octopus</Filter>
     </ClCompile>
+    <ClCompile Include="Client\Minimap.cpp">
+      <Filter>2.Client\3.UI\0.Minimap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -279,6 +288,9 @@
     </ClInclude>
     <ClInclude Include="Client\OctopusState.h">
       <Filter>2.Client\1.GameObjects\2.Monster\0.Octopus</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Minimap.h">
+      <Filter>2.Client\3.UI\0.Minimap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

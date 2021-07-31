@@ -13,6 +13,12 @@ private:
     { return a < b; }
 
 public:
+    __forceinline std::list<Object*>& 
+        GetRenderObjects()
+    {
+        return renderObjects;
+    }
+
     __forceinline void 
         AddRenderObjects(Object* obj)
     { 
