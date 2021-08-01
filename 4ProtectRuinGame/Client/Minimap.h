@@ -1,9 +1,22 @@
 #pragma once
+
+struct MinimapTile
+{
+	
+};
+
 class Minimap
 {
-public:
-	std::list<Sprite*> renderingSprites;
+private:
+	std::vector<Object*> minimap;
 
-	void Render();
+	void CreateMinimapTile();
+
+	void DeleteMinimapTile();
+
+public:
+	std::list<Object*> renderingSprites;
+
+	void Update();
 };
 
