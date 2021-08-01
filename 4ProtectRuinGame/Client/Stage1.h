@@ -2,6 +2,7 @@
 #include "TileMapManager.h"
 #include "Player.h"
 #include "MonsterManager.h"
+#include "Minimap.h"
 #include "Scene.h"
 class Stage1 final :
     public Scene
@@ -9,6 +10,7 @@ class Stage1 final :
 private:
     Player* player;
     MonsterManager& mm;
+    Minimap* minimap;
 
 public:
     __forceinline 

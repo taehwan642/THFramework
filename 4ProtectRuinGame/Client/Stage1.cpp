@@ -22,12 +22,13 @@ Stage1::Init()
 	{
 		mm.SpawnMonster(MonsterTag::OCTOPUS, iter);
 	}
+
+	minimap = new Minimap;
 }
 
 void 
 Stage1::Update()
 {
-
 	Camera& cam = Camera::GetInstance();
 
 	Vec2 camPos = cam.GetPosition();
@@ -50,6 +51,8 @@ Stage1::Update()
 	}
 
 	cam.SetPosition(camPos);
+
+	minimap->Update();
 }
 
 void 
@@ -57,4 +60,5 @@ Stage1::Exit()
 {
 	delete player;
 	mm.DeleteMonster();
+	delete minimap;
 }
