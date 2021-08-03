@@ -388,6 +388,7 @@
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="Client\GameObject.h" />
     <ClInclude Include="Client\GameObjectState.h" />
+    <ClInclude Include="Client\HPUI.h" />
     <ClInclude Include="Client\MenuScene.h" />
     <ClInclude Include="Client\Minimap.h" />
     <ClInclude Include="Client\Monster.h" />
@@ -413,6 +414,7 @@
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
     <ClCompile Include="Client\GameObject.cpp" />
+    <ClCompile Include="Client\HPUI.cpp" />
     <ClCompile Include="Client\MenuScene.cpp" />
     <ClCompile Include="Client\Minimap.cpp" />
     <ClCompile Include="Client\Monster.cpp" />

@@ -105,6 +105,9 @@
     <Filter Include="2.Client\3.UI\0.Minimap">
       <UniqueIdentifier>{1da62f63-d53b-4c74-9db3-3c20836a34d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2.Client\3.UI\1.HPUI">
+      <UniqueIdentifier>{59ea4e6f-1026-4711-b660-60bc292b0bae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -215,6 +218,9 @@
     <ClCompile Include="Client\Minimap.cpp">
       <Filter>2.Client\3.UI\0.Minimap</Filter>
     </ClCompile>
+    <ClCompile Include="Client\HPUI.cpp">
+      <Filter>2.Client\3.UI\1.HPUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -291,6 +297,9 @@
     </ClInclude>
     <ClInclude Include="Client\Minimap.h">
       <Filter>2.Client\3.UI\0.Minimap</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\HPUI.h">
+      <Filter>2.Client\3.UI\1.HPUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
