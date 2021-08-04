@@ -19,6 +19,7 @@ public:
     bool gravity;
     bool isonfloor;
 
+    int MaxHP;
     int HP;
     float moveSpeed;
     int barrierCount;

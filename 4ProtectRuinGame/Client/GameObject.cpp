@@ -5,6 +5,7 @@
 GameObject::GameObject() :
 	gravity(true),
 	isonfloor(false),
+	MaxHP(5),
 	HP(5),
 	moveSpeed(1),
 	barrierCount(0),
