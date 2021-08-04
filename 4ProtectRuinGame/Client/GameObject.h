@@ -1,4 +1,5 @@
 #pragma once
+#include "HPUI.h"
 #include "AniSprite.h"
 class GameObject :
     public AniSprite
@@ -38,6 +39,8 @@ public:
     Sprite* collider;
 
     Vec2 pushDirection;
+
+    HPUI* hpbar;
 
     virtual ~GameObject();
 

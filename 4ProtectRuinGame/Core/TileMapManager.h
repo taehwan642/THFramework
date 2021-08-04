@@ -11,10 +11,18 @@ enum class BlockType
 	OCTOPUS
 };
 
-struct Block
+//struct Block
+//{
+//	BlockType type;
+//	Sprite* sprite;
+//};
+
+class Block : 
+	public Sprite
 {
+public:
 	BlockType type;
-	Sprite* sprite;
+	void Update() override {};
 };
 
 #define Row 6
@@ -24,7 +32,7 @@ class TileMapManager final :
 	public Singleton<TileMapManager>
 {
 private:
-	std::vector<Block> blocks;
+	std::vector<Block*> blocks;
 
 	Sprite* blockss[Row][Column];
 	BlockType blockTypes[Row][Column];
@@ -43,7 +51,7 @@ public:
 
 	void UpdateManager();
 
-	[[nodiscard]] __forceinline std::vector<Block>& GetBlockVector()
+	[[nodiscard]] __forceinline std::vector<Block*>& GetBlockVector()
 	{
 		return blocks;
 	};

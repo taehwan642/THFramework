@@ -1,5 +1,6 @@
 #include "DXUT.h"
 #include "RenderManager.h"
+#include "TileMapManager.h"
 #include "Sprite.h"
 #include "Minimap.h"
 
@@ -19,7 +20,8 @@ void Minimap::CreateMinimapTile()
 			sp->SetTexture(L"bluebox.png");
 		else if (nullptr != dynamic_cast<Monster*>(iter))
 			sp->SetTexture(L"redbox.png");
-		else sp->SetTexture(L"whitebox.png");
+		else if(nullptr != dynamic_cast<Block*>(iter)) 
+			sp->SetTexture(L"whitebox.png");
 			
 		Vec2 minimapTilePosition = (iter->position / 4) * minimapTileScale;
 		sp->position = minimapPosition + minimapTilePosition;

@@ -26,6 +26,13 @@ Player::Player()
 	stm->AddState(STC(PlayerStates::DODGE), new DodgeState(this));
 	stm->AddState(STC(PlayerStates::SUPER), new SuperState(this));
 	stm->ChangeState(STC(PlayerStates::IDLE));
+
+	hpbar = new HPUI(L"playerUI.png", L"playerUIBar.png");
+
+	hpbar->SetMaxHP(MaxHP);
+	hpbar->SetHP(HP);
+
+	hpbar->SetUp(240);
 }
 
 Player::~Player()
@@ -50,6 +57,8 @@ Player::Action()
 			GetAttack(iter->attackLevel, dir);
 		}
 	}
+	hpbar->SetHP(HP);
+
 }
 
 bool 

@@ -164,31 +164,31 @@ TileMapManager::LoadBlocks()
 			continue;
 		}
 
-		Block block;
-		block.type = type;
-		block.sprite = new Sprite();
-		block.sprite->scale = { blockScale, blockScale };
+		Block* block;
+		block = new Block();
+		block->type = type;
+		block->scale = { blockScale, blockScale };
 
 		switch (type)
 		{
 		case BlockType::NONE:
-			block.sprite->SetTexture(L"box.png");
+			block->SetTexture(L"box.png");
 			break;
 		case BlockType::FLOOR:
-			block.sprite->SetTexture(L"block.png");
+			block->SetTexture(L"block.png");
 			break;
 		case BlockType::OBSTICLE:
-			block.sprite->SetTexture(L"block2.png");
+			block->SetTexture(L"block2.png");
 			break;
 		default:
 			break;
 		}
 
-		const Texture* t = block.sprite->GetTexture();
+		const Texture* t = block->GetTexture();
 
-		block.sprite->SetPosition(
-			((block.sprite->scale.x * t->info.Width) / 2) + (x * t->info.Width * block.sprite->scale.x),
-			((block.sprite->scale.y * t->info.Height) / 2) + (y * t->info.Height * block.sprite->scale.y));
+		block->SetPosition(
+			((block->scale.x * t->info.Width) / 2) + (x * t->info.Width * block->scale.x),
+			((block->scale.y * t->info.Height) / 2) + (y * t->info.Height * block->scale.y));
 
 		blocks.push_back(block);
 
@@ -230,6 +230,7 @@ TileMapManager::DeleteBlocks()
 
 	for (auto& iter : blocks)
 	{
-		delete iter.sprite;
+		delete iter;
 	}
+	blocks.clear();
 }

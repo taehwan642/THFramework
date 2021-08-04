@@ -14,13 +14,13 @@ GameObject::GameObject() :
 	attackLevel(1),
 	attackSpeed(1),
 	lookingRight(true),
-	wallcollided(false)
+	wallcollided(false),
+	hpbar(nullptr)
 {
 	collider = new Sprite();
 	collider->SetTexture(L"box.png");
 
 	stm = new StateManager;
-	
 }
 
 GameObject::~GameObject()
@@ -28,16 +28,17 @@ GameObject::~GameObject()
 	delete collider;
 	stm->DeleteStates();
 	delete stm;
+	delete hpbar;
 }
 
 void 
 GameObject::CheckCollision()
 {
-	std::vector<Block> v = TileMapManager::GetInstance().GetBlockVector();
+	std::vector<Block*> v = TileMapManager::GetInstance().GetBlockVector();
 	wallcollided = false;
 	for (const auto& iter : v)
 	{
-		Sprite* bs = iter.sprite;
+		Sprite* bs = iter;
 		RECT result;
 		RECT boxRect = bs->GetRect();
 		RECT myRect = collider->GetRect();
@@ -102,6 +103,13 @@ GameObject::Update()
 	stm->UpdateState();
 
 	position = collider->position;
+
+	if (nullptr != hpbar)
+	{
+		hpbar->position.x = collider->position.x;
+		hpbar->position.y = collider->position.y - hpbar->GetUp();
+		hpbar->SetHPBarPos();
+	}
 }
 
 void GameObject::GetAttack(int damage, const Vec2& pushDir)
