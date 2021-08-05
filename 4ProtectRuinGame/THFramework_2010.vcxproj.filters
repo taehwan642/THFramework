@@ -57,9 +57,6 @@
     <Filter Include="2.Client\0.Scene\1.TileMapScene">
       <UniqueIdentifier>{b9a0bf65-c164-4deb-81fa-7a72d2dc40ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Client\0.Scene\2.Stage1">
-      <UniqueIdentifier>{ceaffdca-40ad-4dc7-80f9-b8172ce11002}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.Core\6.Sprite\0.Sprite">
       <UniqueIdentifier>{1df298af-2fbd-4d76-bc87-ba9b2b17e358}</UniqueIdentifier>
     </Filter>
@@ -107,6 +104,12 @@
     </Filter>
     <Filter Include="2.Client\3.UI\1.HPUI">
       <UniqueIdentifier>{59ea4e6f-1026-4711-b660-60bc292b0bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\0.Scene\2.Stage">
+      <UniqueIdentifier>{ceaffdca-40ad-4dc7-80f9-b8172ce11002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\0.Scene\2.Stage\0.Stage1">
+      <UniqueIdentifier>{f137a3ab-994e-415c-b2d2-1fe2f4592447}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +188,6 @@
     <ClCompile Include="Client\TileMapScene.cpp">
       <Filter>2.Client\0.Scene\1.TileMapScene</Filter>
     </ClCompile>
-    <ClCompile Include="Client\Stage1.cpp">
-      <Filter>2.Client\0.Scene\2.Stage1</Filter>
-    </ClCompile>
     <ClCompile Include="Client\Player.cpp">
       <Filter>2.Client\1.GameObjects\1.Player\0.Player</Filter>
     </ClCompile>
@@ -220,6 +220,12 @@
     </ClCompile>
     <ClCompile Include="Client\HPUI.cpp">
       <Filter>2.Client\3.UI\1.HPUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Stage1.cpp">
+      <Filter>2.Client\0.Scene\2.Stage\0.Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Stage.cpp">
+      <Filter>2.Client\0.Scene\2.Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +268,6 @@
     <ClInclude Include="Client\TileMapScene.h">
       <Filter>2.Client\0.Scene\1.TileMapScene</Filter>
     </ClInclude>
-    <ClInclude Include="Client\Stage1.h">
-      <Filter>2.Client\0.Scene\2.Stage1</Filter>
-    </ClInclude>
     <ClInclude Include="Client\Player.h">
       <Filter>2.Client\1.GameObjects\1.Player\0.Player</Filter>
     </ClInclude>
@@ -300,6 +303,12 @@
     </ClInclude>
     <ClInclude Include="Client\HPUI.h">
       <Filter>2.Client\3.UI\1.HPUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Stage1.h">
+      <Filter>2.Client\0.Scene\2.Stage\0.Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Stage.h">
+      <Filter>2.Client\0.Scene\2.Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -89,7 +89,22 @@ main(void)
 
     sm.AddScene(L"Menu", new MenuScene);
     sm.AddScene(L"TileMap", new TileMapScene);
-    sm.AddScene(L"Stage1", new Stage1);
+    
+    Stage* stage = new Stage;
+    Map* m1 = new Map;
+    m1->difficulty = 1;
+    m1->isCleared = false;
+    m1->mapName = "map.txt";
+    stage->stages.push_back(m1);
+
+    Map* m2 = new Map;
+    m2->difficulty = 1;
+    m2->isCleared = false;
+    m2->mapName = "map2.txt";
+    stage->stages.push_back(m2);
+
+    sm.AddScene(L"Stage", stage);
+
     sm.ChangeScene(L"TileMap");
 
     DXUTMainLoop();

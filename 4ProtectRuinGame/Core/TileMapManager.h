@@ -11,13 +11,7 @@ enum class BlockType
 	OCTOPUS
 };
 
-//struct Block
-//{
-//	BlockType type;
-//	Sprite* sprite;
-//};
-
-class Block : 
+class Block final : 
 	public Sprite
 {
 public:
@@ -56,8 +50,8 @@ public:
 		return blocks;
 	};
 
-	void SaveBlocks();
-	void LoadBlocks();
+	void SaveBlocks(const std::string& mapTag);
+	void LoadBlocks(const std::string& mapTag);
 
 	void ChangeBlocks();
 

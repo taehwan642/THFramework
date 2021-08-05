@@ -3,18 +3,16 @@
 #include "Player.h"
 #include "MonsterManager.h"
 #include "Minimap.h"
-#include "Scene.h"
+#include "Stage.h"
 class Stage1 final :
-    public Scene
+    public Stage
 {
 private:
-    Player* player;
-    MonsterManager& mm;
-    Minimap* minimap;
+    
 
 public:
     __forceinline 
-        Stage1() : mm(MonsterManager::GetInstance()) {}
+        Stage1(){}
     void Init() override;
     void Update() override;
     void Exit() override;

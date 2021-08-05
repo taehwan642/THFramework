@@ -104,9 +104,9 @@ TileMapManager::UpdateManager()
 }
 
 void
-TileMapManager::SaveBlocks()
+TileMapManager::SaveBlocks(const std::string& mapTag)
 {
-	std::ofstream oin("map.txt");
+	std::ofstream oin(mapTag);
 
 	for (int i = 0; i < std::size(blockss); ++i)
 	{
@@ -121,9 +121,9 @@ TileMapManager::SaveBlocks()
 }
 
 void
-TileMapManager::LoadBlocks()
+TileMapManager::LoadBlocks(const std::string& mapTag)
 {
-	std::ifstream fin("map.txt");
+	std::ifstream fin(mapTag);
 	if (fin.fail())
 	{
 		std::cout << "파일이 없습니다." << std::endl;
