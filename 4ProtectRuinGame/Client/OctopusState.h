@@ -7,7 +7,8 @@ enum class OctopusState
     ATTACK,
     WALK,
     FOLLOW,
-    DAMAGED
+    DAMAGED,
+    DIE
 };
 
 class OctopusIdleState final :
@@ -66,6 +67,15 @@ class OctopusDamagedState final :
 {
 public:
     explicit OctopusDamagedState(GameObject* p) : GameObjectState(p) {};
+    [[nodiscard]] int
+        handleInput() override;
+};
+
+class OctopusDieState final :
+    public GameObjectState
+{
+public:
+    explicit OctopusDieState(GameObject* p) : GameObjectState(p) {};
     [[nodiscard]] int
         handleInput() override;
 };

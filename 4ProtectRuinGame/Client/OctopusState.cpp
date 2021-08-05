@@ -4,6 +4,9 @@
 int
 OctopusIdleState::handleInput()
 {
+	if (object->HP <= 0)
+ 		return STC(OctopusState::DIE);
+
 	if (true == object->isDamaged)
 		return STC(OctopusState::DAMAGED);
 
@@ -163,4 +166,16 @@ int OctopusDamagedState::handleInput()
 	object->collider->position.x += object->pushDirection.x * Monster::GetDT() * 100.f;
 
 	return STC(OctopusState::DAMAGED);
+}
+
+int OctopusDieState::handleInput()
+{
+	if (static_cast<Monster*>(object)->PlayAnimationM(L"octohurt"))
+	{
+		object->isactive = false;
+		object->collider->isactive = false;
+
+		return STC(OctopusState::IDLE);
+	}
+	return STC(OctopusState::DIE);
 }

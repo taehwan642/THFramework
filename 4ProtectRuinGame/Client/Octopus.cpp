@@ -15,6 +15,7 @@ Octopus::Octopus(Player* p) :
 	stm->AddState(STC(OctopusState::WALK), new OctopusWalkState(this));
 	stm->AddState(STC(OctopusState::FOLLOW), new OctopusFollowState(this));
 	stm->AddState(STC(OctopusState::DAMAGED), new OctopusDamagedState(this));
+	stm->AddState(STC(OctopusState::DIE), new OctopusDieState(this));
 	stm->ChangeState(STC(OctopusState::IDLE));
 	attackSpeed = 1.f;
 }

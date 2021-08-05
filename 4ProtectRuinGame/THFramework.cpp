@@ -7,7 +7,7 @@
 #include "TileMapManager.h"
 #include "Sprite.h"
 #include "TileMapScene.h"
-#include "Stage1.h"
+#include "Stage.h"
 #include "MonsterManager.h"
 #include "Camera.h"
 

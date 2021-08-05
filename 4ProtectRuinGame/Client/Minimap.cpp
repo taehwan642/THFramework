@@ -9,6 +9,9 @@ void Minimap::CreateMinimapTile()
 	renderingSprites = RenderManager::GetInstance().GetRenderObjects();
 	for (auto& iter : renderingSprites)
 	{
+		if (false == iter->isactive)
+			continue;
+
 		Sprite* sp = new Sprite;
 		sp->isUI = true;
 

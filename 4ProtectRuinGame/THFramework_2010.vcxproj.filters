@@ -108,8 +108,8 @@
     <Filter Include="2.Client\0.Scene\2.Stage">
       <UniqueIdentifier>{ceaffdca-40ad-4dc7-80f9-b8172ce11002}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Client\0.Scene\2.Stage\0.Stage1">
-      <UniqueIdentifier>{f137a3ab-994e-415c-b2d2-1fe2f4592447}</UniqueIdentifier>
+    <Filter Include="2.Client\1.GameObjects\3.Door">
+      <UniqueIdentifier>{8e3314ea-5b50-4880-901f-faa2ddf2504d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -221,11 +221,11 @@
     <ClCompile Include="Client\HPUI.cpp">
       <Filter>2.Client\3.UI\1.HPUI</Filter>
     </ClCompile>
-    <ClCompile Include="Client\Stage1.cpp">
-      <Filter>2.Client\0.Scene\2.Stage\0.Stage1</Filter>
-    </ClCompile>
     <ClCompile Include="Client\Stage.cpp">
       <Filter>2.Client\0.Scene\2.Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Door.cpp">
+      <Filter>2.Client\1.GameObjects\3.Door</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,11 +304,11 @@
     <ClInclude Include="Client\HPUI.h">
       <Filter>2.Client\3.UI\1.HPUI</Filter>
     </ClInclude>
-    <ClInclude Include="Client\Stage1.h">
-      <Filter>2.Client\0.Scene\2.Stage\0.Stage1</Filter>
-    </ClInclude>
     <ClInclude Include="Client\Stage.h">
       <Filter>2.Client\0.Scene\2.Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Door.h">
+      <Filter>2.Client\1.GameObjects\3.Door</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

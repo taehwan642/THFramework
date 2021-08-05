@@ -14,6 +14,7 @@ struct Map
     // 4. 현재 스테이지는 무엇인가?
     // 5. 현재 스테이지의 맵 구성은 어떻게 되는가?
     std::string mapName;
+    AniSprite* background;
     int difficulty;
     bool isCleared;
 };
@@ -25,6 +26,8 @@ protected:
     Player* player;
     MonsterManager& mm;
     Minimap* minimap;
+
+    AniSprite* door;
 
 public:
     Stage() : mm(MonsterManager::GetInstance()), currentStageindex(0) {}

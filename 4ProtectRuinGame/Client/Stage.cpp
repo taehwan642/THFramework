@@ -31,6 +31,15 @@ Stage::Init()
 void
 Stage::Update()
 {
+	stages[currentStageindex]->isCleared = true;
+	for (auto& iter : mm.monsters)
+	{
+		if (nullptr != iter && iter->isactive == true)
+			stages[currentStageindex]->isCleared = false;
+	}
+
+	std::cout << stages[currentStageindex]->isCleared << std::endl;
+
 	Camera& cam = Camera::GetInstance();
 
 	Vec2 camPos = cam.GetPosition();
