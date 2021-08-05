@@ -36,6 +36,8 @@ public:
 
     bool isDamaged = false;
 
+    float startTime;
+
     Sprite* collider;
 
     Vec2 pushDirection;
@@ -64,4 +66,5 @@ constexpr void
 GameObject::SetPosition(const Vec2& pos)
 {
     collider->position = pos;
+    this->position = pos;
 }

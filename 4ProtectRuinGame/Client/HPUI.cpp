@@ -8,19 +8,15 @@ HPUI::HPUI(const std::wstring& tag, const std::wstring& bartag) :
 	HP(0),
 	up(0)
 {
-	layer = 0;
+	layer = 1;
 	SetTexture(tag);
-	RenderManager::GetInstance().Sort();
 	bar = new AniSprite;
-	bar->layer = 1;
 	bar->SetTexture(bartag);
-	RenderManager::GetInstance().Sort();
 }
 
 
 void HPUI::Update()
 {
-	
 	float result = bar->GetTexture()->info.Width * (static_cast<float>(HP) / static_cast<float>(MaxHP));
 	SetRect(&bar->imgRect, 0, 0, result, bar->GetTexture()->info.Height);
 }

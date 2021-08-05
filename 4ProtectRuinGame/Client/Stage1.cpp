@@ -15,6 +15,7 @@ Stage1::Init()
 	
 	player = new Player();
 	player->collider->position = tmm.playerPos;
+	player->position = tmm.playerPos;
 
 	mm.player = player;
 	mm.CreateMonster();

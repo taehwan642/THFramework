@@ -10,7 +10,7 @@ private:
 
     __forceinline static bool 
         Comp(Object* a, Object* b) 
-    { return a < b; }
+    { return a->layer < b->layer; }
 
 public:
     __forceinline std::list<Object*>& 
@@ -24,6 +24,7 @@ public:
     { 
         if (find(renderObjects.begin(), renderObjects.end(), obj) == renderObjects.end())
             renderObjects.emplace_back(obj);
+        Sort();
     };
     
     __forceinline void 

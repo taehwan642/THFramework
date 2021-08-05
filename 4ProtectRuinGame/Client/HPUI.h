@@ -17,6 +17,7 @@ class HPUI :
 
 public:
     HPUI(const std::wstring& tag, const std::wstring& bartag);
+    ~HPUI() { delete bar; }
 
     __forceinline void SetMaxHP(int maxhp);
     __forceinline void SetHP(int hp);

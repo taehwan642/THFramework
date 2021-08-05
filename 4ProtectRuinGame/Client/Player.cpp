@@ -58,7 +58,6 @@ Player::Action()
 		}
 	}
 	hpbar->SetHP(HP);
-
 }
 
 bool 

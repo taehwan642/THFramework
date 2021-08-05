@@ -14,6 +14,8 @@ private:
 public:
 	__forceinline Minimap();
 
+	__forceinline ~Minimap();
+
 	std::list<Object*> renderingSprites;
 
 	void Update();
@@ -23,4 +25,12 @@ Minimap::Minimap() :
 	minimapPosition(0, 0)
 {
 	
+}
+
+Minimap::~Minimap()
+{
+	for (auto& iter : minimap)
+	{
+		delete iter;
+	}
 }

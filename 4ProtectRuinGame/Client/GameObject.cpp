@@ -4,7 +4,7 @@
 
 GameObject::GameObject() :
 	gravity(true),
-	isonfloor(false),
+	isonfloor(true),
 	MaxHP(5),
 	HP(5),
 	moveSpeed(1),
@@ -15,7 +15,9 @@ GameObject::GameObject() :
 	attackSpeed(1),
 	lookingRight(true),
 	wallcollided(false),
-	hpbar(nullptr)
+	hpbar(nullptr),
+	startTime(0.1f),
+	pushDirection(0, 0)
 {
 	collider = new Sprite();
 	collider->SetTexture(L"box.png");
@@ -60,7 +62,6 @@ GameObject::CheckCollision()
 				bool col = false;
 				if ((myRect.right + myRect.left) / 2 <= (boxRect.right + boxRect.left) / 2)
 				{
-					std::cout << result.right << " " << result.bottom << std::endl;
 					collider->position.x -= result.right;
 					col = true;
 				}
@@ -88,7 +89,10 @@ GameObject::Update()
 
 	if (gravity == true)
 	{
-		collider->position.y += 1500.f * DXUTGetElapsedTime();
+		if (startTime < 0)
+			collider->position.y += 1500.f * DXUTGetElapsedTime();
+		else
+			startTime -= DXUTGetElapsedTime();
 		if (collider->position.y > 1408.f)
 		{
 			collider->position.y = 1408.f;
@@ -97,7 +101,7 @@ GameObject::Update()
 	}
 
 	CheckCollision();
-
+	
 	Action();
 
 	stm->UpdateState();
