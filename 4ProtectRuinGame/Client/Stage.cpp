@@ -1,7 +1,25 @@
 #include "DXUT.h"
 #include "Camera.h"
 #include "Stage.h"
+
 std::vector<Map*> Stage::stages = std::vector<Map*>();
+
+void Stage::CheckPlayerInDoor()
+{
+	if (true == stages[currentStageindex]->isCleared)
+	{
+		RECT temp;
+		if (IntersectRect(&temp, &player->collider->GetRect(), &door->GetRect()))
+		{
+			if (DXUTIsKeyDown('W'))
+			{
+				++currentStageindex;
+				TileMapManager& tmm = TileMapManager::GetInstance();
+				tmm.LoadBlocks(stages[currentStageindex]->mapName);
+			}
+		}
+	}
+}
 
 void
 Stage::Init()
@@ -26,6 +44,11 @@ Stage::Init()
 	}
 
 	minimap = new Minimap;
+
+	door = new AniSprite;
+	door->SetTexture(L"door1.png");
+
+
 }
 
 void
@@ -38,7 +61,7 @@ Stage::Update()
 			stages[currentStageindex]->isCleared = false;
 	}
 
-	std::cout << stages[currentStageindex]->isCleared << std::endl;
+	CheckPlayerInDoor();
 
 	Camera& cam = Camera::GetInstance();
 
@@ -75,4 +98,6 @@ Stage::Exit()
 
 	for (auto& iter : stages)
 		delete iter;
+
+	delete door;
 }

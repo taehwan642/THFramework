@@ -123,6 +123,10 @@ TileMapManager::SaveBlocks(const std::string& mapTag)
 void
 TileMapManager::LoadBlocks(const std::string& mapTag)
 {
+	for (auto& iter : blocks)
+		delete iter;
+	blocks.clear();
+
 	std::ifstream fin(mapTag);
 	if (fin.fail())
 	{

@@ -38,6 +38,7 @@ private:
 public:
 	Vec2 playerPos;
 	std::vector<Vec2> enemyPos;
+	Vec2 doorPos;
 
 	TileMapManager();
 

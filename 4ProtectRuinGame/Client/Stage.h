@@ -29,6 +29,8 @@ protected:
 
     AniSprite* door;
 
+    void CheckPlayerInDoor();
+
 public:
     Stage() : mm(MonsterManager::GetInstance()), currentStageindex(0) {}
 

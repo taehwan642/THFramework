@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -386,7 +386,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico" />
-    <ClInclude Include="Client\Door.h" />
     <ClInclude Include="Client\GameObject.h" />
     <ClInclude Include="Client\GameObjectState.h" />
     <ClInclude Include="Client\HPUI.h" />
@@ -414,7 +413,6 @@
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
-    <ClCompile Include="Client\Door.cpp" />
     <ClCompile Include="Client\GameObject.cpp" />
     <ClCompile Include="Client\HPUI.cpp" />
     <ClCompile Include="Client\MenuScene.cpp" />
