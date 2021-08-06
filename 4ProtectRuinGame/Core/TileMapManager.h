@@ -8,7 +8,8 @@ enum class BlockType
 	FLOOR,
 	OBSTICLE,
 	PLAYER,
-	OCTOPUS
+	OCTOPUS,
+	DOOR
 };
 
 class Block final : 

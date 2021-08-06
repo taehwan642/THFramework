@@ -11,14 +11,29 @@ void Stage::CheckPlayerInDoor()
 		RECT temp;
 		if (IntersectRect(&temp, &player->collider->GetRect(), &door->GetRect()))
 		{
-			if (DXUTIsKeyDown('W'))
+			if (DXUTWasKeyPressed('W'))
 			{
 				++currentStageindex;
 				TileMapManager& tmm = TileMapManager::GetInstance();
 				tmm.LoadBlocks(stages[currentStageindex]->mapName);
+				LoadPosition(tmm);
 			}
 		}
 	}
+}
+
+void Stage::LoadPosition(const TileMapManager& tmm)
+{
+	player->collider->position = tmm.playerPos;
+	player->position = tmm.playerPos;
+
+	for (auto& iter : tmm.enemyPos)
+	{
+		mm.SpawnMonster(MonsterTag::OCTOPUS, iter);
+	}
+
+	door->position = tmm.doorPos;
+
 }
 
 void
@@ -33,22 +48,18 @@ Stage::Init()
 	tmm.LoadBlocks(stages[currentStageindex]->mapName);
 
 	player = new Player();
-	player->collider->position = tmm.playerPos;
-	player->position = tmm.playerPos;
+	
 
 	mm.player = player;
 	mm.CreateMonster();
-	for (auto& iter : tmm.enemyPos)
-	{
-		mm.SpawnMonster(MonsterTag::OCTOPUS, iter);
-	}
+	
 
 	minimap = new Minimap;
 
 	door = new AniSprite;
 	door->SetTexture(L"door1.png");
 
-
+	LoadPosition(tmm);
 }
 
 void

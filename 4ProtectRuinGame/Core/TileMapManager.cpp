@@ -96,6 +96,12 @@ TileMapManager::UpdateManager()
 				break;
 			}
 
+			case BlockType::DOOR:
+			{
+				blockss[i][j]->SetTexture(L"door1.png");
+				break;
+			}
+
 			default:
 				break;
 			}
@@ -126,6 +132,7 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 	for (auto& iter : blocks)
 		delete iter;
 	blocks.clear();
+	enemyPos.clear();
 
 	std::ifstream fin(mapTag);
 	if (fin.fail())
@@ -151,7 +158,8 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 
 		if (type == BlockType::NONE ||
 			type == BlockType::PLAYER ||
-			type == BlockType::OCTOPUS)
+			type == BlockType::OCTOPUS ||
+			type == BlockType::DOOR)
 		{
 			if (type == BlockType::PLAYER)
 			{
@@ -164,6 +172,13 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 				enemyPos.emplace_back(((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
 					((blockScale * 256.f) / 2) + (y * 256.f * blockScale));
 			}
+
+			if (type == BlockType::DOOR)
+			{
+				doorPos = { ((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
+					((blockScale * 256.f) / 2) + (y * 256.f * blockScale) };
+			}
+			
 			++x;
 			continue;
 		}
@@ -218,6 +233,11 @@ void TileMapManager::ChangeBlocks()
 	if (DXUTWasKeyPressed(VK_F3)) // Àû ÁÂÇ¥
 	{
 		currentBlocktype = BlockType::OCTOPUS;
+	}
+
+	if (DXUTWasKeyPressed(VK_F4))
+	{
+		currentBlocktype = BlockType::DOOR;
 	}
 }
 

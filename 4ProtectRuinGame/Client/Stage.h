@@ -30,6 +30,7 @@ protected:
     AniSprite* door;
 
     void CheckPlayerInDoor();
+    void LoadPosition(const TileMapManager& tmm);
 
 public:
     Stage() : mm(MonsterManager::GetInstance()), currentStageindex(0) {}
