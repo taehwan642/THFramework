@@ -111,6 +111,9 @@
     <Filter Include="2.Client\1.GameObjects\3.Door">
       <UniqueIdentifier>{8e3314ea-5b50-4880-901f-faa2ddf2504d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2.Client\1.GameObjects\2.Monster\1.Boss">
+      <UniqueIdentifier>{abc55368-c458-4147-aea8-31655b6fcc07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -224,8 +227,11 @@
     <ClCompile Include="Client\Stage.cpp">
       <Filter>2.Client\0.Scene\2.Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Client\Door.cpp">
-      <Filter>2.Client\1.GameObjects\3.Door</Filter>
+    <ClCompile Include="Client\Boss.cpp">
+      <Filter>2.Client\1.GameObjects\2.Monster\1.Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\BossState.cpp">
+      <Filter>2.Client\1.GameObjects\2.Monster\1.Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -307,8 +313,11 @@
     <ClInclude Include="Client\Stage.h">
       <Filter>2.Client\0.Scene\2.Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Client\Door.h">
-      <Filter>2.Client\1.GameObjects\3.Door</Filter>
+    <ClInclude Include="Client\Boss.h">
+      <Filter>2.Client\1.GameObjects\2.Monster\1.Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\BossState.h">
+      <Filter>2.Client\1.GameObjects\2.Monster\1.Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

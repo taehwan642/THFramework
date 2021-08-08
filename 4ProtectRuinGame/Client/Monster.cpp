@@ -12,9 +12,3 @@ Monster::Action()
 {
 	
 }
-
-bool 
-Monster::PlayAnimationM(const std::wstring& tag)
-{
-	return monstertimeScale == 0.f ? false : PlayAnimation(tag);
-}

@@ -17,4 +17,6 @@ public:
     explicit AniSprite();
     void CreateAnimation(const std::wstring& tag, int frameCount, float tickTime);
     bool PlayAnimation(const std::wstring& tag);
+
+    virtual float GetDeltaTime() { return DXUTGetElapsedTime(); }
 };

@@ -102,6 +102,12 @@ TileMapManager::UpdateManager()
 				break;
 			}
 
+			case BlockType::BOSS:
+			{
+				blockss[i][j]->SetTexture(L"flyidle (1).png");
+				break;
+			}
+
 			default:
 				break;
 			}
@@ -159,7 +165,8 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 		if (type == BlockType::NONE ||
 			type == BlockType::PLAYER ||
 			type == BlockType::OCTOPUS ||
-			type == BlockType::DOOR)
+			type == BlockType::DOOR ||
+			type == BlockType::BOSS)
 		{
 			if (type == BlockType::PLAYER)
 			{
@@ -169,14 +176,20 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 			
 			if (type == BlockType::OCTOPUS)
 			{
-				enemyPos.emplace_back(((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
-					((blockScale * 256.f) / 2) + (y * 256.f * blockScale));
+				enemyPos.emplace_back(BlockType::OCTOPUS, Vec2(((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
+					((blockScale * 256.f) / 2) + (y * 256.f * blockScale)));
 			}
 
 			if (type == BlockType::DOOR)
 			{
 				doorPos = { ((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
 					((blockScale * 256.f) / 2) + (y * 256.f * blockScale) };
+			}
+
+			if (type == BlockType::BOSS)
+			{
+				enemyPos.emplace_back(BlockType::BOSS, Vec2(((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
+					((blockScale * 256.f) / 2) + (y * 256.f * blockScale)));
 			}
 			
 			++x;
@@ -238,6 +251,11 @@ void TileMapManager::ChangeBlocks()
 	if (DXUTWasKeyPressed(VK_F4))
 	{
 		currentBlocktype = BlockType::DOOR;
+	}
+
+	if (DXUTWasKeyPressed(VK_F5))
+	{
+		currentBlocktype = BlockType::BOSS;
 	}
 }
 

@@ -2,35 +2,17 @@
 
 class Minimap
 {
-private:
-	std::vector<Object*> minimap;
-
-	void CreateMinimapTile();
-
-	void DeleteMinimapTile();
-
-	Vec2 minimapPosition;
-
 public:
-	__forceinline Minimap();
+	std::vector<Object*> minimapTile;
 
-	__forceinline ~Minimap();
+	void CreateTile();
+	void DeleteTile();
 
-	std::list<Object*> renderingSprites;
+	Vec2 minimapPos;
+	float minimapTileScale = 0.5f;
+
+	Minimap();
+	~Minimap();
 
 	void Update();
 };
-
-Minimap::Minimap() :
-	minimapPosition(0, 0)
-{
-	
-}
-
-Minimap::~Minimap()
-{
-	for (auto& iter : minimap)
-	{
-		delete iter;
-	}
-}

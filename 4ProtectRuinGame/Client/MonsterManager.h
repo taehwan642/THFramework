@@ -5,7 +5,8 @@
 
 enum class MonsterTag
 {
-    OCTOPUS
+    OCTOPUS,
+    BOSS
 };
 
 class MonsterManager final :
@@ -25,7 +26,7 @@ public:
     }
     
     __forceinline void 
-        SpawnMonster(MonsterTag tag, const Vec2& position)
+        SpawnMonster(MonsterTag tag, const Vec2& position, int difficulty)
     {
         for (int i = 0; i < std::size(monsters); ++i)
         {
@@ -35,6 +36,9 @@ public:
                 {
                 case MonsterTag::OCTOPUS:
                     monsters[i] = new Octopus(player);
+                    break;
+                case MonsterTag::BOSS:
+                    monsters[i] = new Boss(player);
                     break;
                 default:
                     break;
@@ -49,6 +53,9 @@ public:
             case MonsterTag::OCTOPUS:
                 mp = dynamic_cast<Octopus*>(monsters[i]);
                 break;
+            case MonsterTag::BOSS:
+                mp = dynamic_cast<Boss*>(monsters[i]);
+                break;
             default:
                 break;
             }
@@ -57,8 +64,24 @@ public:
             if (nullptr != mp &&
                 monsters[i]->isactive == false)
             {
+                switch (tag)
+                {
+                case MonsterTag::OCTOPUS:
+                    monsters[i]->PlayAnimation(L"octoidle");
+                    monsters[i]->MaxHP = 5 * difficulty;
+                    monsters[i]->HP = monsters[i]->MaxHP;
+                    break;
+                case MonsterTag::BOSS:
+                    monsters[i]->PlayAnimation(L"flyidle");
+                    monsters[i]->MaxHP = 10 * difficulty;
+                    monsters[i]->HP = monsters[i]->MaxHP;
+                    break;
+                default:
+                    break;
+                }
                 monsters[i]->SetPosition(position);
                 monsters[i]->isactive = true;
+                monsters[i]->collider->isactive = true;
                 return;
             }
         }

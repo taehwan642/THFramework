@@ -163,26 +163,6 @@ JumpEndState::handleInput()
 int
 DamagedState::handleInput()
 {
-	/*deltatime += DXUTGetElapsedTime();
-	object->gravity = true;
-	if (deltatime > 0.3f)
-	{
-		deltatime = 0;
-		object->color = D3DCOLOR_RGBA(255, 255, 255, 255);
-		return STC(PlayerStates::IDLE);
-	}
-	object->color = D3DCOLOR_RGBA(255, 0, 0, 255);
-
-	if (DXUTIsKeyDown('A'))
-	{
-		object->collider->position.x -= 300.f * DXUTGetElapsedTime();
-		object->lookingRight = false;
-	}
-	if (DXUTIsKeyDown('D'))
-	{
-		object->collider->position.x += 300.f * DXUTGetElapsedTime();
-		object->lookingRight = true;
-	}*/
 	if (object->PlayAnimation(L"hurt"))
 	{
 		object->isDamaged = false;

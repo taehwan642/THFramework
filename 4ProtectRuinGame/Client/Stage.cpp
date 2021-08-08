@@ -29,7 +29,28 @@ void Stage::LoadPosition(const TileMapManager& tmm)
 
 	for (auto& iter : tmm.enemyPos)
 	{
-		mm.SpawnMonster(MonsterTag::OCTOPUS, iter);
+		switch (iter.first)
+		{
+		case BlockType::NONE:
+			break;
+		case BlockType::FLOOR:
+			break;
+		case BlockType::OBSTICLE:
+			break;
+		case BlockType::PLAYER:
+			break;
+		case BlockType::OCTOPUS:
+			mm.SpawnMonster(MonsterTag::OCTOPUS, iter.second, 1);
+			break;
+		case BlockType::DOOR:
+			break;
+		case BlockType::BOSS:
+			mm.SpawnMonster(MonsterTag::BOSS, iter.second, 1);
+			break;
+		default:
+			break;
+		}
+		
 	}
 
 	door->position = tmm.doorPos;

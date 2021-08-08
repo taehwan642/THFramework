@@ -28,3 +28,6 @@ using Matrix = D3DXMATRIX;
 
 #include "OctopusState.h"
 #include "Octopus.h"
+
+#include "BossState.h"
+#include "Boss.h"

@@ -47,7 +47,7 @@ TileMapScene::Update()
 	if (DXUTWasKeyPressed('I'))
 		tmm.SaveBlocks("map.txt");
 	if (DXUTWasKeyPressed('O'))
-		tmm.SaveBlocks("map2.txt");
+		tmm.SaveBlocks("map3.txt");
 
 	if (DXUTWasKeyPressed('M'))
 		SceneManager::GetInstance().ChangeScene(L"Stage");

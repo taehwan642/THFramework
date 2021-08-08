@@ -91,7 +91,7 @@ main(void)
     sm.AddScene(L"TileMap", new TileMapScene);
     
     Stage* stage = new Stage;
-    Map* m1 = new Map;
+    /*Map* m1 = new Map;
     m1->difficulty = 1;
     m1->isCleared = false;
     m1->mapName = "map.txt";
@@ -101,7 +101,13 @@ main(void)
     m2->difficulty = 1;
     m2->isCleared = false;
     m2->mapName = "map2.txt";
-    stage->stages.push_back(m2);
+    stage->stages.push_back(m2);*/
+
+    Map* m3 = new Map;
+    m3->difficulty = 1;
+    m3->isCleared = false;
+    m3->mapName = "map3.txt";
+    stage->stages.push_back(m3);
 
     sm.AddScene(L"Stage", stage);
 

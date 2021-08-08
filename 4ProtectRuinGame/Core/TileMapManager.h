@@ -9,7 +9,8 @@ enum class BlockType
 	OBSTICLE,
 	PLAYER,
 	OCTOPUS,
-	DOOR
+	DOOR,
+	BOSS
 };
 
 class Block final : 
@@ -38,7 +39,7 @@ private:
 
 public:
 	Vec2 playerPos;
-	std::vector<Vec2> enemyPos;
+	std::vector<std::pair<BlockType, Vec2>> enemyPos;
 	Vec2 doorPos;
 
 	TileMapManager();

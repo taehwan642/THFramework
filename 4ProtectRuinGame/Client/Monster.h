@@ -13,7 +13,7 @@ public:
     __forceinline static float 
         GetDT() { return DXUTGetElapsedTime() * monstertimeScale; };
 
-    bool PlayAnimationM(const std::wstring& tag);
+    float GetDeltaTime() override { return DXUTGetElapsedTime() * monstertimeScale; };
 
     void Action() override;
 };

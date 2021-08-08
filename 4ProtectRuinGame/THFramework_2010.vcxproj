@@ -386,6 +386,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico" />
+    <ClInclude Include="Client\Boss.h" />
+    <ClInclude Include="Client\BossState.h" />
     <ClInclude Include="Client\GameObject.h" />
     <ClInclude Include="Client\GameObjectState.h" />
     <ClInclude Include="Client\HPUI.h" />
@@ -413,6 +415,8 @@
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
+    <ClCompile Include="Client\Boss.cpp" />
+    <ClCompile Include="Client\BossState.cpp" />
     <ClCompile Include="Client\GameObject.cpp" />
     <ClCompile Include="Client\HPUI.cpp" />
     <ClCompile Include="Client\MenuScene.cpp" />
