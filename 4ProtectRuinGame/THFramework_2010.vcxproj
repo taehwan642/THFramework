@@ -388,6 +388,7 @@
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="Client\Boss.h" />
     <ClInclude Include="Client\BossState.h" />
+    <ClInclude Include="Client\Effect.h" />
     <ClInclude Include="Client\GameObject.h" />
     <ClInclude Include="Client\GameObjectState.h" />
     <ClInclude Include="Client\HPUI.h" />
@@ -398,6 +399,7 @@
     <ClInclude Include="Client\Octopus.h" />
     <ClInclude Include="Client\OctopusState.h" />
     <ClInclude Include="Client\Player.h" />
+    <ClInclude Include="Client\PlayerLVupUI.h" />
     <ClInclude Include="Client\PlayerState.h" />
     <ClInclude Include="Client\Stage.h" />
     <ClInclude Include="Client\TileMapScene.h" />
@@ -417,6 +419,7 @@
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
     <ClCompile Include="Client\Boss.cpp" />
     <ClCompile Include="Client\BossState.cpp" />
+    <ClCompile Include="Client\Effect.cpp" />
     <ClCompile Include="Client\GameObject.cpp" />
     <ClCompile Include="Client\HPUI.cpp" />
     <ClCompile Include="Client\MenuScene.cpp" />
@@ -426,6 +429,7 @@
     <ClCompile Include="Client\Octopus.cpp" />
     <ClCompile Include="Client\OctopusState.cpp" />
     <ClCompile Include="Client\Player.cpp" />
+    <ClCompile Include="Client\PlayerLVupUI.cpp" />
     <ClCompile Include="Client\PlayerState.cpp" />
     <ClCompile Include="Client\Stage.cpp" />
     <ClCompile Include="Client\TileMapScene.cpp" />

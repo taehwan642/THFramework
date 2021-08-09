@@ -108,11 +108,14 @@
     <Filter Include="2.Client\0.Scene\2.Stage">
       <UniqueIdentifier>{ceaffdca-40ad-4dc7-80f9-b8172ce11002}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Client\1.GameObjects\3.Door">
-      <UniqueIdentifier>{8e3314ea-5b50-4880-901f-faa2ddf2504d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2.Client\1.GameObjects\2.Monster\1.Boss">
       <UniqueIdentifier>{abc55368-c458-4147-aea8-31655b6fcc07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\3.UI\2.PlayerLVup">
+      <UniqueIdentifier>{aec71f0f-0db0-4e27-bd5b-47877b41f7ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObjects\3.Effect">
+      <UniqueIdentifier>{a5047382-7594-496f-afea-6db3351b7976}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +236,12 @@
     <ClCompile Include="Client\BossState.cpp">
       <Filter>2.Client\1.GameObjects\2.Monster\1.Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Client\PlayerLVupUI.cpp">
+      <Filter>2.Client\3.UI\2.PlayerLVup</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Effect.cpp">
+      <Filter>2.Client\1.GameObjects\3.Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -318,6 +327,12 @@
     </ClInclude>
     <ClInclude Include="Client\BossState.h">
       <Filter>2.Client\1.GameObjects\2.Monster\1.Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\PlayerLVupUI.h">
+      <Filter>2.Client\3.UI\2.PlayerLVup</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Effect.h">
+      <Filter>2.Client\1.GameObjects\3.Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
