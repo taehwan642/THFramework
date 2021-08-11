@@ -81,6 +81,8 @@ Stage::Init()
 	door->SetTexture(L"door1.png");
 
 	LoadPosition(tmm);
+
+	EffectManager::GetInstance().CreateEffect();
 }
 
 void
@@ -132,4 +134,5 @@ Stage::Exit()
 		delete iter;
 
 	delete door;
+	EffectManager::GetInstance().DeleteEffect();
 }

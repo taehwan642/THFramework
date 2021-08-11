@@ -9,6 +9,7 @@
 #include "TileMapScene.h"
 #include "Stage.h"
 #include "MonsterManager.h"
+#include "Effect.h"
 #include "Camera.h"
 
 SceneManager& sm = SceneManager::GetInstance();
@@ -66,6 +67,10 @@ OnD3D9DestroyDevice( void* pUserContext )
    Sprite::sprite->Release();
 
    MonsterManager::GetInstance().DeleteInstance();
+
+   EffectManager& eff = EffectManager::GetInstance();
+   eff.DeleteEffect();
+   eff.DeleteInstance();
 }
 
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
@@ -91,7 +96,7 @@ main(void)
     sm.AddScene(L"TileMap", new TileMapScene);
     
     Stage* stage = new Stage;
-    /*Map* m1 = new Map;
+    Map* m1 = new Map;
     m1->difficulty = 1;
     m1->isCleared = false;
     m1->mapName = "map.txt";
@@ -101,7 +106,7 @@ main(void)
     m2->difficulty = 1;
     m2->isCleared = false;
     m2->mapName = "map2.txt";
-    stage->stages.push_back(m2);*/
+    stage->stages.push_back(m2);
 
     Map* m3 = new Map;
     m3->difficulty = 1;

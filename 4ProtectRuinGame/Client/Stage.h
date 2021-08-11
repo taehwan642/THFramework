@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "MonsterManager.h"
 #include "Minimap.h"
+#include "Effect.h"
 #include "Scene.h"
 
 struct Map

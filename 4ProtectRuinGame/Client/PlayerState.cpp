@@ -1,5 +1,6 @@
 #include "DXUT.h"
 #include "MonsterManager.h"
+#include "Effect.h"
 #include "PlayerState.h"
 
 int
@@ -87,6 +88,7 @@ AttackState::handleInput()
 					if (object->lookingRight == true)
 					{
 						iter->GetAttack(object->attackLevel, Vec2(1.f, 0));
+						EffectManager::GetInstance().SpawnEffect(Effects::HIT, iter->position);
 					}
 				}
 				else
@@ -94,6 +96,7 @@ AttackState::handleInput()
 					if (object->lookingRight == false)
 					{
 						iter->GetAttack(object->attackLevel, Vec2(-1.f, 0));
+						EffectManager::GetInstance().SpawnEffect(Effects::HIT, iter->position);
 					}
 				}
 			}
