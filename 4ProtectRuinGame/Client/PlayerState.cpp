@@ -203,3 +203,8 @@ SuperState::handleInput()
 	static_cast<Player*>(object)->isDodging = true;
 	return STC(PlayerStates::SUPER);
 }
+
+int ArrowAttackState::handleInput()
+{
+	return 0;
+}

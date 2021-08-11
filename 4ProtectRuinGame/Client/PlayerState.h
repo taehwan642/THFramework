@@ -5,6 +5,7 @@ enum class PlayerStates
 	IDLE,
 	RUN,
 	ATTACK,
+	ARROWATTACK,
 	JUMP,
 	JUMPEND,
 	DAMAGED,
@@ -37,6 +38,15 @@ class AttackState final :
 {
 public:
 	explicit AttackState(GameObject* p) : GameObjectState(p) {};
+	[[nodiscard]] int
+		handleInput() override;
+};
+
+class ArrowAttackState final :
+	public GameObjectState
+{
+public:
+	explicit ArrowAttackState(GameObject* p) : GameObjectState(p) {};
 	[[nodiscard]] int
 		handleInput() override;
 };
