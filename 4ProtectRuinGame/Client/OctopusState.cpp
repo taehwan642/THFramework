@@ -174,7 +174,7 @@ int OctopusDieState::handleInput()
 	{
 		object->isactive = false;
 		object->collider->isactive = false;
-
+		static_cast<Monster*>(object)->player->GetExp(1);
 		return STC(OctopusState::IDLE);
 	}
 	return STC(OctopusState::DIE);

@@ -58,7 +58,9 @@ Player::Action()
 		}
 	}
 	hpbar->SetHP(HP);
+	std::cout << this->exp << std::endl;
 }
+
 
 bool 
 Player::Check_CanGetAttack()
