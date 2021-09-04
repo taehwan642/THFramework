@@ -6,11 +6,7 @@ enum class BlockType
 {
 	NONE,
 	FLOOR,
-	OBSTICLE,
-	PLAYER,
-	OCTOPUS,
-	DOOR,
-	BOSS
+	OBSTICLE
 };
 
 class Block final : 
@@ -38,10 +34,6 @@ private:
 	BlockType currentBlocktype;
 
 public:
-	Vec2 playerPos;
-	std::vector<std::pair<BlockType, Vec2>> enemyPos;
-	Vec2 doorPos;
-
 	TileMapManager();
 
 	void Initialize();

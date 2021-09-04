@@ -3,13 +3,8 @@
 #include "SceneManager.h"
 #include "Texture.h"
 #include "RenderManager.h"
-#include "MenuScene.h"
 #include "TileMapManager.h"
 #include "Sprite.h"
-#include "TileMapScene.h"
-#include "Stage.h"
-#include "MonsterManager.h"
-#include "Effect.h"
 #include "Camera.h"
 
 SceneManager& sm = SceneManager::GetInstance();
@@ -65,12 +60,6 @@ OnD3D9DestroyDevice( void* pUserContext )
    c.DeleteInstance();
 
    Sprite::sprite->Release();
-
-   MonsterManager::GetInstance().DeleteInstance();
-
-   EffectManager& eff = EffectManager::GetInstance();
-   eff.DeleteEffect();
-   eff.DeleteInstance();
 }
 
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
@@ -91,30 +80,6 @@ main(void)
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
     DXUTCreateDevice( true, screenwidth, screenheight );
-
-    sm.AddScene(L"Menu", new MenuScene);
-    sm.AddScene(L"TileMap", new TileMapScene);
-    
-    Stage* stage = new Stage;
-    Map* m1 = new Map;
-    m1->difficulty = 1;
-    m1->isCleared = false;
-    m1->mapName = "map.txt";
-    stage->stages.push_back(m1);
-
-    Map* m2 = new Map;
-    m2->difficulty = 1;
-    m2->isCleared = false;
-    m2->mapName = "map2.txt";
-    stage->stages.push_back(m2);
-
-    Map* m3 = new Map;
-    m3->difficulty = 1;
-    m3->isCleared = false;
-    m3->mapName = "map3.txt";
-    stage->stages.push_back(m3);
-
-    sm.AddScene(L"Stage", stage);
 
     sm.ChangeScene(L"TileMap");
 

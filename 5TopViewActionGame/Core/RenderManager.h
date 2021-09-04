@@ -40,6 +40,9 @@ public:
         for (auto& iter : renderObjects)
         {
             iter->Update();
+        }
+        for (auto& iter : renderObjects)
+        {
             iter->Render();
         }
     };

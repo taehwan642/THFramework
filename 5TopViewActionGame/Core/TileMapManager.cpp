@@ -84,30 +84,6 @@ TileMapManager::UpdateManager()
 				break; 
 			}
 			
-			case BlockType::OCTOPUS:
-			{
-				blockss[i][j]->SetTexture(L"octoidle (1).png");
-				break;
-			}
-
-			case BlockType::PLAYER:
-			{
-				blockss[i][j]->SetTexture(L"idle (1).png");
-				break;
-			}
-
-			case BlockType::DOOR:
-			{
-				blockss[i][j]->SetTexture(L"door1.png");
-				break;
-			}
-
-			case BlockType::BOSS:
-			{
-				blockss[i][j]->SetTexture(L"flyidle (1).png");
-				break;
-			}
-
 			default:
 				break;
 			}
@@ -138,7 +114,6 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 	for (auto& iter : blocks)
 		delete iter;
 	blocks.clear();
-	enemyPos.clear();
 
 	std::ifstream fin(mapTag);
 	if (fin.fail())
@@ -162,36 +137,8 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 			++y;
 		}
 
-		if (type == BlockType::NONE ||
-			type == BlockType::PLAYER ||
-			type == BlockType::OCTOPUS ||
-			type == BlockType::DOOR ||
-			type == BlockType::BOSS)
+		if (type == BlockType::NONE )
 		{
-			if (type == BlockType::PLAYER)
-			{
-				playerPos = { ((blockScale * 256.f) / 2) + (x * 256.f * blockScale), 
-					((blockScale * 256.f) / 2) + (y * 256.f * blockScale) };
-			}
-			
-			if (type == BlockType::OCTOPUS)
-			{
-				enemyPos.emplace_back(BlockType::OCTOPUS, Vec2(((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
-					((blockScale * 256.f) / 2) + (y * 256.f * blockScale)));
-			}
-
-			if (type == BlockType::DOOR)
-			{
-				doorPos = { ((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
-					((blockScale * 256.f) / 2) + (y * 256.f * blockScale) };
-			}
-
-			if (type == BlockType::BOSS)
-			{
-				enemyPos.emplace_back(BlockType::BOSS, Vec2(((blockScale * 256.f) / 2) + (x * 256.f * blockScale),
-					((blockScale * 256.f) / 2) + (y * 256.f * blockScale)));
-			}
-			
 			++x;
 			continue;
 		}
@@ -236,26 +183,6 @@ void TileMapManager::ChangeBlocks()
 	if (DXUTWasKeyPressed(VK_F1))
 	{
 		currentBlocktype = BlockType::FLOOR;
-	}
-
-	if (DXUTWasKeyPressed(VK_F2)) // ÇÃ·¹ÀÌ¾î ÁÂÇ¥
-	{
-		currentBlocktype = BlockType::PLAYER;
-	}
-
-	if (DXUTWasKeyPressed(VK_F3)) // Àû ÁÂÇ¥
-	{
-		currentBlocktype = BlockType::OCTOPUS;
-	}
-
-	if (DXUTWasKeyPressed(VK_F4))
-	{
-		currentBlocktype = BlockType::DOOR;
-	}
-
-	if (DXUTWasKeyPressed(VK_F5))
-	{
-		currentBlocktype = BlockType::BOSS;
 	}
 }
 
