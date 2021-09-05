@@ -1,19 +1,51 @@
 #include "DXUT.h"
+#include "Item.h"
 #include "Player.h"
 
-void Player::Heal(int healvalue)
+Player::Player() : upAttack(strValue + 1)
 {
-	hp += healvalue;
-	if (hp > PLAYERMAXHP)
+	movespeed = 300;
+	hp = maxHP;
+	keys.push_back(new HealKey(this));
+	keys.push_back(new WeakAttackKey(this));
+}
+
+void Player::HpUIUp(int healvalue)
+{
+	hpuigauge += healvalue;
+	if (hpuigauge > 4)
 	{
-		hp = PLAYERMAXHP;
+		hpuigauge = 4;
 	}
 }
 
-Player::Player()
+void Player::CollideItem()
 {
-	movespeed = 300;
-	hp = PLAYERMAXHP;
+	for (auto iter : ItemManager::GetInstance().items)
+	{
+		if (false == iter->isactive)
+			continue;
+		RECT r;
+		if (IntersectRect(&r, &GetRect(), &iter->GetRect()))
+		{
+			// 부딪혔다! 그 머냐 그거 그 그 이펙트 활성화
+			iter->Effect(this); //<- 아이템의 고유 이펙트
+		}
+	}
+}
+
+void Player::CheckAttackUp()
+{
+	attackupTick -= DXUTGetElapsedTime();
+	
+	if (attackupTick > 0)
+	{
+		strValue = upAttack;
+	}
+	else
+	{
+		strValue = upAttack - 1;
+	}
 }
 
 void Player::Move()
@@ -36,7 +68,44 @@ void Player::Move()
 		position.x += DXUTGetElapsedTime() * movespeed;
 }
 
+void Player::CheckSkillKey()
+{
+	for (auto iter : keys)
+	{
+		if (iter->CheckSkill())
+		{
+			iter->DoSomething();
+		}
+	}
+}
+
 void Player::Action()
 {
+	CollideItem();
+	CheckAttackUp();
+	CheckSkillKey();
 	Move();
+}
+
+bool SkillKey::CheckSkill()
+{
+	for (auto iter : sk)
+	{
+		if (!DXUTIsKeyDown(iter))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void HealKey::DoSomething()
+{
+	p->Heal(p->maxHP);
+	p->hpuigauge = 0;
+}
+
+void WeakAttackKey::DoSomething()
+{
+	std::cout << "오 이게 돼?" << std::endl;
 }

@@ -386,9 +386,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="UIPack.cpp" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="UIPack.h" />

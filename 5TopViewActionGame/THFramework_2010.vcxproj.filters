@@ -158,6 +158,9 @@
     <ClCompile Include="Font.cpp">
       <Filter>2.Client\2.UI</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>2.Client\1.GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -213,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>2.Client\2.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>2.Client\1.GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

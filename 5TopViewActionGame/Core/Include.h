@@ -18,5 +18,3 @@ using Vec3 = D3DXVECTOR3;
 using Color = D3DXCOLOR;
 using Matrix = D3DXMATRIX;
 
-#define GAMEON true
-
