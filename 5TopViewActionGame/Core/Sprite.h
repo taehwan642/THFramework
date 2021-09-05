@@ -18,7 +18,7 @@ protected:
     Texture* texture;
 
 public:
-    explicit Sprite() : texture(0) {};
+    explicit Sprite() : texture(0) { RenderManager::GetInstance().AddRenderObjects(this); };
 
     __forceinline ~Sprite()
     { RenderManager::GetInstance().RemoveRender(this); };
@@ -28,7 +28,6 @@ public:
     {
         texture = TextureManager::GetInstance().LoadTexture(tag);
         SetRect(&imgRect, 0, 0, texture->info.Width, texture->info.Height);
-        RenderManager::GetInstance().AddRenderObjects(this);
     };
 
     __forceinline void
@@ -36,7 +35,6 @@ public:
     {
         this->texture = texture;
         SetRect(&imgRect, 0, 0, this->texture->info.Width, this->texture->info.Height);
-        RenderManager::GetInstance().AddRenderObjects(this);
     };
 
     [[nodiscard]] __forceinline const Texture*

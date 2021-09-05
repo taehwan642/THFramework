@@ -39,7 +39,8 @@ public:
     {
         for (auto& iter : renderObjects)
         {
-            iter->Update();
+            if (false != iter->isactive)
+                iter->Update();
         }
         for (auto& iter : renderObjects)
         {

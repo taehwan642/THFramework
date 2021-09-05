@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "Singleton.h"
 
-enum class BlockType
+enum BlockType
 {
 	NONE,
 	FLOOR,
@@ -24,10 +24,11 @@ class TileMapManager final :
 	public Singleton<TileMapManager>
 {
 private:
+	// 현재 실제 게임에서 렌더링되고있는 블록
 	std::vector<Block*> blocks;
 
-	Sprite* blockss[Row][Column];
-	BlockType blockTypes[Row][Column];
+	// 타일맵 찍을 때 렌더할 블록
+	Block* blockss[Row][Column];
 	
 	float blockScale;
 

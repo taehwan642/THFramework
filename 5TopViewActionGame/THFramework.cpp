@@ -6,6 +6,7 @@
 #include "TileMapManager.h"
 #include "Sprite.h"
 #include "Camera.h"
+#include "Stage1.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
@@ -15,6 +16,8 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
                                      void* pUserContext )
 {
     D3DXCreateSprite(DXUTGetD3D9Device(), &Sprite::sprite);
+    Camera& c = Camera::GetInstance();
+    c.Initialize();
     srand(time(NULL));
     return S_OK;
 }
@@ -80,8 +83,9 @@ main(void)
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
     DXUTCreateDevice( true, screenwidth, screenheight );
-
-    sm.ChangeScene(L"TileMap");
+    
+    sm.AddScene(L"Stage1", new Stage1);
+    sm.ChangeScene(L"Stage1");
 
     DXUTMainLoop();
 

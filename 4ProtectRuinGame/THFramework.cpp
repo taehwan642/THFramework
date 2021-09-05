@@ -10,6 +10,7 @@
 #include "Stage.h"
 #include "MonsterManager.h"
 #include "Effect.h"
+#include "CameraTestScene.h"
 #include "Camera.h"
 
 SceneManager& sm = SceneManager::GetInstance();
@@ -94,6 +95,7 @@ main(void)
 
     sm.AddScene(L"Menu", new MenuScene);
     sm.AddScene(L"TileMap", new TileMapScene);
+    sm.AddScene(L"Camera", new CameraTestScene);
     
     Stage* stage = new Stage;
     Map* m1 = new Map;
@@ -116,7 +118,7 @@ main(void)
 
     sm.AddScene(L"Stage", stage);
 
-    sm.ChangeScene(L"TileMap");
+    sm.ChangeScene(L"Camera");
 
     DXUTMainLoop();
 

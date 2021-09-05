@@ -262,13 +262,17 @@ void TileMapManager::ChangeBlocks()
 void 
 TileMapManager::DeleteBlocks()
 {
-	for (int i = 0; i < std::size(blockss); ++i)
+	if (blockss != nullptr)
 	{
-		for (int j = 0; j < std::size(blockss[i]); ++j)
+		for (int i = 0; i < std::size(blockss); ++i)
 		{
-			delete blockss[i][j];
+			for (int j = 0; j < std::size(blockss[i]); ++j)
+			{
+				delete blockss[i][j];
+			}
 		}
 	}
+
 
 	for (auto& iter : blocks)
 	{

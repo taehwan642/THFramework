@@ -386,6 +386,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico" />
+    <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="Client\Boss.h" />
     <ClInclude Include="Client\BossState.h" />
     <ClInclude Include="Client\Effect.h" />
@@ -417,6 +418,7 @@
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
+    <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="Client\Boss.cpp" />
     <ClCompile Include="Client\BossState.cpp" />
     <ClCompile Include="Client\Effect.cpp" />

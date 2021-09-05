@@ -242,6 +242,9 @@
     <ClCompile Include="Client\Effect.cpp">
       <Filter>2.Client\1.GameObjects\3.Effect</Filter>
     </ClCompile>
+    <ClCompile Include="CameraTestScene.cpp">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -333,6 +336,9 @@
     </ClInclude>
     <ClInclude Include="Client\Effect.h">
       <Filter>2.Client\1.GameObjects\3.Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraTestScene.h">
+      <Filter>2.Client\0.Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -385,6 +385,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="UIPack.cpp" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Stage1.h" />
+    <ClInclude Include="UIPack.h" />
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="Core\AniSprite.h" />
     <ClInclude Include="Core\Camera.h" />
@@ -424,6 +431,9 @@
     <ClCompile Include="DXUT\Optional\SDKmisc.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="THFramework.cpp" />
   </ItemGroup>
   <ItemGroup>

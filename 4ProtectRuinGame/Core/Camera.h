@@ -8,17 +8,17 @@ private:
     Matrix worldM;
     Matrix viewM;
 
+public:
     float camSize;
     Vec2 camPos;
 
-public:
     __forceinline void 
         Initialize() 
     {
         D3DXMatrixIdentity(&worldM);
         DXUTGetD3D9Device()->SetTransform(D3DTS_WORLD, &worldM);
         camSize = 1;
-        camPos = { screenwidth / 2, screenheight / 2 };
+        camPos = Vec2(0,0);
     };
 
     __forceinline Vec2
