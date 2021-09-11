@@ -43,6 +43,12 @@ public:
         return texture;
     }
 
+    void Lookat(Vec2 pos)
+    {
+        Vec2 temp = position - pos;
+        rotation = atan2(temp.y, temp.x);
+    }
+
     [[nodiscard]] __forceinline RECT
         GetRect() const
     {

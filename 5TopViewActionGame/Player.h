@@ -6,6 +6,7 @@ class Player :
     public GameObject
 {
 public:
+    POINT p;
     std::vector<SkillKey*> keys;
 
     float attackupTick = 0.f;
@@ -22,6 +23,8 @@ public:
     void CollideItem();
     void CheckAttackUp();
     void Move();
+
+    void Shoot();
 
     void CheckSkillKey();
 

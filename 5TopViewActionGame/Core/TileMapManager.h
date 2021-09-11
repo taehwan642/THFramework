@@ -5,10 +5,29 @@
 enum BlockType
 {
 	NONE,
-	FLOOR, // 맵
-	WALL, // 맵
-	PLAYER // 오브젝트
+	FLOOR,
+	WALL1,
+	WALL2,
+	WALL3,
+	WALL4,
+	CORNER1,
+	CORNER2,
+	CORNER3,
+	CORNER4,
+
+	DOOR1,
+	DOOR2,
+	DOOR3,
+	DOOR4,
+	WINDOW1,
+	WINDOW2,
+	CHEST,
+	PLAYER
 };
+
+// 키를 넣는 방법 2개
+// 1. 모드에 따라서 키가 바뀐다.
+// 2. 그냥 다 때려박는다.
 
 class Block final : 
 	public Sprite
@@ -29,7 +48,9 @@ public:
 class TileMapManager final :
 	public Singleton<TileMapManager>
 {
-private:
+public:
+	int count = 0;
+
 	std::vector<BlockType> walls;
 
 	// 현재 실제 게임에서 렌더링되고있는 블록
@@ -45,9 +66,10 @@ private:
 
 	int mode = 0; // 0 = 타일맵, 1 = 오브젝트맵
 
-public:
 	float blockScale;
+
 	Vec2 playerpos;
+	std::vector<Vec2> chestpos;
 
 	TileMapManager();
 

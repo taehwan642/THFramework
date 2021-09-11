@@ -14,6 +14,29 @@ void TilemapScene::Update()
 	TileMapManager& tm = TileMapManager::GetInstance();
 	tm.UpdateManager();
 
+	Camera& cam = Camera::GetInstance();
+
+	if (DXUTIsKeyDown('W'))
+	{
+		cam.camPos.y -= 500.f * DXUTGetElapsedTime();
+	}
+
+	if (DXUTIsKeyDown('A'))
+	{
+		cam.camPos.x -= 500.f * DXUTGetElapsedTime();
+	}
+
+	if (DXUTIsKeyDown('S'))
+	{
+		cam.camPos.y += 500.f * DXUTGetElapsedTime();
+	}
+
+	if (DXUTIsKeyDown('D'))
+	{
+		cam.camPos.x += 500.f * DXUTGetElapsedTime();
+	}
+
+
 	if (DXUTWasKeyPressed('I'))
 	{
 		tm.SaveObject("mapobj.txt");

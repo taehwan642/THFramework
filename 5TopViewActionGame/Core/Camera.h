@@ -9,9 +9,10 @@ private:
     Matrix viewM;
 
     float camSize;
-    Vec2 camPos;
 
 public:
+    Vec2 camPos;
+
     __forceinline void 
         Initialize() 
     {

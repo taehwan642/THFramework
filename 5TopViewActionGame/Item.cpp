@@ -1,5 +1,6 @@
 #include "DXUT.h"
 #include "Player.h"
+#include "Effect.h"
 #include "Item.h"
 
 void Item::Effect(Player* p)
@@ -31,6 +32,7 @@ void Item::Update()
 		if (tick < 0)
 		{
 			// 빵!
+			EManager::GetInstance().Spawn(position, E_BOMB);
 			// for(적)
 			// 플레이어
 			
@@ -55,6 +57,7 @@ void ItemManager::Create()
 		Item* it = new Item;
 		it->isactive = false;
 		it->pl = pl; // 플레이어 할당 부분
+		it->scale = { 0.5,0.5 };
 		items.push_back(it);
 	}
 }

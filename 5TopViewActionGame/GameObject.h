@@ -18,6 +18,8 @@ public:
     void Heal(int healvalue); // 즉시 회복
     void Damaged(int damage);
 
+    void Collide();
+
     virtual void Action() PURE;
     void Update() override;
 };

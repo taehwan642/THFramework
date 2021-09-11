@@ -1,5 +1,7 @@
 #include "DXUT.h"
 #include "Item.h"
+#include "Camera.h"
+#include "Bullet.h"
 #include "Player.h"
 
 Player::Player() : upAttack(strValue + 1)
@@ -8,6 +10,7 @@ Player::Player() : upAttack(strValue + 1)
 	hp = maxHP;
 	keys.push_back(new HealKey(this));
 	keys.push_back(new WeakAttackKey(this));
+	layer = 100;
 }
 
 void Player::HpUIUp(int healvalue)
@@ -50,10 +53,15 @@ void Player::CheckAttackUp()
 
 void Player::Move()
 {
-	if (DXUTWasKeyPressed('E'))
-		--score;
-	if (DXUTWasKeyPressed('Q'))
-		++score;
+	GetCursorPos(&p);
+	ScreenToClient(DXUTGetHWND(), &p);
+
+	Camera& cam = Camera::GetInstance();
+	Vec2 camPos = cam.GetPosition();
+	p.x = (camPos.x - screenwidth / 2) + p.x;
+	p.y = (camPos.y - screenheight / 2) + p.y;
+
+	Lookat(Vec2(p.x, p.y));
 
 	if (isAttacking)
 		return;
@@ -66,6 +74,14 @@ void Player::Move()
 		position.y += DXUTGetElapsedTime() * movespeed;
 	if (DXUTIsKeyDown('D'))
 		position.x += DXUTGetElapsedTime() * movespeed;
+}
+
+void Player::Shoot()
+{
+	if (DXUTWasKeyPressed(VK_SPACE))
+	{
+		BManager::GetInstance().Spawn(position, Vec2(p.x, p.y), strValue);
+	}
 }
 
 void Player::CheckSkillKey()
@@ -85,6 +101,7 @@ void Player::Action()
 	CheckAttackUp();
 	CheckSkillKey();
 	Move();
+	Shoot();
 }
 
 bool SkillKey::CheckSkill()

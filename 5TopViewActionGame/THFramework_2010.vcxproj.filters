@@ -57,14 +57,14 @@
     <Filter Include="2.Client\0.Scene">
       <UniqueIdentifier>{507b9096-cacc-48e8-8171-5b3ed73c0996}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Client\1.GameObject">
-      <UniqueIdentifier>{d3dbb826-b3a3-45ef-9cf2-4cc1aa6e01d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.Core\9.GameObject">
       <UniqueIdentifier>{a6d4e8ec-db59-44b3-a814-a317a0f248c7}</UniqueIdentifier>
     </Filter>
     <Filter Include="2.Client\2.UI">
       <UniqueIdentifier>{d181418e-562c-4b44-ba5e-fd25dcd23742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Client\1.GameObject">
+      <UniqueIdentifier>{d3dbb826-b3a3-45ef-9cf2-4cc1aa6e01d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +164,15 @@
     <ClCompile Include="TilemapScene.cpp">
       <Filter>2.Client\0.Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>2.Client\1.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Chest.cpp">
+      <Filter>2.Client\1.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>2.Client\1.GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -225,6 +234,15 @@
     </ClInclude>
     <ClInclude Include="TilemapScene.h">
       <Filter>2.Client\0.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>2.Client\1.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.h">
+      <Filter>2.Client\1.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>2.Client\1.GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

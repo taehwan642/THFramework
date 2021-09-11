@@ -16,8 +16,17 @@ TileMapManager::TileMapManager() : blockScale(0.5f), currentBlocktype(BlockType:
 			objects[i][j] = nullptr;
 		}
 	}
-	walls.push_back(WALL);
 	walls.push_back(FLOOR);
+
+	walls.push_back(WALL1);
+	walls.push_back(WALL2);
+	walls.push_back(WALL3);
+	walls.push_back(WALL4);
+
+	walls.push_back(CORNER1);
+	walls.push_back(CORNER2);
+	walls.push_back(CORNER3);
+	walls.push_back(CORNER4);
 }
 
 void 
@@ -167,12 +176,38 @@ std::wstring TileMapManager::GetTextureTag(BlockType type)
 		return L"box.png";
 	case FLOOR:
 		return L"floor.png";
-	case WALL:
+	case WALL1:
 		return L"wall.png";
+	case WALL2:
+		return L"wall2.png";
+	case WALL3:
+		return L"wall3.png";
+	case WALL4:
+		return L"wall4.png";
+	case CORNER1:
+		return L"corner.png";
+	case CORNER2:
+		return L"corner2.png";
+	case CORNER3:
+		return L"corner3.png";
+	case CORNER4:
+		return L"corner4.png";
+	case DOOR1:
+		return L"door.png";
+	case DOOR2:
+		return L"door2.png";
+	case DOOR3:
+		return L"door3.png";
+	case DOOR4:
+		return L"door4.png";
+	case WINDOW1:
+		return L"window.png";
+	case WINDOW2:
+		return L"window2.png";
+	case CHEST:
+		return L"chest (1).png";
 	case PLAYER:
 		return L"player (1).png";
-	default:
-		break;
 	}
 	return std::wstring();
 }
@@ -187,7 +222,7 @@ TileMapManager::SaveBlocks(const std::string& mapTag)
 		for (int j = 0; j < std::size(blocks[i]); ++j)
 		{
 			int typeValue = (BlockType)blocks[i][j]->type;
-			oin << typeValue;
+			oin << typeValue << '\n';
 		}
 	}
 
@@ -203,7 +238,7 @@ void TileMapManager::SaveObject(const std::string& mapTag)
 		for (int j = 0; j < std::size(objects[i]); ++j)
 		{
 			int typeValue = (BlockType)objects[i][j]->type;
-			oin << typeValue;
+			oin << typeValue << '\n';
 		}
 	}
 
@@ -224,14 +259,14 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 		std::cout << "파일이 없습니다." << std::endl;
 		return;
 	}
-	char typeValue;
 	int x = 0;
 	int y = 0;
-	
-	while (fin.get(typeValue)) 
+
+	while (!fin.eof()) 
 	{
-		// atoi == char to int
-		int chartoint = atoi(&typeValue);
+		char arr[256];
+		fin.getline(arr, 256);
+		int chartoint = atoi(arr);
 		BlockType type = (BlockType)chartoint;
 
 		if (x > (std::size(blocks[0]) - 1))
@@ -272,6 +307,7 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 	for (auto& iter : objBlocks)
 		delete iter;
 	objBlocks.clear();
+	chestpos.clear();
 
 
 	std::ifstream fin(mapTag);
@@ -280,14 +316,17 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 		std::cout << "파일이 없습니다." << std::endl;
 		return;
 	}
-	char typeValue;
+
 	int x = 0;
 	int y = 0;
 
-	while (fin.get(typeValue))
+	while (!fin.eof())    //파일 끝까지 읽었는지 확인
 	{
-		// atoi == char to int
-		int chartoint = atoi(&typeValue);
+		char arr[256];
+
+		fin.getline(arr, 256);    //한줄씩 읽어오기
+
+		int chartoint = atoi(arr);
 		BlockType type = (BlockType)chartoint;
 
 		if (x > (std::size(objects[0]) - 1))
@@ -297,7 +336,8 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 		}
 
 		if (type == BlockType::NONE ||
-			type == PLAYER)
+			type == PLAYER ||
+			type == CHEST)
 		{
 			if (type == PLAYER)
 			{
@@ -307,6 +347,17 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 					((blockScale * 256.f) / 2.f) + (y * 256.f * blockScale)
 				};
 			}
+
+			if (type == CHEST)
+			{
+				Vec2 c =
+				{
+					((blockScale * 256.f) / 2.f) + (x * 256.f * blockScale),
+					((blockScale * 256.f) / 2.f) + (y * 256.f * blockScale)
+				};;
+				chestpos.push_back(c);
+			}
+
 			++x;
 			continue;
 		}
@@ -340,17 +391,63 @@ void TileMapManager::ChangeBlocks()
 		mode = (mode == 0) ? 1 : 0;
 		std::cout << mode << std::endl;
 	}
+
 	if (DXUTWasKeyPressed(VK_F1))
 	{
-		currentBlocktype = FLOOR;
+		currentBlocktype = NONE;
 	}
 
 	if (DXUTWasKeyPressed(VK_F2))
 	{
-		currentBlocktype = WALL;
+		currentBlocktype = FLOOR;
 	}
 
 	if (DXUTWasKeyPressed(VK_F3))
+	{
+		if (count > 3)
+		{
+			count = 0;
+		}
+		currentBlocktype = (BlockType)(WALL1 + count);
+		++count;
+	}
+
+	if (DXUTWasKeyPressed(VK_F4))
+	{
+		if (count > 3)
+		{
+			count = 0;
+		}
+		currentBlocktype = (BlockType)(CORNER1 + count);
+		++count;
+	}
+
+	if (DXUTWasKeyPressed(VK_F5))
+	{
+		if (count > 3)
+		{
+			count = 0;
+		}
+		currentBlocktype = (BlockType)(DOOR1 + count);
+		++count;
+	}
+
+	if (DXUTWasKeyPressed(VK_F6))
+	{
+		if (count > 1)
+		{
+			count = 0;
+		}
+		currentBlocktype = (BlockType)(WINDOW1 + count);
+		++count;
+	}
+
+	if (DXUTWasKeyPressed(VK_F7))
+	{
+		currentBlocktype = CHEST;
+	}
+
+	if (DXUTWasKeyPressed(VK_F8))
 	{
 		currentBlocktype = PLAYER;
 	}

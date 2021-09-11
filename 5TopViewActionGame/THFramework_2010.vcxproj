@@ -385,10 +385,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="TilemapScene.cpp" />
     <ClCompile Include="UIPack.cpp" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Chest.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Item.h" />

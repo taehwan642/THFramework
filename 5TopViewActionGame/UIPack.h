@@ -3,6 +3,7 @@
 class Sprite;
 class Player;
 class Font;
+class AniSprite;
 
 class UIPack
 {
@@ -15,6 +16,8 @@ public:
 	// 제한 시간 출력하는 폰트
 	Font* lastTime = nullptr;
 	Sprite* hpgauge = nullptr;
+
+	AniSprite* sea = nullptr;
 
 	float* plastTime = nullptr;
 
