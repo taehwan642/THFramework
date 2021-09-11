@@ -8,10 +8,14 @@
 void Stage1::Init()
 {
 	// 플레이어
-	
+	TileMapManager& tm = TileMapManager::GetInstance();
+	tm.LoadObject("mapobj.txt");
+	tm.LoadBlocks("mapblock.txt");
+
 	p = new Player;
-	p->position = { screenwidth / 2, screenheight / 2 };
-	p->SetTexture(L"hit (1).png");
+	p->position = tm.playerpos;
+	p->scale ={ tm.blockScale, tm.blockScale };
+	p->SetTexture(L"player (1).png");
 
 	uipack = new UIPack;
 	uipack->Init(p, &coolTime);
@@ -20,8 +24,6 @@ void Stage1::Init()
 
 	ItemManager::GetInstance().pl = p;
 	ItemManager::GetInstance().Create();
-
-	TileMapManager::GetInstance().LoadBlocks("map1.txt");
 }
 
 void Stage1::Update()

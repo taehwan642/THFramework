@@ -21,6 +21,11 @@ public:
 #define Row 6
 #define Column 20
 
+// 이 클래스의 목적?
+// 타일에 관련된 것들.
+// 여기에서 플레이어를 생성할거냐
+// 아니면 씬에서 플레이어를 생성하게 두고
+// 플레이어의 위치를 넘겨줄건가.
 class TileMapManager final :
 	public Singleton<TileMapManager>
 {
@@ -35,13 +40,15 @@ private:
 	Block* blocks[Row][Column];
 	Block* objects[Row][Column];
 	
-	float blockScale;
 
 	BlockType currentBlocktype;
 
 	int mode = 0; // 0 = 타일맵, 1 = 오브젝트맵
 
 public:
+	float blockScale;
+	Vec2 playerpos;
+
 	TileMapManager();
 
 	void Initialize();
@@ -56,7 +63,9 @@ public:
 	};
 
 	void SaveBlocks(const std::string& mapTag);
+	void SaveObject(const std::string& mapTag);
 	void LoadBlocks(const std::string& mapTag);
+	void LoadObject(const std::string& mapTag);
 
 	void ChangeBlocks();
 
