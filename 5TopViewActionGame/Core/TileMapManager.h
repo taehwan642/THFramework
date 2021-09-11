@@ -5,8 +5,9 @@
 enum BlockType
 {
 	NONE,
-	FLOOR,
-	OBSTICLE
+	FLOOR, // 맵
+	WALL, // 맵
+	PLAYER // 오브젝트
 };
 
 class Block final : 
@@ -24,15 +25,21 @@ class TileMapManager final :
 	public Singleton<TileMapManager>
 {
 private:
+	std::vector<BlockType> walls;
+
 	// 현재 실제 게임에서 렌더링되고있는 블록
-	std::vector<Block*> blocks;
+	std::vector<Block*> tileBlocks;
+	std::vector<Block*> objBlocks; // 오브젝트
 
 	// 타일맵 찍을 때 렌더할 블록
-	Block* blockss[Row][Column];
+	Block* blocks[Row][Column];
+	Block* objects[Row][Column];
 	
 	float blockScale;
 
 	BlockType currentBlocktype;
+
+	int mode = 0; // 0 = 타일맵, 1 = 오브젝트맵
 
 public:
 	TileMapManager();
@@ -41,9 +48,11 @@ public:
 
 	void UpdateManager();
 
+	std::wstring GetTextureTag(BlockType type);
+
 	[[nodiscard]] __forceinline std::vector<Block*>& GetBlockVector()
 	{
-		return blocks;
+		return tileBlocks;
 	};
 
 	void SaveBlocks(const std::string& mapTag);

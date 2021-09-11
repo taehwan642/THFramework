@@ -161,6 +161,9 @@
     <ClCompile Include="Item.cpp">
       <Filter>2.Client\1.GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="TilemapScene.cpp">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -219,6 +222,9 @@
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>2.Client\1.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TilemapScene.h">
+      <Filter>2.Client\0.Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

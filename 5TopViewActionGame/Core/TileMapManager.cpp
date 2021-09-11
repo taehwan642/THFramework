@@ -2,15 +2,22 @@
 #include "Camera.h"
 #include "TileMapManager.h"
 
+// 1. 오브젝트맵과 타일맵은 분리되어있음.
+// 2. 분리된걸 세이브, 로드해야한다.
+// 3. 분리되게 블록을 찍어야한다.
+
 TileMapManager::TileMapManager() : blockScale(0.5f), currentBlocktype(BlockType::FLOOR)
 {
-	for (int i = 0; i < std::size(blockss); ++i)
+	for (int i = 0; i < std::size(blocks); ++i)
 	{
-		for (int j = 0; j < std::size(blockss[i]); ++j)
+		for (int j = 0; j < std::size(blocks[i]); ++j)
 		{
-			blockss[i][j] = nullptr;
+			blocks[i][j] = nullptr;
+			objects[i][j] = nullptr;
 		}
 	}
+	walls.push_back(WALL);
+	walls.push_back(FLOOR);
 }
 
 void 
@@ -18,32 +25,46 @@ TileMapManager::Initialize()
 {
 	int x = 0;
 	int y = 0;
-	for (int i = 0; i < std::size(blockss); ++i)
+	for (int i = 0; i < std::size(blocks); ++i)
 	{
-		for (int j = 0; j < std::size(blockss[i]); ++j)
+		for (int j = 0; j < std::size(blocks[i]); ++j)
 		{
-			blockss[i][j] = new Block;
-			blockss[i][j]->SetTexture(L"box.png");
-			blockss[i][j]->scale = { blockScale, blockScale };
+			blocks[i][j] = new Block;
+			blocks[i][j]->SetTexture(L"box.png");
+			blocks[i][j]->scale = { blockScale, blockScale };
 
-			const Texture* t = blockss[i][j]->GetTexture();
+			objects[i][j] = new Block;
+			objects[i][j]->SetTexture(L"box.png");
+			objects[i][j]->scale = { blockScale, blockScale };
+			objects[i][j]->layer = 1;
+			
+			const Texture* t = blocks[i][j]->GetTexture();
 
-			if (x > (std::size(blockss[i]) - 1))
+			if (x > (std::size(blocks[i]) - 1))
 			{
 				x = 0;
 				++y;
 			}
 
-			blockss[i][j]->SetPosition(
-				((blockss[i][j]->scale.x * t->info.Width) / 2) + (x * t->info.Width * blockss[i][j]->scale.x),
-				((blockss[i][j]->scale.y * t->info.Height) / 2) + (y * t->info.Height * blockss[i][j]->scale.y));
+			Vec2 pos = { ((blocks[i][j]->scale.x * t->info.Width) / 2) + (x * t->info.Width * blocks[i][j]->scale.x),
+				((blocks[i][j]->scale.y * t->info.Height) / 2) + (y * t->info.Height * blocks[i][j]->scale.y) };
+
+			blocks[i][j]->position = pos;
+			objects[i][j]->position = pos;
 
 			++x;
 
-			blockss[i][j]->type = BlockType::NONE;
+			blocks[i][j]->type = BlockType::NONE;
+			objects[i][j]->type = BlockType::NONE;
 		}
 	}
 }
+
+// 모드가 0
+// 맵찍는거
+// 모드가 1
+// 오브젝트
+// 맵찍을때 오브젝트
 
 void
 TileMapManager::UpdateManager()
@@ -58,66 +79,101 @@ TileMapManager::UpdateManager()
 	pnt.x = (camPos.x - screenwidth / 2) + pnt.x;
 	pnt.y = (camPos.y - screenheight / 2) + pnt.y;
 
-	for (int i = 0; i < std::size(blockss); ++i)
+	if (mode == 0)
 	{
-		for (int j = 0; j < std::size(blockss[i]); ++j)
+		for (int i = 0; i < std::size(blocks); ++i)
 		{
-
-			if (PtInRect(&blockss[i][j]->GetRect(), pnt))
+			for (int j = 0; j < std::size(blocks[i]); ++j)
 			{
-				if (DXUTIsKeyDown(VK_SPACE))
+
+				if (PtInRect(&blocks[i][j]->GetRect(), pnt))
 				{
-					blockss[i][j]->type = currentBlocktype;
-				}
-			}
+					if (DXUTIsKeyDown(VK_SPACE))
+					{
+						bool ison = false;
+						for (auto iter : walls)
+							if (iter == currentBlocktype)
+							{
+								ison = true;
+								break;
+							}
 
-			switch (blockss[i][j]->type)
-			{
-			case BlockType::NONE: 
-			{
-				blockss[i][j]->SetTexture(L"box.png");
-				break; 
+						if (ison == true)
+							blocks[i][j]->type = currentBlocktype;
+					}
+				}
+
+				blocks[i][j]->SetTexture(GetTextureTag(blocks[i][j]->type));
 			}
-			
-			case BlockType::FLOOR: 
+		}
+	}
+	else
+	{
+		for (int i = 0; i < std::size(blocks); ++i)
+		{
+			for (int j = 0; j < std::size(blocks[i]); ++j)
 			{
-				blockss[i][j]->SetTexture(L"block.png");
-				break; 
-			}
-			
-			case BlockType::OBSTICLE: 
-			{
-				break; 
-			}
-			
-			default:
-				break;
+
+				if (PtInRect(&objects[i][j]->GetRect(), pnt))
+				{
+					if (DXUTIsKeyDown(VK_SPACE))
+					{
+						// 임시 변수
+						bool ison = true;
+						// 벽의 타입을 순회하며 현재 찍으려는 게 벽이다?
+						// 현재 오브젝트맵을 찍고있는데 타일맵을 찍으려고 하면 안되니까
+						// 
+						for (auto iter : walls)
+							// if iter(여기서 iter는 맵의 종류(벽, 땅 등)) == 지금찍으려는 블록이랑 같다?
+							// 못찍게 막기.
+							if (iter == currentBlocktype)
+							{
+								ison = false;
+								break;
+							}
+
+						// 그래서 ison false가 되면 난 벽을 찍으려고 했던거니까
+						// 못찍게 막고, false가 아니면 벽이 아니라 오브젝트니까 OK
+						if(ison == true)
+							objects[i][j]->type = currentBlocktype;
+					}
+				}
+
+				objects[i][j]->SetTexture(GetTextureTag(objects[i][j]->type));
 			}
 		}
 	}
 }
 
+std::wstring TileMapManager::GetTextureTag(BlockType type)
+{
+	switch (type)
+	{
+	case NONE:
+		return L"box.png";
+	case FLOOR:
+		return L"floor.png";
+	case WALL:
+		return L"wall.png";
+	case PLAYER:
+		return L"player (1).png";
+	default:
+		break;
+	}
+	return std::wstring();
+}
+
 void
 TileMapManager::SaveBlocks(const std::string& mapTag)
 {
-	// 외부에 출력하기 위해서 파일 생성 또는 받아오기
-	// 만약 열 파일이 없다면 생성
-	// output file stream
 	std::ofstream oin(mapTag);
 
-	// blockss의 사이즈는? blockss[ 이 부분 ][]
-	for (int i = 0; i < std::size(blockss); ++i)
+	for (int i = 0; i < std::size(blocks); ++i)
 	{
-		// blockss[] 의 사이즈는? blockss[][ 이 부분 ]
-		for (int j = 0; j < std::size(blockss[i]); ++j)
+		for (int j = 0; j < std::size(blocks[i]); ++j)
 		{
-			// typeValue의 의미? blockss 속에 있던 type(enum) 을 int로 변환한 값
-			int typeValue = (BlockType)blockss[i][j]->type;
-			// 그걸 넣어준다.
+			int typeValue = (BlockType)blocks[i][j]->type;
 			oin << typeValue;
-			// 왜 타입만 넣어주고 위치, 사이즈는 안넣어주는가?
-			// 위치는 빈 공간은 0으로 설정되기 때문에 위치값은 일정하게 찍힌다.
-			// 사이즈는 "고정" 이기 때문
 		}
 	}
 
@@ -127,13 +183,11 @@ TileMapManager::SaveBlocks(const std::string& mapTag)
 void
 TileMapManager::LoadBlocks(const std::string& mapTag)
 {
-	for (auto& iter : blocks)
+	for (auto& iter : tileBlocks)
 		delete iter;
-	blocks.clear();
+	tileBlocks.clear();
 
-	// input file stream
-	// 파일을 열어서 정보를 받는다.
-	// 이 때 열지 못한다면 fail()함수가 true를 리턴.
+	
 	std::ifstream fin(mapTag);
 	if (fin.fail())
 	{
@@ -143,27 +197,14 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 	char typeValue;
 	int x = 0;
 	int y = 0;
-	// 파일 내부를 순환하며 얻어온 "문자" 값을 typeValue에 넣어줌.
-	// 예를 들어 파일 안에 "01010" 라는 글이 있다면
-	// get으로 받아올 때 
-	// 0
-	// 1
-	// 0
-	// 1
-	// 0
-	// 이렇게 불러옴. 한번에 한번 while돌면서.
-	// 그리고 get함수가 true가 나오면 파일이 아직 안끝났다는 뜻.
-	// while(true)면 계속 도는것과 같은 이치.
-	// 그래서 계속 돕니다
-	// 근데 false가 나왔따? 그럼 EOF. (End-Of-File)
-	// 파일의 끝에 닿아서 더 이상 읽을 게 없다는 뜻.
+	
 	while (fin.get(typeValue)) 
 	{
 		// atoi == char to int
 		int chartoint = atoi(&typeValue);
 		BlockType type = (BlockType)chartoint;
 
-		if (x > (std::size(blockss[0]) - 1))
+		if (x > (std::size(blocks[0]) - 1))
 		{
 			x = 0;
 			++y;
@@ -180,20 +221,7 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 		block->type = type;
 		block->scale = { blockScale, blockScale };
 
-		switch (type)
-		{
-		case BlockType::NONE:
-			block->SetTexture(L"box.png");
-			break;
-		case BlockType::FLOOR:
-			block->SetTexture(L"block.png");
-			break;
-		case BlockType::OBSTICLE:
-			block->SetTexture(L"block2.png");
-			break;
-		default:
-			break;
-		}
+		block->SetTexture(GetTextureTag(type));
 
 		const Texture* t = block->GetTexture();
 
@@ -201,7 +229,7 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 			((block->scale.x * t->info.Width) / 2) + (x * t->info.Width * block->scale.x),
 			((block->scale.y * t->info.Height) / 2) + (y * t->info.Height * block->scale.y));
 
-		blocks.push_back(block);
+		tileBlocks.push_back(block);
 
 		++x;
 	}
@@ -211,29 +239,51 @@ TileMapManager::LoadBlocks(const std::string& mapTag)
 
 void TileMapManager::ChangeBlocks()
 {
+	if (DXUTWasKeyPressed('M'))
+	{
+		mode = (mode == 0) ? 1 : 0;
+		std::cout << mode << std::endl;
+	}
 	if (DXUTWasKeyPressed(VK_F1))
 	{
-		currentBlocktype = BlockType::FLOOR;
+		currentBlocktype = FLOOR;
+	}
+
+	if (DXUTWasKeyPressed(VK_F2))
+	{
+		currentBlocktype = WALL;
+	}
+
+	if (DXUTWasKeyPressed(VK_F3))
+	{
+		currentBlocktype = PLAYER;
 	}
 }
 
 void 
 TileMapManager::DeleteBlocks()
 {
-	if (blockss[0] != nullptr)
+	if (blocks[0] != nullptr)
 	{
-		for (int i = 0; i < std::size(blockss); ++i)
+		for (int i = 0; i < std::size(blocks); ++i)
 		{
-			for (int j = 0; j < std::size(blockss[i]); ++j)
+			for (int j = 0; j < std::size(blocks[i]); ++j)
 			{
-				delete blockss[i][j];
+				delete blocks[i][j];
+				blocks[i][j] = nullptr;
+				delete objects[i][j];
+				objects[i][j] = nullptr;
 			}
 		}
 	}
 
-	for (auto& iter : blocks)
-	{
+	for (auto& iter : tileBlocks)
 		delete iter;
+	for (auto iter : objBlocks)
+	{
+		delete iter; // 쓰레기값
+		iter = nullptr;
 	}
-	blocks.clear();
+	tileBlocks.clear();
+	objBlocks.clear();
 }

@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "Camera.h"
 #include "Stage1.h"
+#include "TilemapScene.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
@@ -53,7 +54,6 @@ OnD3D9DestroyDevice( void* pUserContext )
    tm.DeleteInstance();
 
    TileMapManager& tmm = TileMapManager::GetInstance();
-   tmm.DeleteBlocks();
    tmm.DeleteInstance();
 
    rm.ClearAll();
@@ -85,7 +85,8 @@ main(void)
     DXUTCreateDevice( true, screenwidth, screenheight );
     
     sm.AddScene(L"Stage1", new Stage1);
-    sm.ChangeScene(L"Stage1");
+    sm.AddScene(L"Tilemap", new TilemapScene);
+    sm.ChangeScene(L"Tilemap");
 
     DXUTMainLoop();
 

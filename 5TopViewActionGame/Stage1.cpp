@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "UIPack.h"
 #include "Item.h"
+#include "TileMapManager.h"
 #include "Stage1.h"
 
 void Stage1::Init()
@@ -19,6 +20,8 @@ void Stage1::Init()
 
 	ItemManager::GetInstance().pl = p;
 	ItemManager::GetInstance().Create();
+
+	TileMapManager::GetInstance().LoadBlocks("map1.txt");
 }
 
 void Stage1::Update()
@@ -35,4 +38,6 @@ void Stage1::Exit()
 	uipack->Delete();
 	delete p;
 	ItemManager::GetInstance().Delete();
+
+	TileMapManager::GetInstance().DeleteBlocks();
 }

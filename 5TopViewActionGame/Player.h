@@ -30,13 +30,6 @@ public:
 
 
 
-
-
-
-
-
-
-
 struct SkillKey
 {
     Player* p;
@@ -62,8 +55,3 @@ struct WeakAttackKey : public SkillKey
     }
     void DoSomething() override;
 };
-
-// 지금 자기가 누른 키 waskeypressed 검사
-// 키 조합이 배열에 들어있다.
-// 자기가 누른 키가 특정 키패턴과 연관되어있다면
-// 그거를 쭉 검사.
