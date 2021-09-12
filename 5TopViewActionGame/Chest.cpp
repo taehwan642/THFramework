@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Item.h"
 #include "Bullet.h"
+#include "Effect.h"
 #include "Chest.h"
 
 Chest::Chest()
@@ -27,6 +28,8 @@ void Chest::Collide()
 		{
 			++hp;
 			iter->isactive = false;
+			EManager::GetInstance().Spawn(position, E_HIT);
+			iter->UpGauge();
 			if (hp > 4)
 			{
 				ItemSpawn();

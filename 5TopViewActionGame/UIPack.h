@@ -17,7 +17,12 @@ public:
 	Font* lastTime = nullptr;
 	Sprite* hpgauge = nullptr;
 
+	Sprite* aim = nullptr;
+
 	AniSprite* sea = nullptr;
+
+	Sprite* attackgaugeOutline = nullptr;
+	AniSprite* attackgaugeBar = nullptr;
 
 	float* plastTime = nullptr;
 
@@ -27,6 +32,7 @@ public:
 	void PlayerScoreUpdate();
 	void SceneLastTimeUpdate();
 	void PlayerHPGaugeUpdate();
+	void AttackGaugeBarUpdate();
 	
 	void Update();
 	void Delete();

@@ -21,9 +21,11 @@ void GameObject::Damaged(int damage)
 	}
 }
 
-void GameObject::Collide()
+bool GameObject::Collide()
 {
 	TileMapManager& tm = TileMapManager::GetInstance();
+
+	bool col = false;
 
 	for (auto iter : tm.tileBlocks)
 	{
@@ -32,6 +34,7 @@ void GameObject::Collide()
 		RECT r;
 		if (IntersectRect(&r, &GetRect(), &iter->GetRect()))
 		{
+			col = true;
 			float xlength = r.right - r.left;
 			float ylength = r.bottom - r.top;
 
@@ -65,6 +68,7 @@ void GameObject::Collide()
 		RECT r;
 		if (IntersectRect(&r, &GetRect(), &iter->GetRect()))
 		{
+			col = true;
 			float xlength = r.right - r.left;
 			float ylength = r.bottom - r.top;
 
@@ -92,16 +96,15 @@ void GameObject::Collide()
 			}
 		}
 	}
+	return col;
 }
 
 void GameObject::Update()
 {
-	// 面倒贸府
-	
+	attackspeed -= DXUTGetElapsedTime();
+	dontmoveTime -= DXUTGetElapsedTime();
 
-	// 框流烙贸府
-	// 殿殿..
 	Action();
 
-	Collide();
+	isCollide = Collide();
 }

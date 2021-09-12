@@ -1,25 +1,29 @@
 #pragma once
-#include "AniSprite.h"
+#include "GameObject.h"
 #include "Singleton.h"
 
+class Player;
+
 class Bullet :
-    public AniSprite
+    public GameObject
 {
 public:
-    int damage = 1;
     Vec2 dir{};
-    float speed = 400.f;
     float alivetime = 3.f;
-    Bullet();
+    Player* player;
+    bool isWeak = false;
 
-    void Update() override;
+    Bullet();
+    void UpGauge();
+    void Action() override;
 };
 
 class BManager : public Singleton<BManager>
 {
 public:
+    Player* player;
     std::vector<Bullet*> bullets;
     void Create();
-    void Spawn(Vec2 pos, Vec2 dir, int damage);
+    void Spawn(Vec2 pos, Vec2 mousepos, int damage, int spawntype = 0, bool isWeak = false);
     void Delete();
 };

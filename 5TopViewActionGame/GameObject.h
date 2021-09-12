@@ -6,7 +6,7 @@ class GameObject :
 public:
     virtual ~GameObject() {};
 
-    bool isAttacking = false;
+    float dontmoveTime = 0.0f;
 
     int hp = 5;
     int maxHP = 5;
@@ -15,10 +15,14 @@ public:
 
     float movespeed = 100.f;
 
+    float attackspeed = 0.0f;
+
+    bool isCollide = false;
+
     void Heal(int healvalue); // 즉시 회복
     void Damaged(int damage);
 
-    void Collide();
+    bool Collide();
 
     virtual void Action() PURE;
     void Update() override;

@@ -1,19 +1,27 @@
 #pragma once
 #include "GameObject.h"
 
-struct SkillKey;
 class Player :
     public GameObject
 {
 public:
+    float spawnTime = 0.f;
+    // float, float, float
+    // 대기시간, 데미지, 타입
+    std::queue<std::pair<Vec4, std::vector<Vec2>>> bulletqueue;
+
+    float aimTime = 0.f;
+    Vec2 aimPos{ -999,-999 };
+
     POINT p;
-    std::vector<SkillKey*> keys;
 
     float attackupTick = 0.f;
     const int upAttack = 0;
 
     int score = 0;
     int hpuigauge = 0;
+
+    int attackgauge = 10;
 
     Player();
     virtual ~Player() {};
@@ -24,37 +32,13 @@ public:
     void CheckAttackUp();
     void Move();
 
+    bool WeakShoot();
+    bool SpecialWeakShoot();
+
+    bool StrongShoot();
+    bool SpecialStrongShoot();
+
     void Shoot();
 
-    void CheckSkillKey();
-
     void Action() override;
-};
-
-
-
-struct SkillKey
-{
-    Player* p;
-    std::vector<char> sk;
-    bool CheckSkill();
-    // 변하지 않는 흐름 사이에 변하는게 있다면
-    // 그걸 가상함수로.
-    virtual void DoSomething() PURE;
-};
-
-struct HealKey : public SkillKey
-{
-    HealKey(Player* p) { this->p = p; sk.push_back('Z'); }
-    void DoSomething() override;
-};
-
-struct WeakAttackKey : public SkillKey
-{
-    WeakAttackKey(Player* p) { this->p = p; 
-    sk.push_back('J'); 
-    sk.push_back('K');
-    sk.push_back('L');
-    }
-    void DoSomething() override;
 };

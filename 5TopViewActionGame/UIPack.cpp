@@ -40,6 +40,27 @@ void UIPack::Init(Player* p, float* lt)
 	sea->layer = -100;
 	sea->position = { screenwidth / 2, screenheight / 2 };
 	sea->isUI = true;
+
+	attackgaugeOutline = new Sprite;
+	attackgaugeOutline->layer = 999;
+	attackgaugeOutline->isUI = true;
+	attackgaugeOutline->scale = {0.5f,0.5f};
+	attackgaugeOutline->position = { 1000, 80 };
+	attackgaugeOutline->SetTexture(L"gaugeUI.png");
+	
+	attackgaugeBar = new AniSprite;
+	attackgaugeBar->layer = 998;
+	attackgaugeBar->isUI = true;
+	attackgaugeBar->scale = { 0.5f,0.5f };
+	attackgaugeBar->position = { 1000, 80 };
+	attackgaugeBar->SetTexture(L"gaugeUIBar (1).png");
+	attackgaugeBar->CreateAnimation(L"gaugeUIBar", 4, 0.2f);
+
+	aim = new Sprite;
+	aim->layer = 999;
+	aim->scale = { 0.5f,0.5f };
+	aim->position = { -999,-999 };
+	aim->SetTexture(L"aim.png");
 }
 
 void UIPack::PlayerHPUIUpdate()
@@ -70,13 +91,26 @@ void UIPack::PlayerHPGaugeUpdate()
 	hpgauge->SetTexture(tag);
 }
 
+void UIPack::AttackGaugeBarUpdate()
+{
+	attackgaugeBar->PlayAnimation(L"gaugeUIBar");
+	if (pl->attackgauge > 10)
+		pl->attackgauge = 10;
+	float x = attackgaugeBar->GetTexture()->info.Width * (pl->attackgauge / 10.f);
+	// 10으로 차면 공격 가능하게
+	
+	SetRect(&attackgaugeBar->imgRect, 0, 0, (int)x, attackgaugeBar->GetTexture()->info.Height);
+}
+
 void UIPack::Update()
 {
+	aim->position = pl->aimPos;
 	sea->PlayAnimation(L"sea");
 	PlayerHPUIUpdate();
 	PlayerScoreUpdate();
 	SceneLastTimeUpdate();
 	PlayerHPGaugeUpdate();
+	AttackGaugeBarUpdate();
 }
 
 void UIPack::Delete()
@@ -85,4 +119,8 @@ void UIPack::Delete()
 	delete score;
 	delete lastTime;
 	delete hpgauge;
+	delete sea;
+	delete attackgaugeOutline;
+	delete attackgaugeBar;
+	delete aim;
 }

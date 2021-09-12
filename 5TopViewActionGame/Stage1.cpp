@@ -37,7 +37,9 @@ void Stage1::Init()
 	ItemManager::GetInstance().pl = p;
 	ItemManager::GetInstance().Create();
 
+	BManager::GetInstance().player = p;
 	BManager::GetInstance().Create();
+
 	EManager::GetInstance().Create();
 }
 

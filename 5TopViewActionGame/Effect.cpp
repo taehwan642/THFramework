@@ -35,10 +35,10 @@ void EManager::Delete()
 
 Effect::Effect()
 {
-	CreateAnimation(L"boom", 8, 0.1f);
+	CreateAnimation(L"boom", 8, 0.05f);
 	CreateAnimation(L"dust", 4, 0.1f);
 	CreateAnimation(L"heal", 5, 0.3f);
-	CreateAnimation(L"hit", 3, 0.2f);
+	CreateAnimation(L"hit", 3, 0.05f);
 	PlayAnimation(L"hit");
 	scale = { 0.5,0.5 };
 }
