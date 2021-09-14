@@ -10,6 +10,7 @@
 #include "MainScene.h"
 #include "Font.h"
 #include "TilemapScene.h"
+#include <dxdiag.h>
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
@@ -100,15 +101,12 @@ main(void)
     DXUTSetHotkeyHandling( true, true, true );
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
-    DXUTCreateDevice( false, screenwidth, screenheight );
+    DXUTCreateDevice( true, screenwidth, screenheight );
     
     sm.AddScene(L"Stage1", new Stage1);
     sm.AddScene(L"Tilemap", new TilemapScene);
     sm.AddScene(L"Main", new MainScene);
     sm.ChangeScene(L"Main");
-
-    std::wcout << DXUTGetDeviceStats() << std::endl;
-
 
     DXUTMainLoop();
 
