@@ -17,7 +17,8 @@ void GameObject::Damaged(int damage)
 	if (hp <= 0)
 	{
 		// ав╬З╢Г
-		
+		isdead = true;
+		Dead();
 	}
 }
 

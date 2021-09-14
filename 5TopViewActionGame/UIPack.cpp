@@ -61,6 +61,19 @@ void UIPack::Init(Player* p, float* lt)
 	aim->scale = { 0.5f,0.5f };
 	aim->position = { -999,-999 };
 	aim->SetTexture(L"aim.png");
+
+	scoreboard = new Sprite;
+	scoreboard->layer = 1000;
+	scoreboard->isUI = true;
+	scoreboard->position = { screenwidth / 2,screenheight / 2 };
+	scoreboard->SetTexture(L"scoreboard.png");
+	scoreboard->isactive = false;
+
+	scorefont = new Font(4, 1, L"Arial");
+	scorefont->layer = 1001;
+	scorefont->position = { screenwidth / 2,screenheight / 2 - 100 };
+	scorefont->isactive = false;
+	scorefont->color = D3DCOLOR_RGBA(0, 0, 0, 255);
 }
 
 void UIPack::PlayerHPUIUpdate()
@@ -102,15 +115,25 @@ void UIPack::AttackGaugeBarUpdate()
 	SetRect(&attackgaugeBar->imgRect, 0, 0, (int)x, attackgaugeBar->GetTexture()->info.Height);
 }
 
+void UIPack::ScoreBoardUpdate()
+{
+	// isdead가 트루면 isactive도 true. 당연하다!
+	scoreboard->isactive = pl->isdead;
+	scorefont->isactive = pl->isdead;
+	scorefont->SetText((char*)std::to_string(pl->score).c_str());
+}
+
 void UIPack::Update()
 {
 	aim->position = pl->aimPos;
 	sea->PlayAnimation(L"sea");
+
 	PlayerHPUIUpdate();
 	PlayerScoreUpdate();
 	SceneLastTimeUpdate();
 	PlayerHPGaugeUpdate();
 	AttackGaugeBarUpdate();
+	ScoreBoardUpdate();
 }
 
 void UIPack::Delete()
@@ -123,4 +146,6 @@ void UIPack::Delete()
 	delete attackgaugeOutline;
 	delete attackgaugeBar;
 	delete aim;
+	delete scoreboard;
+	delete scorefont;
 }

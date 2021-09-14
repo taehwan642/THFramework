@@ -24,6 +24,9 @@ public:
 	Sprite* attackgaugeOutline = nullptr;
 	AniSprite* attackgaugeBar = nullptr;
 
+	Sprite* scoreboard = nullptr;
+	Font* scorefont = nullptr;
+
 	float* plastTime = nullptr;
 
 	void Init(Player* p, float* lt);
@@ -33,7 +36,9 @@ public:
 	void SceneLastTimeUpdate();
 	void PlayerHPGaugeUpdate();
 	void AttackGaugeBarUpdate();
-	
+	void ScoreBoardUpdate();
+
+
 	void Update();
 	void Delete();
 };

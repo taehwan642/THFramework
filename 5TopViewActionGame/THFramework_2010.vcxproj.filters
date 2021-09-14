@@ -173,6 +173,15 @@
     <ClCompile Include="Effect.cpp">
       <Filter>2.Client\1.GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RankScene.cpp">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -243,6 +252,15 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>2.Client\1.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RankScene.h">
+      <Filter>2.Client\0.Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

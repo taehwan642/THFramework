@@ -19,6 +19,9 @@ public:
 
     bool isCollide = false;
 
+    bool isdead = false;
+    virtual void Dead() {};
+
     void Heal(int healvalue); // 즉시 회복
     void Damaged(int damage);
 

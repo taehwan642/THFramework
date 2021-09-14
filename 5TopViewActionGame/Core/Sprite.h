@@ -8,7 +8,6 @@ class Sprite :
     public Object
 {
 private:
-    static LPD3DXSPRITE sprite;
 
     friend HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
         void* pUserContext);
@@ -18,6 +17,8 @@ protected:
     Texture* texture;
 
 public:
+    static LPD3DXSPRITE sprite;
+
     explicit Sprite() : texture(0) { RenderManager::GetInstance().AddRenderObjects(this); };
 
     __forceinline ~Sprite()

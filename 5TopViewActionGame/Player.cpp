@@ -230,6 +230,9 @@ void Player::Shoot()
 
 void Player::Action()
 {
+	if (isdead == true)
+		return;
+
 	if (hpuigauge == 4)
 	{
 		Heal(maxHP);
@@ -240,6 +243,9 @@ void Player::Action()
 		aimPos = { -999, -999 };
 	else
 		aimTime -= DXUTGetElapsedTime();
+
+	if (DXUTWasKeyPressed('B'))
+		Damaged(1);
 
 	CollideItem();
 	CheckAttackUp();

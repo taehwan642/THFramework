@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "Bullet.h"
 #include "Effect.h"
+#include "Player.h"
 #include "Chest.h"
 
 Chest::Chest()
@@ -30,6 +31,7 @@ void Chest::Collide()
 			iter->isactive = false;
 			EManager::GetInstance().Spawn(position, E_HIT);
 			iter->UpGauge();
+			ItemManager::GetInstance().pl->score += 20;
 			if (hp > 4)
 			{
 				ItemSpawn();

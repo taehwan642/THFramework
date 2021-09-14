@@ -5279,11 +5279,12 @@ HRESULT WINAPI DXUTToggleFullScreen()
     // Go back to previous state
 
     BOOL bIsWindowed = DXUTGetIsWindowedFromDS( &deviceSettings );
-    UINT nWidth = ( bIsWindowed ) ? GetDXUTState().GetWindowBackBufferWidthAtModeChange() :
+    UINT nWidth = ( bIsWindowed ) ? deviceSettings.d3d9.pp.BackBufferWidth :
         GetDXUTState().GetFullScreenBackBufferWidthAtModeChange();
-    UINT nHeight = ( bIsWindowed ) ? GetDXUTState().GetWindowBackBufferHeightAtModeChange() :
+    UINT nHeight = ( bIsWindowed ) ? deviceSettings.d3d9.pp.BackBufferHeight :
         GetDXUTState().GetFullScreenBackBufferHeightAtModeChange();
-
+    std::cout << nWidth << " " << nHeight << std::endl;
+    //std::cout << deviceSettings.d3d9.pp.BackBufferWidth << " " << deviceSettings.d3d9.pp.BackBufferHeight << std::endl;
     if( nWidth > 0 && nHeight > 0 )
     {
         matchOptions.eResolution = DXUTMT_CLOSEST_TO_INPUT;

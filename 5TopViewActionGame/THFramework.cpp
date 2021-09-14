@@ -7,10 +7,13 @@
 #include "Sprite.h"
 #include "Camera.h"
 #include "Stage1.h"
+#include "MainScene.h"
+#include "Font.h"
 #include "TilemapScene.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
+bool isEnd = false;
 
 HRESULT CALLBACK 
 OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
@@ -23,10 +26,39 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
     return S_OK;
 }
 
+HRESULT CALLBACK OnD3D9ResetDevice(IDirect3DDevice9* pd3dDevice,
+    const D3DSURFACE_DESC* pBackBufferSurfaceDesc, void* pUserContext)
+{
+    HRESULT hr;
+    Sprite::sprite->OnResetDevice();
+    std::list<Object*>& list = rm.GetRenderObjects();
+    for (auto iter : list)
+    {
+        Font* f = dynamic_cast<Font*>(iter);
+        if (f != nullptr)
+            f->font->OnResetDevice();
+    }
+    return S_OK;
+}
+
+void CALLBACK OnLostDevice(void* pUserContext)
+{
+    if (isEnd)
+        return;
+    Sprite::sprite->OnLostDevice();
+    std::list<Object*>& list = rm.GetRenderObjects();
+    for (auto iter : list)
+    {
+        Font* f = dynamic_cast<Font*>(iter);
+        if (f != nullptr)
+            f->font->OnLostDevice();
+    }
+}
+
 void CALLBACK 
 OnFrameMove( double fTime, float fElapsedTime, void* pUserContext )
 {
-   sm.UpdateScene();
+    sm.UpdateScene();
 }
 
 void CALLBACK 
@@ -46,23 +78,7 @@ OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, float fElapsedTim
 void CALLBACK 
 OnD3D9DestroyDevice( void* pUserContext )
 {
-   sm.ClearScenes();
-   sm.DeleteInstance();
 
-   TextureManager& tm = TextureManager::GetInstance();
-   tm.ReleaseAllTexture();
-   tm.DeleteInstance();
-
-   TileMapManager& tmm = TileMapManager::GetInstance();
-   tmm.DeleteInstance();
-
-   rm.ClearAll();
-   rm.DeleteInstance();
-
-   Camera& c = Camera::GetInstance();
-   c.DeleteInstance();
-
-   Sprite::sprite->Release();
 }
 
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
@@ -74,6 +90,8 @@ main(void)
 #endif
 
     DXUTSetCallbackD3D9DeviceCreated( OnD3D9CreateDevice );
+    DXUTSetCallbackD3D9DeviceReset(OnD3D9ResetDevice);
+    DXUTSetCallbackD3D9DeviceLost( OnLostDevice );
     DXUTSetCallbackFrameMove( OnFrameMove );
     DXUTSetCallbackD3D9FrameRender( OnD3D9FrameRender );
     DXUTSetCallbackD3D9DeviceDestroyed( OnD3D9DestroyDevice );
@@ -82,13 +100,38 @@ main(void)
     DXUTSetHotkeyHandling( true, true, true );
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
-    DXUTCreateDevice( true, screenwidth, screenheight );
+    DXUTCreateDevice( false, screenwidth, screenheight );
     
     sm.AddScene(L"Stage1", new Stage1);
     sm.AddScene(L"Tilemap", new TilemapScene);
-    sm.ChangeScene(L"Tilemap");
+    sm.AddScene(L"Main", new MainScene);
+    sm.ChangeScene(L"Main");
+
+    std::wcout << DXUTGetDeviceStats() << std::endl;
+
 
     DXUTMainLoop();
+
+
+    isEnd = true;
+
+    sm.ClearScenes();
+    sm.DeleteInstance();
+
+    TextureManager& tm = TextureManager::GetInstance();
+    tm.ReleaseAllTexture();
+    tm.DeleteInstance();
+
+    TileMapManager& tmm = TileMapManager::GetInstance();
+    tmm.DeleteInstance();
+
+    rm.ClearAll();
+    rm.DeleteInstance();
+
+    Camera& c = Camera::GetInstance();
+    c.DeleteInstance();
+
+    Sprite::sprite->Release();
 
     return DXUTGetExitCode();
 }
