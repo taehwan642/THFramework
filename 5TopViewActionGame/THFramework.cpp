@@ -91,8 +91,10 @@ main(void)
 #endif
 
     DXUTSetCallbackD3D9DeviceCreated( OnD3D9CreateDevice );
-    DXUTSetCallbackD3D9DeviceReset(OnD3D9ResetDevice);
+
+    DXUTSetCallbackD3D9DeviceReset( OnD3D9ResetDevice );
     DXUTSetCallbackD3D9DeviceLost( OnLostDevice );
+
     DXUTSetCallbackFrameMove( OnFrameMove );
     DXUTSetCallbackD3D9FrameRender( OnD3D9FrameRender );
     DXUTSetCallbackD3D9DeviceDestroyed( OnD3D9DestroyDevice );
@@ -101,7 +103,7 @@ main(void)
     DXUTSetHotkeyHandling( true, true, true );
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
-    DXUTCreateDevice( true, screenwidth, screenheight );
+    DXUTCreateDevice( false, screenwidth, screenheight );
     
     sm.AddScene(L"Stage1", new Stage1);
     sm.AddScene(L"Tilemap", new TilemapScene);

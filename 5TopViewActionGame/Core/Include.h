@@ -10,6 +10,7 @@
 #include <random>
 #include <ctime>
 #include <queue>
+#include <functional>
 
 constexpr int screenwidth = 1280;
 constexpr int screenheight = 720;

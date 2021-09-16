@@ -66,9 +66,6 @@
     <Filter Include="2.Client\1.GameObject">
       <UniqueIdentifier>{d3dbb826-b3a3-45ef-9cf2-4cc1aa6e01d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1.Core\10.Sound">
-      <UniqueIdentifier>{2336013e-153c-46a3-99cb-f84f96994df0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -185,14 +182,8 @@
     <ClCompile Include="RankScene.cpp">
       <Filter>2.Client\0.Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>1.Core\10.Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="DXUT\Optional\SDKsound.cpp">
-      <Filter>1.Core\10.Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="DXUT\Optional\SDKwavefile.cpp">
-      <Filter>1.Core\10.Sound</Filter>
+    <ClCompile Include="Button.cpp">
+      <Filter>2.Client\2.UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,14 +265,8 @@
     <ClInclude Include="RankScene.h">
       <Filter>2.Client\0.Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>1.Core\10.Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="DXUT\Optional\SDKsound.h">
-      <Filter>1.Core\10.Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="DXUT\Optional\SDKwavefile.h">
-      <Filter>1.Core\10.Sound</Filter>
+    <ClInclude Include="Button.h">
+      <Filter>2.Client\2.UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
