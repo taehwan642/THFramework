@@ -185,6 +185,12 @@
     <ClCompile Include="Button.cpp">
       <Filter>2.Client\2.UI</Filter>
     </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CutScene.cpp">
+      <Filter>2.Client\2.UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -266,6 +272,12 @@
       <Filter>2.Client\0.Scene</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>2.Client\2.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CutScene.h">
       <Filter>2.Client\2.UI</Filter>
     </ClInclude>
   </ItemGroup>

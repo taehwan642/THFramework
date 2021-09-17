@@ -388,9 +388,11 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="CutScene.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="RankScene.cpp" />
@@ -399,10 +401,12 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Chest.h" />
+    <ClInclude Include="CutScene.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Player.h" />

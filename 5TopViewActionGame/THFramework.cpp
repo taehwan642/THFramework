@@ -10,7 +10,8 @@
 #include "MainScene.h"
 #include "Font.h"
 #include "TilemapScene.h"
-#include <dxdiag.h>
+#include "EndingScene.h"
+#include "IntroScene.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
@@ -103,15 +104,16 @@ main(void)
     DXUTSetHotkeyHandling( true, true, true );
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
-    DXUTCreateDevice( false, screenwidth, screenheight );
+    DXUTCreateDevice( true, screenwidth, screenheight );
     
     sm.AddScene(L"Stage1", new Stage1);
     sm.AddScene(L"Tilemap", new TilemapScene);
     sm.AddScene(L"Main", new MainScene);
-    sm.ChangeScene(L"Main");
+    sm.AddScene(L"Intro", new IntroScene);
+    sm.AddScene(L"End", new EndingScene);
+    sm.ChangeScene(L"End");
 
     DXUTMainLoop();
-
 
     isEnd = true;
 
