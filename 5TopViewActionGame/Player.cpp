@@ -9,6 +9,7 @@ Player::Player() : upAttack(strValue + 1)
 	movespeed = 300;
 	hp = maxHP;
 	layer = 100;
+	//CreateAnimation();
 }
 
 void Player::HpUIUp(int healvalue)
