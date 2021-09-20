@@ -151,7 +151,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>d3dx10d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dsound.lib;d3dx10d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LargeAddressAware>true</LargeAddressAware>
@@ -389,6 +389,8 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="CutScene.cpp" />
+    <ClCompile Include="DXUT\Optional\SDKsound.cpp" />
+    <ClCompile Include="DXUT\Optional\SDKwavefile.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -396,12 +398,15 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="RankScene.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TilemapScene.cpp" />
     <ClCompile Include="UIPack.cpp" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="CutScene.h" />
+    <ClInclude Include="DXUT\Optional\SDKsound.h" />
+    <ClInclude Include="DXUT\Optional\SDKwavefile.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Font.h" />
@@ -411,6 +416,7 @@
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RankScene.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="TilemapScene.h" />
     <ClInclude Include="UIPack.h" />

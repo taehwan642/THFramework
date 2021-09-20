@@ -34,14 +34,15 @@ void IntroScene::Init()
 
 void IntroScene::Update()
 {
+	// if cutsceneFunc() == true {}
 	if (cutsceneFunc())
 	{
-		if (isStart == true)
+		if (isStart == true) // End
 		{
 			isStart = false; // 끝나는 효과 나올 차례
 			cutsceneFunc = cutscene[cutsceneindex]->end;
 		}
-		else
+		else // End함수가 돌고있었다.
 		{
 			isStart = true;
 			cutscene[cutsceneindex]->isactive = false;

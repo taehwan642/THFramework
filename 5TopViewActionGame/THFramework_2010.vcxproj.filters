@@ -66,6 +66,9 @@
     <Filter Include="2.Client\1.GameObject">
       <UniqueIdentifier>{d3dbb826-b3a3-45ef-9cf2-4cc1aa6e01d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1.Core\Sound">
+      <UniqueIdentifier>{659edacf-7524-4c0e-9a92-b85ffc667ff7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -191,6 +194,15 @@
     <ClCompile Include="CutScene.cpp">
       <Filter>2.Client\2.UI</Filter>
     </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKsound.cpp">
+      <Filter>1.Core\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKwavefile.cpp">
+      <Filter>1.Core\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>1.Core\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -279,6 +291,15 @@
     </ClInclude>
     <ClInclude Include="CutScene.h">
       <Filter>2.Client\2.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKsound.h">
+      <Filter>1.Core\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKwavefile.h">
+      <Filter>1.Core\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>1.Core\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

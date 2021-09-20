@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "Chest.h"
 #include "Effect.h"
+#include "SoundManager.h"
 #include "Stage1.h"
 
 void Stage1::Init()
@@ -41,6 +42,8 @@ void Stage1::Init()
 	BManager::GetInstance().Create();
 
 	EManager::GetInstance().Create();
+
+	SoundManager::GetInstance().Play(L"bgm", 0, true);
 }
 
 void Stage1::Update()

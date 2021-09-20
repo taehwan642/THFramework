@@ -11,6 +11,7 @@
 #include <ctime>
 #include <queue>
 #include <functional>
+#include <thread>
 
 constexpr int screenwidth = 1280;
 constexpr int screenheight = 720;

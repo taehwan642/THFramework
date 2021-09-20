@@ -12,6 +12,7 @@
 #include "TilemapScene.h"
 #include "EndingScene.h"
 #include "IntroScene.h"
+#include "SoundManager.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
@@ -25,6 +26,38 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
     Camera& c = Camera::GetInstance();
     c.Initialize();
     srand(time(NULL));
+
+    std::thread th([&]() 
+        {
+            TextureManager& tm = TextureManager::GetInstance();
+            std::wstring route;
+            for (int i = 0; i < 8; ++i)
+            {
+                route = L"boom (" + std::to_wstring(i + 1) + L").png";
+                tm.LoadTexture(route);
+            }
+
+            TileMapManager& tmm = TileMapManager::GetInstance();
+            for (int i = 0; i < BlockType::PLAYER; ++i)
+            {
+                tm.LoadTexture(tmm.GetTextureTag((BlockType)i));
+            }
+
+
+            return 0;
+        });
+
+    std::thread th2([&]()
+        {
+            // ¸ó½ºÅÍ
+
+            SoundManager& smm = SoundManager::GetInstance();
+            smm.LoadSound(L"Resources/Sound/Forest Birds 01.wav", L"bgm");
+            return 0;
+        });
+
+    th.join();
+    th2.join();
     return S_OK;
 }
 
@@ -134,6 +167,10 @@ main(void)
     c.DeleteInstance();
 
     Sprite::sprite->Release();
+
+    SoundManager& smm = SoundManager::GetInstance();
+    smm.DeleteSounds();
+    smm.DeleteInstance();
 
     return DXUTGetExitCode();
 }
