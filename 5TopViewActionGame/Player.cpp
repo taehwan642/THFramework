@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "Camera.h"
 #include "Bullet.h"
+#include "Effect.h"
 #include "Player.h"
 
 Player::Player() : upAttack(strValue + 1)
@@ -9,7 +10,12 @@ Player::Player() : upAttack(strValue + 1)
 	movespeed = 300;
 	hp = maxHP;
 	layer = 100;
-	//CreateAnimation();
+	
+	CreateAnimation(L"player", 6, 0.3f); // idle
+	CreateAnimation(L"playershoot", 3, 0.1f); // 약공격, 강공격 & 루시안궁
+	CreateAnimation(L"playershotgun", 3, 0.1f);
+	CreateAnimation(L"lucian/lucian", 15, 0.1f);
+	PlayAnimation(L"player");
 }
 
 void Player::HpUIUp(int healvalue)
@@ -81,17 +87,18 @@ bool Player::WeakShoot()
 	{
 		attackspeed = 0.5f;
 
-		std::pair<Vec4, std::vector<Vec2>> temp;
+		ShootData temp;
 
-		temp.first.x = 0.5f;
-		temp.first.y = strValue;
-		temp.first.z = 0;
-		temp.first.w = 1;
+		temp.spawntime = 0.5f;
+		temp.damage = strValue;
+		temp.spawntype = 0;
+		temp.isweak = 1;
 
-		temp.second.push_back(Vec2(p.x, p.y));
+		temp.dir.push_back(Vec2(p.x, p.y));
 		bulletqueue.push(temp);
 
 		dontmoveTime = 0.4f;
+		state = SHOOT;
 	}
 	return true;
 }
@@ -104,7 +111,7 @@ bool Player::SpecialWeakShoot()
 		{
 			for (int i = 0; i < 2; ++i)
 			{
-				std::pair<Vec4, std::vector<Vec2>> temp;
+				ShootData temp;
 				for (int r = -30; r <= 30; r += 30)
 				{
 					Vec2 dir;
@@ -122,17 +129,36 @@ bool Player::SpecialWeakShoot()
 					// sin == y
 
 					// 다음 쏘는 시간 딜레이
-					temp.first.x = 0.2f;
-					temp.first.y = strValue + 2;
-					temp.first.z = 1;
-					temp.first.w = 0;
+					temp.spawntime = 0.2f;
+					temp.damage = strValue + 2;
+					temp.spawntype = 1;
+					temp.isweak = 0;
 					// 방향이 3개면 총알은 3개
-					temp.second.push_back(-dir);
+					temp.dir.push_back(-dir);
 				}
 				bulletqueue.push(temp);
 			}
 			attackgauge = 0;
 			dontmoveTime = 0.5f;
+			attackspeed = 0.2f; 
+			// 위치에서 바라보는 방향으로 약간 더 움직여야 총구쪽으로 향한다.
+			// position + dir * scalar (float)
+
+			// 방향벡터 구하기
+			float dirX = p.x - position.x;
+			float dirY = p.y - position.y;
+			Vec2 d = { dirX, dirY };
+			// 크기 1로 세팅
+			D3DXVec2Normalize(&d, &d);
+			// (방향벡터 방향으로) 앞으로 땡겨주기
+			Vec2 res =
+			{
+				position.x + d.x * 80,
+				position.y + d.y * 80
+			};
+			// 스폰
+			EManager::GetInstance().Spawn(res, E_SHOTGUN, rotation);
+			state = SHOTGUN;
 			return true;
 		}
 	}
@@ -145,18 +171,19 @@ bool Player::StrongShoot()
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			std::pair<Vec4, std::vector<Vec2>> temp;
+			ShootData temp;
 			// 다음 쏘는 시간 딜레이
-			temp.first.x = 0.1f;
-			temp.first.y = strValue + 1; 
-			temp.first.z = 0;
-			temp.first.w = 1;
+			temp.spawntime = 0.1f;
+			temp.damage = strValue + 1; 
+			temp.spawntype = 0;
+			temp.isweak = 1;
 			// 방향이 3개면 총알은 3개
-			temp.second.push_back(Vec2(p.x, p.y));
+			temp.dir.push_back(Vec2(p.x, p.y));
 			bulletqueue.push(temp);
 		}
 		attackspeed = 1.2f;
-		dontmoveTime = 0.8f;
+		dontmoveTime = 0.5f;
+		state = SHOOT;
 		return true;
 	}
 	return false;
@@ -170,19 +197,21 @@ bool Player::SpecialStrongShoot()
 		{
 			for (int i = 0; i < 10; ++i)
 			{
-				std::pair<Vec4, std::vector<Vec2>> temp;
+				ShootData temp;
 				// 다음 쏘는 시간 딜레이
-				temp.first.x = 0.1f;
-				temp.first.y = strValue + 1;
-				temp.first.z = 0;
-				temp.first.w = 0;
+				temp.spawntime = 0.1f;
+				temp.damage = strValue + 1;
+				temp.spawntype = 0;
+				temp.isweak = 0;
 				// 방향이 3개면 총알은 3개
-				temp.second.push_back(Vec2(p.x, p.y));
+				temp.dir.push_back(Vec2(p.x, p.y));
 				aimPos = Vec2(p.x, p.y);
 				bulletqueue.push(temp);
 			}
 			aimTime = 1.f;
 			attackgauge = 0;
+			attackspeed = 0.2f;
+			state = LUCIAN;
 			return true;
 		}
 	}
@@ -196,12 +225,12 @@ void Player::Shoot()
 	{
 		if (bulletqueue.size() > 0)
 		{
-			std::pair<Vec4, std::vector<Vec2>> temp = bulletqueue.front();
-			spawnTime = temp.first.x;
+			ShootData temp = bulletqueue.front();
+			spawnTime = temp.spawntime;
 
-			for (auto iter : temp.second)
+			for (auto iter : temp.dir)
 			{
-				BManager::GetInstance().Spawn(position, iter, temp.first.y, temp.first.z, temp.first.w);
+				BManager::GetInstance().Spawn(position, iter, temp.damage, temp.spawntype, temp.isweak);
 			}
 			bulletqueue.pop();
 		}
@@ -234,19 +263,49 @@ void Player::Action()
 	if (isdead == true)
 		return;
 
-	if (hpuigauge == 4)
+	switch (state)
 	{
-		Heal(maxHP);
-		hpuigauge = 0;
+	case IDLE:
+		PlayAnimation(L"player");
+		break;
+	case SHOOT:
+		if(PlayAnimation(L"playershoot"))
+			state = IDLE;
+		break;
+	case SHOTGUN:
+		if(PlayAnimation(L"playershotgun"))
+			state = IDLE;
+		break;
+	case LUCIAN:
+		if (PlayAnimation(L"lucian/lucian"))
+			state = IDLE;
+		break;
+	default:
+		break;
 	}
+	// 만약 쏘고있지 않을 때
+	// idle 애니메이션 실행
+	// 만약 쏘고있을 때
+	// shoot 애니메이션 실행
+
+	if (DXUTWasKeyPressed('H'))
+	{
+		if (hpuigauge == 4)
+		{
+			EManager::GetInstance().Spawn(position, E_HEAL);
+			Heal(maxHP);
+			hpuigauge = 0;
+		}
+	}
+
 
 	if (aimTime < 0)
 		aimPos = { -999, -999 };
 	else
 		aimTime -= DXUTGetElapsedTime();
 
-	if (DXUTWasKeyPressed('B'))
-		Damaged(1);
+	/*if (DXUTWasKeyPressed('B'))
+		Damaged(1);*/
 
 	CollideItem();
 	CheckAttackUp();

@@ -58,6 +58,9 @@ void IntroScene::Update()
 			cutscene[cutsceneindex]->font->isactive = true;
 		}
 	}
+	if(DXUTWasKeyPressed('S'))
+		SceneManager::GetInstance().ChangeScene(L"Main");
+
 }
 
 void IntroScene::Exit()

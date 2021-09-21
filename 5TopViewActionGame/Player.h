@@ -1,14 +1,30 @@
 #pragma once
 #include "GameObject.h"
 
+struct ShootData
+{
+    std::vector<Vec2> dir; // 두가지 용도
+    int damage;
+    int spawntype;
+    bool isweak;
+    float spawntime;
+};
+
+enum PlayerState
+{
+    IDLE, SHOOT, SHOTGUN, LUCIAN
+};
+
 class Player :
     public GameObject
 {
 public:
+    PlayerState state = IDLE;
+
     float spawnTime = 0.f;
     // float, float, float
     // 대기시간, 데미지, 타입
-    std::queue<std::pair<Vec4, std::vector<Vec2>>> bulletqueue;
+    std::queue<ShootData> bulletqueue;
 
     float aimTime = 0.f;
     Vec2 aimPos{ -999,-999 };
@@ -22,6 +38,12 @@ public:
     int hpuigauge = 0;
 
     int attackgauge = 10;
+
+    void ChangeState(PlayerState s)
+    {
+        if (state != SHOOT && state != SHOTGUN && state != LUCIAN)
+            state = s;
+    }
 
     Player();
     virtual ~Player() {};

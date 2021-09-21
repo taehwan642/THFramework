@@ -20,7 +20,6 @@ void Stage1::Init()
 	p = new Player;
 	p->position = tm.playerpos;
 	p->scale ={ tm.blockScale, tm.blockScale };
-	p->SetTexture(L"player (1).png");
 
 	uipack = new UIPack;
 	uipack->Init(p, &coolTime);

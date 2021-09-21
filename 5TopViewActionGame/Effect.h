@@ -7,7 +7,9 @@ enum EffectTag
     E_BOMB,
     E_HIT,
     E_HEAL,
-    E_DUST
+    E_ATTACKUP,
+    E_DUST,
+    E_SHOTGUN
 };
 
 class Effect :
@@ -25,6 +27,6 @@ class EManager : public Singleton<EManager>
 public:
     std::vector<Effect*> effects;
     void Create();
-    void Spawn(Vec2 pos, EffectTag tag);
+    void Spawn(Vec2 pos, EffectTag tag, float rotation = 0);
     void Delete();
 };

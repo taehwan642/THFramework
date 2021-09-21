@@ -9,10 +9,12 @@ void Item::Effect(Player* p)
 	{
 	case I_HEAL:
 		p->Heal(1);
+		EManager::GetInstance().Spawn(position, E_HEAL);
 		isactive = false;
 		break;
 	case I_ATTACKUP:
 		p->attackupTick = 3.0f;
+		EManager::GetInstance().Spawn(position, E_ATTACKUP); // »¡°£»ö
 		isactive = false;
 		break;
 	case I_HPUIUP:
