@@ -46,12 +46,13 @@ public:
 
     void Lookat(Vec2 pos, bool type = false)
     {
+        // 위치
         if (type == false)
         {
             Vec2 temp = position - pos;
             rotation = atan2(temp.y, temp.x);
         }
-        else
+        else // 방향
         {
             rotation = atan2(pos.y, pos.x);
         }

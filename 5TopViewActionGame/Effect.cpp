@@ -46,6 +46,7 @@ Effect::Effect()
 	CreateAnimation(L"heal", 5, 0.05f);
 	CreateAnimation(L"hit", 3, 0.05f);
 	CreateAnimation(L"shotguneff", 7, 0.1f);
+	CreateAnimation(L"monsterdie", 6, 0.05f);
 	PlayAnimation(L"hit");
 	scale = { 0.5,0.5 };
 }
@@ -72,6 +73,9 @@ void Effect::Update()
 		break;
 	case E_ATTACKUP:
 		isEnd = PlayAnimation(L"heal");
+		break;
+	case E_MDIE:
+		isEnd = PlayAnimation(L"monsterdie");
 		break;
 	default:
 		break;

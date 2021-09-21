@@ -397,6 +397,8 @@
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Monster1.cpp" />
     <ClCompile Include="RankScene.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TilemapScene.cpp" />
@@ -414,6 +416,8 @@
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MainScene.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Monster1.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RankScene.h" />
     <ClInclude Include="SoundManager.h" />

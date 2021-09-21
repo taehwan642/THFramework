@@ -6,7 +6,6 @@ class AniSprite :
 private:
     std::wstring currentAnimationTag;
     std::pair<float, std::vector<Texture*>> currentAnimation;
-    int currentFrame;
     std::map<std::wstring, std::pair<float, std::vector<Texture*>>> animationMap;
 
 protected:
@@ -14,6 +13,7 @@ protected:
 
 
 public:
+    int currentFrame;
     explicit AniSprite();
     void CreateAnimation(const std::wstring& tag, int frameCount, float tickTime);
     bool PlayAnimation(const std::wstring& tag);

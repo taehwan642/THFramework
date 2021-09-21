@@ -8,6 +8,7 @@
 #include "Chest.h"
 #include "Effect.h"
 #include "SoundManager.h"
+#include "Monster1.h"
 #include "Stage1.h"
 
 void Stage1::Init()
@@ -25,6 +26,9 @@ void Stage1::Init()
 	uipack->Init(p, &coolTime);
 	// UI
 	// Àû
+
+	m = new Monster1;
+	m->player = p;
 
 	for (auto iter : tm.chestpos)
 	{

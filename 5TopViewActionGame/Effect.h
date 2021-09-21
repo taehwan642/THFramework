@@ -9,7 +9,8 @@ enum EffectTag
     E_HEAL,
     E_ATTACKUP,
     E_DUST,
-    E_SHOTGUN
+    E_SHOTGUN,
+    E_MDIE
 };
 
 class Effect :

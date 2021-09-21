@@ -69,6 +69,9 @@
     <Filter Include="1.Core\Sound">
       <UniqueIdentifier>{659edacf-7524-4c0e-9a92-b85ffc667ff7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2.Client\1.GameObject\Monster">
+      <UniqueIdentifier>{dd11bd87-8d47-49da-8c7d-314008afd352}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -203,6 +206,12 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>1.Core\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster1.cpp">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -300,6 +309,12 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>1.Core\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster1.h">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
