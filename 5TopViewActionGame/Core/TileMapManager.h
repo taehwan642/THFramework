@@ -23,7 +23,8 @@ enum BlockType
 	WINDOW2,
 	CHEST,
 	PLAYER,
-	MONSTER1
+	MONSTER1,
+	MONSTERSPAWNER
 };
 
 // 키를 넣는 방법 2개

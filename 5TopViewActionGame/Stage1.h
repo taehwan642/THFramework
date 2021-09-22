@@ -5,14 +5,13 @@ class Player;
 class UIPack;
 class Chest;
 class Monster;
+class MonsterSpawner;
 
 class Stage1 :
     public Scene
 {
     Player* p;
     UIPack* uipack;
-    std::vector<Monster*> monsters;
-
     std::vector<Chest*> chests;
 
 public:

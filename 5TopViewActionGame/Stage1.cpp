@@ -9,6 +9,7 @@
 #include "Effect.h"
 #include "SoundManager.h"
 #include "Monster1.h"
+#include "MonsterSpawner.h"
 #include "Stage1.h"
 
 void Stage1::Init()
@@ -27,24 +28,18 @@ void Stage1::Init()
 	// UI
 	// Àû
 
+
+	MonsterManager::GetInstance().Create();
+	MonsterManager::GetInstance().p = p;
+	MonsterSpawnerManager::GetInstance().Create();
+
 	for (auto iter : tm.monsterpos)
 	{
-		Monster* m;
-		switch (iter.type)
-		{
-		case MONSTER1:
-			m = new Monster1;
-			m->player = p;
-			m->scale = { tm.blockScale, tm.blockScale };
-			break;
-			// 
-		default:
-			break;
-		}
-		m->position = iter.position;
-		monsters.push_back(m);
+		if (iter.type == MONSTERSPAWNER)
+			MonsterSpawnerManager::GetInstance().Spawn(3, { MONSTER1 }, iter.position);
+		else
+			MonsterManager::GetInstance().Spawn(iter.type, iter.position);
 	}
-	
 
 	for (auto iter : tm.chestpos)
 	{
@@ -86,6 +81,8 @@ void Stage1::Exit()
 	TileMapManager::GetInstance().DeleteBlocks();
 	BManager::GetInstance().Delete();
 	EManager::GetInstance().Delete();
+	MonsterManager::GetInstance().Delete();
+	MonsterSpawnerManager::GetInstance().Delete();
 
 	for (auto iter : chests)
 		delete iter;

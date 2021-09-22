@@ -210,6 +210,8 @@ std::wstring TileMapManager::GetTextureTag(BlockType type)
 		return L"player (1).png";
 	case MONSTER1:
 		return L"m1idle (1).png";
+	case MONSTERSPAWNER:
+		return L"MonsterSpawner.png";
 	}
 	return std::wstring();
 }
@@ -340,7 +342,7 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 		if (type == BlockType::NONE ||
 			type == PLAYER ||
 			type == CHEST ||
-			type == MONSTER1)
+			type >= MONSTER1)
 		{
 			if (type == PLAYER)
 			{
@@ -361,7 +363,7 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 				chestpos.push_back(c);
 			}
 
-			if (type == MONSTER1)
+			if (type == MONSTER1 || type == MONSTERSPAWNER)
 			{
 				Vec2 c =
 				{
@@ -551,6 +553,11 @@ void TileMapManager::ChangeBlocks()
 		currentBlocktype = MONSTER1;
 		//currentBlocktype = (BlockType)(MONSTER1 + count);
 		++count;
+	}
+
+	if (DXUTWasKeyPressed(VK_F10))
+	{
+		currentBlocktype = MONSTERSPAWNER;
 	}
 }
 

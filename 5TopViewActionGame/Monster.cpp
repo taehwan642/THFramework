@@ -1,6 +1,8 @@
 #include "DXUT.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Monster1.h"
+#include "TileMapManager.h"
 #include "Monster.h"
 
 Monster::Monster()
@@ -10,6 +12,8 @@ Monster::Monster()
 	hpuibar->SetTexture(L"mhpbar.png");
 	hpui->layer = 200;
 	hpuibar->layer = 199;
+	TileMapManager& tm = TileMapManager::GetInstance();
+	scale = { tm.blockScale, tm.blockScale };
 }
 
 Monster::~Monster()
@@ -89,4 +93,61 @@ void Monster::Action()
 	default:
 		break;
 	}
+}
+
+void MonsterManager::Create()
+{
+	for (int i = 0; i < 30; ++i)
+	{
+		Monster* mp = nullptr;
+		monsters.push_back(mp);
+	}
+}
+
+void MonsterManager::Spawn(BlockType type, Vec2 position, int difficulty)
+{
+	for (auto iter : monsters)
+	{
+		// 이 코드의 목적
+		// 널포인터가 아니다? 그럼 일단 살아있다는 거죠?
+		// 근데 널포인터가 아니면서 isactive == true
+		// 그러면 무조건 맵에 보인다는건데 그걸 delete할 수는 없죠?
+		if (nullptr != iter && true == iter->isactive) // 맵에 보인다.
+		{
+			// 이 몬스터를 건드리지 않는다.
+			continue;
+		}
+
+		// isactive가 false거나 nullptr일 때 내려온다.
+		if (iter != nullptr)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+
+		switch (type)
+		{
+		case MONSTER1:
+			iter = new Monster1;
+			break;
+		default:
+			break;
+		}
+
+		iter->SetStat(difficulty);
+		iter->player = p;
+		iter->position = position;
+		
+		return;
+	}
+}
+
+void MonsterManager::Delete()
+{
+	for (auto iter : monsters)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+	monsters.clear();
 }

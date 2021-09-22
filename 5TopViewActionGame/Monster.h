@@ -1,5 +1,8 @@
 #pragma once
+#include "Singleton.h"
 #include "GameObject.h"
+
+enum BlockType;
 
 enum MonsterState
 {
@@ -30,7 +33,18 @@ public:
 
     void Action() override;
 
+    virtual void SetStat(int diff) {}; // 난이도에 의존하는 스탯 초기화
+
     virtual bool IdleState() { return true; };
     virtual bool AttackState() { return true; };
 };
 
+class MonsterManager : public Singleton<MonsterManager>
+{
+public:
+    Player* p;
+    std::vector<Monster*> monsters;
+    void Create();
+    void Spawn(BlockType type, Vec2 position, int difficulty = 1);
+    void Delete();
+};

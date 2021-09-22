@@ -11,6 +11,7 @@ Monster1::Monster1()
 	layer = 100;
 	position = { screenwidth / 2, screenheight / 2 };
 	hpui->SetTexture(L"Enemy_HP.png");
+	maxHP = 5;
 }
 
 Monster1::~Monster1()
@@ -70,4 +71,10 @@ bool Monster1::AttackState()
 		return true;
 	}
 	return false;
+}
+
+void Monster1::SetStat(int diff)
+{
+	hp = maxHP + ((diff - 1) * 1.5f);
+	strValue = 1 + ((diff - 1) * 1.5f);
 }

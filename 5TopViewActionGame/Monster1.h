@@ -14,5 +14,7 @@ public:
 
     bool IdleState() override;
     bool AttackState() override;
+
+    void SetStat(int diff) override;
 };
 
