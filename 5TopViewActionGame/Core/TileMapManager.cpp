@@ -208,6 +208,8 @@ std::wstring TileMapManager::GetTextureTag(BlockType type)
 		return L"chest (1).png";
 	case PLAYER:
 		return L"player (1).png";
+	case MONSTER1:
+		return L"m1idle (1).png";
 	}
 	return std::wstring();
 }
@@ -337,7 +339,8 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 
 		if (type == BlockType::NONE ||
 			type == PLAYER ||
-			type == CHEST)
+			type == CHEST ||
+			type == MONSTER1)
 		{
 			if (type == PLAYER)
 			{
@@ -354,8 +357,21 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 				{
 					((blockScale * 256.f) / 2.f) + (x * 256.f * blockScale),
 					((blockScale * 256.f) / 2.f) + (y * 256.f * blockScale)
-				};;
+				};
 				chestpos.push_back(c);
+			}
+
+			if (type == MONSTER1)
+			{
+				Vec2 c =
+				{
+					((blockScale * 256.f) / 2.f) + (x * 256.f * blockScale),
+					((blockScale * 256.f) / 2.f) + (y * 256.f * blockScale)
+				};
+				MonsterTag tag;
+				tag.position = c;
+				tag.type = type;
+				monsterpos.push_back(tag);
 			}
 
 			++x;
@@ -377,6 +393,80 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 			((block->scale.y * t->info.Height) / 2) + (y * t->info.Height * block->scale.y));
 
 		objBlocks.push_back(block);
+
+		++x;
+	}
+
+	fin.close();
+}
+
+void TileMapManager::UpdateBlocks(const std::string& mapTag)
+{
+	std::ifstream fin(mapTag);
+	if (fin.fail())
+	{
+		std::cout << "파일이 없습니다." << std::endl;
+		return;
+	}
+	int x = 0;
+	int y = 0;
+
+	while (!fin.eof()) 
+	{
+		char arr[256];
+		fin.getline(arr, 256);
+		int chartoint = atoi(arr);
+
+		BlockType type = (BlockType)chartoint;
+
+		if (x > (std::size(blocks[0]) - 1))
+		{
+			x = 0;
+			++y;
+		}
+
+		if (y != 6)
+		{
+			blocks[y][x]->SetTexture(GetTextureTag(type));
+			blocks[y][x]->type = type;
+		}
+
+		++x;
+	}
+
+	fin.close();
+}
+
+void TileMapManager::UpdateObject(const std::string& mapTag)
+{
+	std::ifstream fin(mapTag);
+	if (fin.fail())
+	{
+		std::cout << "파일이 없습니다." << std::endl;
+		return;
+	}
+	int x = 0;
+	int y = 0;
+
+	while (!fin.eof())
+	{
+		char arr[256];
+		fin.getline(arr, 256);
+		int chartoint = atoi(arr);
+		BlockType type = (BlockType)chartoint;
+
+		if (x > (std::size(blocks[0]) - 1))
+		{
+			x = 0;
+			++y;
+		}
+
+		if (y != 6)
+		{
+			objects[y][x]->SetTexture(GetTextureTag(type));
+			objects[y][x]->type = type;
+		}
+
 
 		++x;
 	}
@@ -450,6 +540,17 @@ void TileMapManager::ChangeBlocks()
 	if (DXUTWasKeyPressed(VK_F8))
 	{
 		currentBlocktype = PLAYER;
+	}
+
+	if (DXUTWasKeyPressed(VK_F9))
+	{
+		if (count > 4)
+		{
+			count = 0;
+		}
+		currentBlocktype = MONSTER1;
+		//currentBlocktype = (BlockType)(MONSTER1 + count);
+		++count;
 	}
 }
 

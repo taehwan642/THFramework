@@ -22,7 +22,8 @@ enum BlockType
 	WINDOW1,
 	WINDOW2,
 	CHEST,
-	PLAYER
+	PLAYER,
+	MONSTER1
 };
 
 // 키를 넣는 방법 2개
@@ -35,6 +36,12 @@ class Block final :
 public:
 	BlockType type;
 	void Update() override {};
+};
+
+struct MonsterTag
+{
+	BlockType type;
+	Vec2 position;
 };
 
 #define Row 6
@@ -70,6 +77,7 @@ public:
 
 	Vec2 playerpos;
 	std::vector<Vec2> chestpos;
+	std::vector<MonsterTag> monsterpos;
 
 	TileMapManager();
 
@@ -88,6 +96,9 @@ public:
 	void SaveObject(const std::string& mapTag);
 	void LoadBlocks(const std::string& mapTag);
 	void LoadObject(const std::string& mapTag);
+
+	void UpdateBlocks(const std::string& mapTag);
+	void UpdateObject(const std::string& mapTag);
 
 	void ChangeBlocks();
 

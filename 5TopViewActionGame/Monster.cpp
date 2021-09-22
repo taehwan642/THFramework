@@ -29,6 +29,8 @@ void Monster::CollideBullet()
 
 		if (length < 40.f)
 		{
+			iter->UpGauge();
+			player->score += 20;
 			Damaged(iter->strValue);
 			// 방향벡터 구하기
 			float dirX = iter->position.x - position.x;

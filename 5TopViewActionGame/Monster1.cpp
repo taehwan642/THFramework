@@ -23,6 +23,7 @@ void Monster1::Dead()
 	EManager::GetInstance().Spawn(position, E_MDIE);
 	hpui->isactive = false;
 	hpuibar->isactive = false;
+	player->score += 30;
 }
 
 void Monster1::Follow()

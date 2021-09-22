@@ -42,6 +42,13 @@ void TilemapScene::Update()
 		tm.SaveObject("mapobj.txt");
 		tm.SaveBlocks("mapblock.txt");
 	}
+
+	if (DXUTWasKeyPressed('U'))
+	{
+		tm.UpdateBlocks("mapblock.txt");
+		tm.UpdateObject("mapobj.txt");
+	}
+
 	if (DXUTWasKeyPressed('O'))
 		SceneManager::GetInstance().ChangeScene(L"Stage1");
 }

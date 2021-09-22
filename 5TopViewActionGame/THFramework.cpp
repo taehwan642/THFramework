@@ -144,7 +144,7 @@ main(void)
     sm.AddScene(L"Main", new MainScene);
     sm.AddScene(L"Intro", new IntroScene);
     sm.AddScene(L"End", new EndingScene);
-    sm.ChangeScene(L"End");
+    sm.ChangeScene(L"Tilemap");
 
     DXUTMainLoop();
 

@@ -27,8 +27,24 @@ void Stage1::Init()
 	// UI
 	// Àû
 
-	m = new Monster1;
-	m->player = p;
+	for (auto iter : tm.monsterpos)
+	{
+		Monster* m;
+		switch (iter.type)
+		{
+		case MONSTER1:
+			m = new Monster1;
+			m->player = p;
+			m->scale = { tm.blockScale, tm.blockScale };
+			break;
+			// 
+		default:
+			break;
+		}
+		m->position = iter.position;
+		monsters.push_back(m);
+	}
+	
 
 	for (auto iter : tm.chestpos)
 	{
