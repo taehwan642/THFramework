@@ -45,6 +45,12 @@ struct MonsterTag
 	Vec2 position;
 };
 
+struct DoorTag
+{
+	Vec2 pos;
+	BlockType doortype;
+};
+
 #define Row 6
 #define Column 20
 
@@ -79,6 +85,7 @@ public:
 	Vec2 playerpos;
 	std::vector<Vec2> chestpos;
 	std::vector<MonsterTag> monsterpos;
+	DoorTag doortag;
 
 	TileMapManager();
 

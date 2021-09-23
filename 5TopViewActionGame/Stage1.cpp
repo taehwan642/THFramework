@@ -10,33 +10,35 @@
 #include "SoundManager.h"
 #include "Monster1.h"
 #include "MonsterSpawner.h"
+#include "Door.h"
+#include "SceneManager.h"
 #include "Stage1.h"
 
-void Stage1::Init()
+void Stage1::Initialize()
 {
-	// 플레이어
+	for (auto iter : chests)
+		delete iter;
+	chests.clear();
+
+	for (auto iter : MonsterManager::GetInstance().monsters)
+	{
+		if(iter != nullptr)
+			iter->isactive = false;
+	}
+
+	for (auto iter : MonsterSpawnerManager::GetInstance().spn)
+	{
+		iter->isactive = false;
+	}
+
 	TileMapManager& tm = TileMapManager::GetInstance();
-	tm.LoadObject("mapobj.txt");
-	tm.LoadBlocks("mapblock.txt");
 
-	p = new Player;
 	p->position = tm.playerpos;
-	p->scale ={ tm.blockScale, tm.blockScale };
-
-	uipack = new UIPack;
-	uipack->Init(p, &coolTime);
-	// UI
-	// 적
-
-
-	MonsterManager::GetInstance().Create();
-	MonsterManager::GetInstance().p = p;
-	MonsterSpawnerManager::GetInstance().Create();
 
 	for (auto iter : tm.monsterpos)
 	{
 		if (iter.type == MONSTERSPAWNER)
-			MonsterSpawnerManager::GetInstance().Spawn(3, { MONSTER1 }, iter.position);
+			MonsterSpawnerManager::GetInstance().Spawn(1, { MONSTER1 }, iter.position);
 		else
 			MonsterManager::GetInstance().Spawn(iter.type, iter.position);
 	}
@@ -49,6 +51,48 @@ void Stage1::Init()
 		chests.push_back(c);
 	}
 
+	door->isOpen = false;
+	door->position = tm.doortag.pos;
+	door->SetTexture(door->SetDoorTexture(tm.doortag.doortype));
+}
+
+void Stage1::SetMap(int index)
+{
+	TileMapManager& tm = TileMapManager::GetInstance();
+
+	tm.LoadObject(mapTXTdata[index].objTXT);
+	tm.LoadBlocks(mapTXTdata[index].blockTXT);
+}
+
+void Stage1::Init()
+{
+	// 플레이어
+	TileMapManager& tm = TileMapManager::GetInstance();
+
+	MapTXTData data;
+	data.blockTXT = "mapblock.txt";
+	data.objTXT = "mapobj.txt";
+	mapTXTdata.push_back(data);
+
+	data.blockTXT = "mapblock2.txt";
+	data.objTXT = "mapobj2.txt";
+	mapTXTdata.push_back(data);
+
+
+	SetMap(0);
+
+	p = new Player;
+	p->scale = { tm.blockScale, tm.blockScale };
+
+	uipack = new UIPack;
+	uipack->Init(p, &coolTime);
+
+	MonsterManager::GetInstance().Create();
+	MonsterManager::GetInstance().p = p;
+	MonsterSpawnerManager::GetInstance().Create();
+
+	door = new Door;
+
 	ItemManager::GetInstance().pl = p;
 	ItemManager::GetInstance().Create();
 
@@ -58,6 +102,8 @@ void Stage1::Init()
 	EManager::GetInstance().Create();
 
 	SoundManager::GetInstance().Play(L"bgm", 0, true);
+
+	Initialize();
 }
 
 void Stage1::Update()
@@ -70,6 +116,20 @@ void Stage1::Update()
 
 	coolTime -= DXUTGetElapsedTime();
 	uipack->Update();
+
+	if (door->CollisionPlayer(p->position)) // 플레이어가 다음 맵으로 넘어갔다
+	{
+		if (door->currentDoorIndex == mapTXTdata.size())
+		{
+			SceneManager::GetInstance().ChangeScene(L"Rank");
+		}
+		else
+		{
+			SetMap(door->currentDoorIndex);
+			Initialize();
+			++door->currentDoorIndex;
+		}
+	}
 }
 
 void Stage1::Exit()

@@ -389,6 +389,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="CutScene.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="DXUT\Optional\SDKsound.cpp" />
     <ClCompile Include="DXUT\Optional\SDKwavefile.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -408,6 +409,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="CutScene.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="DXUT\Optional\SDKsound.h" />
     <ClInclude Include="DXUT\Optional\SDKwavefile.h" />
     <ClInclude Include="Effect.h" />

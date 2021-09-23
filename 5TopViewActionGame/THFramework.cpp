@@ -12,6 +12,7 @@
 #include "TilemapScene.h"
 #include "EndingScene.h"
 #include "IntroScene.h"
+#include "RankScene.h"
 #include "SoundManager.h"
 
 SceneManager& sm = SceneManager::GetInstance();
@@ -144,6 +145,7 @@ main(void)
     sm.AddScene(L"Main", new MainScene);
     sm.AddScene(L"Intro", new IntroScene);
     sm.AddScene(L"End", new EndingScene);
+    sm.AddScene(L"Rank", new RankScene);
     sm.ChangeScene(L"Tilemap");
 
     DXUTMainLoop();

@@ -8,6 +8,7 @@ MonsterSpawner::MonsterSpawner()
 	SetTexture(L"MonsterSpawner.png");
 	TileMapManager& tm = TileMapManager::GetInstance();
 	scale = { tm.blockScale, tm.blockScale };
+	layer = 30;
 }
 
 MonsterSpawner::~MonsterSpawner()

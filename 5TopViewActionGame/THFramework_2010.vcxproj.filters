@@ -215,6 +215,9 @@
     <ClCompile Include="MonsterSpawner.cpp">
       <Filter>2.Client\1.GameObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>2.Client\1.GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -321,6 +324,9 @@
     </ClInclude>
     <ClInclude Include="MonsterSpawner.h">
       <Filter>2.Client\1.GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>2.Client\1.GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

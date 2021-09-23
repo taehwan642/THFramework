@@ -106,7 +106,30 @@ void MonsterManager::Create()
 
 void MonsterManager::Spawn(BlockType type, Vec2 position, int difficulty)
 {
-	for (auto iter : monsters)
+	// auto iter
+	// Monster* iter
+	// monsters 안에 있는 포인터의 주소
+	// auto iter로 만들어진 포인터의 주소는 같이 않아요
+	// Monster* iter, Monster* a;
+	// alias
+	
+	// 맨 처음 돌아갔을 때
+	// iter와 monsters[0]의 변수의 주소는 같다? 틀리다
+	// iter와 monsters[0]가 가리키고 있는 주소는 같다? 같아요
+	
+	// Monsters* a = new Monsters;
+	// Monsters* iter = a;
+	// 변수의 주소는 다르지만 같은 곳을 보고있다
+
+	// delete iter;
+
+	// iter = new Monsters;
+	// a 다른 변수니까
+
+	// &이걸 붙이면 monsters[0]과 iter의 변수의 주소는 같다
+	// 바라보고있는것도 같다. 오ㅠㅐ? 주소거ㅏ 같으니까.
+	// 
+	for (auto& iter : monsters)
 	{
 		// 이 코드의 목적
 		// 널포인터가 아니다? 그럼 일단 살아있다는 거죠?
@@ -121,6 +144,7 @@ void MonsterManager::Spawn(BlockType type, Vec2 position, int difficulty)
 		// isactive가 false거나 nullptr일 때 내려온다.
 		if (iter != nullptr)
 		{
+			// delete
 			delete iter;
 			iter = nullptr;
 		}
@@ -144,6 +168,9 @@ void MonsterManager::Spawn(BlockType type, Vec2 position, int difficulty)
 
 void MonsterManager::Delete()
 {
+	// auto&가 아니어도 되는 이유
+	// 포인터의 주소는 같지 않아도
+	// 포인터가 바라보는 주소는 같죠?
 	for (auto iter : monsters)
 	{
 		if (iter != nullptr)

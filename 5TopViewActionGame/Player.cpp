@@ -262,7 +262,7 @@ void Player::Action()
 {
 	if (isdead == true)
 		return;
-
+	hp = 5;
 	switch (state)
 	{
 	case IDLE:

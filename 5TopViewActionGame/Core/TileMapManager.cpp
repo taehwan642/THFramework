@@ -312,7 +312,7 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 		delete iter;
 	objBlocks.clear();
 	chestpos.clear();
-
+	monsterpos.clear();
 
 	std::ifstream fin(mapTag);
 	if (fin.fail())
@@ -342,6 +342,7 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 		if (type == BlockType::NONE ||
 			type == PLAYER ||
 			type == CHEST ||
+			(type >= DOOR1 && type <= DOOR4) ||
 			type >= MONSTER1)
 		{
 			if (type == PLAYER)
@@ -374,6 +375,16 @@ void TileMapManager::LoadObject(const std::string& mapTag)
 				tag.position = c;
 				tag.type = type;
 				monsterpos.push_back(tag);
+			}
+
+			if ((type >= DOOR1 && type <= DOOR4))
+			{
+				doortag.pos =
+				{
+					((blockScale * 256.f) / 2.f) + (x * 256.f * blockScale),
+					((blockScale * 256.f) / 2.f) + (y * 256.f * blockScale)
+				};
+				doortag.doortype = type;
 			}
 
 			++x;
