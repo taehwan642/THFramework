@@ -23,6 +23,11 @@ class Stage1 :
     std::vector<Chest*> chests;
     Door* door;
 
+    int difficulty = 1;
+
+    int currentStage = 0;
+    int stagedatas[3]{};
+
     void Initialize(); // ¸Ê ¹Ù²ð¶§¸¶´Ù
     void SetMap(int index);
 

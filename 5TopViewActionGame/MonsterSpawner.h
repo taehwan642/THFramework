@@ -24,6 +24,6 @@ class MonsterSpawnerManager : public Singleton<MonsterSpawnerManager>
 public:
     std::vector<MonsterSpawner*> spn;
     void Create();
-    void Spawn(int spawnValue, std::vector<int> types, Vec2 position);
+    void Spawn(int spawnValue, std::vector<int> types, Vec2 position, int difficulty = 1);
     void Delete();
 };

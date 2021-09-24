@@ -49,7 +49,7 @@ void EndingScene::Update()
 			++cutsceneindex;
 			if (cutsceneindex == 6)
 			{
-				SceneManager::GetInstance().ChangeScene(L"Main");
+				SceneManager::GetInstance().ChangeScene(L"Rank");
 				return;
 			}
 			cutsceneFunc = cutscene[cutsceneindex]->start;
@@ -58,7 +58,7 @@ void EndingScene::Update()
 		}
 	}
 	if (DXUTWasKeyPressed('S'))
-		SceneManager::GetInstance().ChangeScene(L"Main");
+		SceneManager::GetInstance().ChangeScene(L"Rank");
 }
 
 void EndingScene::Exit()

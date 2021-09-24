@@ -394,6 +394,7 @@
     <ClCompile Include="DXUT\Optional\SDKwavefile.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="FailScene.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -414,6 +415,7 @@
     <ClInclude Include="DXUT\Optional\SDKwavefile.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="FailScene.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IntroScene.h" />

@@ -39,14 +39,14 @@ void TilemapScene::Update()
 
 	if (DXUTWasKeyPressed('I'))
 	{
-		tm.SaveObject("mapobj2.txt");
-		tm.SaveBlocks("mapblock2.txt");
+		tm.SaveObject("mapobj3.txt");
+		tm.SaveBlocks("mapblock3.txt");
 	}
 
 	if (DXUTWasKeyPressed('U'))
 	{
-		tm.UpdateBlocks("mapblock2.txt");
-		tm.UpdateObject("mapobj2.txt");
+		tm.UpdateBlocks("mapblock3.txt");
+		tm.UpdateObject("mapobj3.txt");
 	}
 
 	if (DXUTWasKeyPressed('O'))

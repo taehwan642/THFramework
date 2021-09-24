@@ -4,6 +4,7 @@ class Sprite;
 class Player;
 class Font;
 class AniSprite;
+class Button;
 
 class UIPack
 {
@@ -26,11 +27,20 @@ public:
 
 	Sprite* scoreboard = nullptr;
 	Font* scorefont = nullptr;
+	Button* scoreButton = nullptr;
+	bool isButtonOn = false;
+
+	// 패배 폰트
+	// 나가기 버튼 -> 메뉴로
+	// 재시작 버튼 -> 다시 Stage
 
 	float* plastTime = nullptr;
 
 	void Init(Player* p, float* lt);
 	
+	void ScoreActive(bool b);
+	void DieActive(bool b);
+
 	void PlayerHPUIUpdate();
 	void PlayerScoreUpdate();
 	void SceneLastTimeUpdate();

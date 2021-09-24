@@ -48,7 +48,7 @@ void MonsterSpawnerManager::Create()
 	}
 }
 
-void MonsterSpawnerManager::Spawn(int spawnValue, std::vector<int> types, Vec2 position)
+void MonsterSpawnerManager::Spawn(int spawnValue, std::vector<int> types, Vec2 position, int difficulty)
 {
 	for (auto iter : spn)
 	{
@@ -56,6 +56,7 @@ void MonsterSpawnerManager::Spawn(int spawnValue, std::vector<int> types, Vec2 p
 		{
 			iter->monsterSpawnValue = spawnValue;
 			iter->position = position;
+			iter->difficulty = difficulty;
 			iter->SetMonsterType(types);
 			iter->isactive = true;
 			return;

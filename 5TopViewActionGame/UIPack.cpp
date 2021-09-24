@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Font.h"
 #include "AniSprite.h"
+#include "Button.h"
 #include "UIPack.h"
 
 void UIPack::Init(Player* p, float* lt)
@@ -66,14 +67,34 @@ void UIPack::Init(Player* p, float* lt)
 	scoreboard->layer = 1000;
 	scoreboard->isUI = true;
 	scoreboard->position = { screenwidth / 2,screenheight / 2 };
-	scoreboard->SetTexture(L"scoreboard.png");
+	scoreboard->SetTexture(L"ScoreBoard.png");
 	scoreboard->isactive = false;
 
 	scorefont = new Font(4, 1, L"Arial");
 	scorefont->layer = 1001;
 	scorefont->position = { screenwidth / 2,screenheight / 2 - 100 };
 	scorefont->isactive = false;
-	scorefont->color = D3DCOLOR_RGBA(0, 0, 0, 255);
+
+	scoreButton = new Button;
+	scoreButton->function = [&]() {
+		isButtonOn = true;
+	};
+	scoreButton->SetTexture(L"Exit.png");
+	scoreButton->layer = 1002;
+	scoreButton->isUI = true;
+	scoreButton->isactive = false;
+	scoreButton->position = { screenwidth / 2,screenheight / 2 + 300 };
+}
+
+void UIPack::ScoreActive(bool b)
+{
+	scoreboard->isactive = b;
+	scorefont->isactive = b;
+	scoreButton->isactive = b;
+}
+
+void UIPack::DieActive(bool b)
+{
 }
 
 void UIPack::PlayerHPUIUpdate()
