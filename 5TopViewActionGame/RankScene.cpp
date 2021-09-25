@@ -62,16 +62,19 @@ void RankScene::Update()
 	// 알파벳 개수, 'A' 부터 26개.
 	if (isCleared == true)
 	{
-		for (int i = 0; i < 26; ++i)
+		if (isEntered == false)
 		{
-			if (DXUTWasKeyPressed('A' + i))
+			for (int i = 0; i < 26; ++i)
 			{
-				for (int j = 0; j < 3; ++j)
+				if (DXUTWasKeyPressed('A' + i))
 				{
-					if (name[j] == ' ')
+					for (int j = 0; j < 3; ++j)
 					{
-						name[j] = 'A' + i;
-						break;
+						if (name[j] == ' ')
+						{
+							name[j] = 'A' + i;
+							break;
+						}
 					}
 				}
 			}

@@ -37,7 +37,7 @@ public:
     int score = 0;
     int hpuigauge = 0;
 
-    int attackgauge = 10;
+    int attackgauge = 0;
 
     void ChangeState(PlayerState s)
     {
@@ -47,6 +47,9 @@ public:
 
     Player();
     virtual ~Player() {};
+
+    bool invincible = false;
+    void Damaged(int damage) override;
 
     void HpUIUp(int healvalue); // 회복 게이지 회복
     

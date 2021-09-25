@@ -29,6 +29,7 @@ public:
     {
         texture = TextureManager::GetInstance().LoadTexture(tag);
         SetRect(&imgRect, 0, 0, texture->info.Width, texture->info.Height);
+        RenderManager::GetInstance().Sort();
     };
 
     __forceinline void
@@ -36,6 +37,7 @@ public:
     {
         this->texture = texture;
         SetRect(&imgRect, 0, 0, this->texture->info.Width, this->texture->info.Height);
+        RenderManager::GetInstance().Sort();
     };
 
     [[nodiscard]] __forceinline const Texture*

@@ -7,6 +7,7 @@ class Chest;
 class Monster;
 class MonsterSpawner;
 class Door;
+class Button;
 
 struct MapTXTData
 {
@@ -23,10 +24,19 @@ class Stage1 :
     std::vector<Chest*> chests;
     Door* door;
 
+    Sprite* blur = nullptr;
+
+    Button* mainButton;
+    Button* restartButton;
+
     int difficulty = 1;
 
     int currentStage = 0;
     int stagedatas[3]{};
+
+    bool isPaused = false;
+
+    void CheatKey();
 
     void Initialize(); // ¸Ê ¹Ù²ð¶§¸¶´Ù
     void SetMap(int index);

@@ -23,7 +23,7 @@ public:
     virtual void Dead() {}; // 죽었을 때 나오는 효과
 
     void Heal(int healvalue); // 즉시 회복
-    void Damaged(int damage);
+    virtual void Damaged(int damage);
 
     bool Collide();
 

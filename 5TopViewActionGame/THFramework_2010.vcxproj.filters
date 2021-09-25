@@ -221,6 +221,9 @@
     <ClCompile Include="FailScene.cpp">
       <Filter>2.Client\0.Scene</Filter>
     </ClCompile>
+    <ClCompile Include="OptionScene.cpp">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -332,6 +335,9 @@
       <Filter>2.Client\1.GameObject</Filter>
     </ClInclude>
     <ClInclude Include="FailScene.h">
+      <Filter>2.Client\0.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionScene.h">
       <Filter>2.Client\0.Scene</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,6 +18,7 @@ void EndingScene::Init()
 		cutscene[i]->isactive = false;
 		cutscene[i]->font->position = { screenwidth / 2, 500 };
 		cutscene[i]->font->isactive = false;
+		cutscene[i]->isUI = true;
 	}
 
 	cutscene[0]->isactive = true;

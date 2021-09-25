@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Monster.h"
 #include "TileMapManager.h"
+#include "SceneManager.h"
 #include "MonsterSpawner.h"
 
 MonsterSpawner::MonsterSpawner()
@@ -25,7 +26,7 @@ void MonsterSpawner::Update()
 	// 일정 쿨타임이 지나면
 	// 스폰
 	// 근데 누굴 스폰시킬지는 난수로 정하기.
-	tick += DXUTGetElapsedTime();
+	tick += SM GetDeltaTime();
 	if (tick > cooltime)
 	{
 		if (monsterSpawnValue > 0)

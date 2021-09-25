@@ -1,5 +1,6 @@
 #include "DXUT.h"
 #include "Font.h"
+#include "SceneManager.h"
 #include "CutScene.h"
 
 void CutScene::Update()
@@ -16,9 +17,9 @@ CutScene::CutScene()
 
 		Vec3 endRGB = { 255, 255, 255 };
 
-		tick += DXUTGetElapsedTime();
+		tick += SM GetDeltaTime();
 
-		D3DXVec3Lerp(&currentRGB, &currentRGB, &endRGB, DXUTGetElapsedTime() * 2);
+		D3DXVec3Lerp(&currentRGB, &currentRGB, &endRGB, SM GetDeltaTime() * 2);
 
 		if (fabs(endRGB.x - currentRGB.x) < 1.5f)
 		{
@@ -40,9 +41,9 @@ CutScene::CutScene()
 		// 검정색에서 본래 색으로 돌아가고, 몇초 뒤 return true
 		Vec3 endRGB = { 0, 0, 0 };
 
-		tick += DXUTGetElapsedTime();
+		tick += SM GetDeltaTime();
 
-		D3DXVec3Lerp(&currentRGB, &currentRGB, &endRGB, DXUTGetElapsedTime() * 2);
+		D3DXVec3Lerp(&currentRGB, &currentRGB, &endRGB, SM GetDeltaTime() * 2);
 
 		if (fabs(endRGB.x - currentRGB.x) < 1.5f)
 		{

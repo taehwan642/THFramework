@@ -1,5 +1,6 @@
 #include "DXUT.h"
 #include "Texture.h"
+#include "SceneManager.h"
 #include "AniSprite.h"
 
 AniSprite::AniSprite() :
@@ -37,7 +38,7 @@ AniSprite::PlayAnimation(const std::wstring& tag)
 		SetTexture(currentAnimation.second[0]);
 	}
 
-	currentTick += GetDeltaTime();
+	currentTick += SM GetDeltaTime();
 
 	if (currentTick > currentAnimation.first)
 	{

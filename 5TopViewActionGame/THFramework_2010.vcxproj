@@ -402,6 +402,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Monster1.cpp" />
     <ClCompile Include="MonsterSpawner.cpp" />
+    <ClCompile Include="OptionScene.cpp" />
     <ClCompile Include="RankScene.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TilemapScene.cpp" />
@@ -424,6 +425,7 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Monster1.h" />
     <ClInclude Include="MonsterSpawner.h" />
+    <ClInclude Include="OptionScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RankScene.h" />
     <ClInclude Include="SoundManager.h" />

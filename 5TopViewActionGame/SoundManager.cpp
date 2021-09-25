@@ -37,6 +37,8 @@ void SoundManager::Play(std::wstring tag,  long volume, bool isLoop)
 	auto iter = soundmap.find(tag);
 	if (iter == soundmap.end())
 		return;
+
+	volume += worldVolume;
 	soundmap[tag]->Play(0, isLoop, volume);
 }
 

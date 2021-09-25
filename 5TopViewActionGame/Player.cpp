@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Bullet.h"
 #include "Effect.h"
+#include "SceneManager.h"
 #include "Player.h"
 
 Player::Player() : upAttack(strValue + 1)
@@ -16,6 +17,21 @@ Player::Player() : upAttack(strValue + 1)
 	CreateAnimation(L"playershotgun", 3, 0.1f);
 	CreateAnimation(L"lucian/lucian", 15, 0.1f);
 	PlayAnimation(L"player");
+}
+
+void Player::Damaged(int damage)
+{
+	if (invincible == true)
+		return;
+
+	hp -= damage;
+
+	if (hp <= 0)
+	{
+		// Á×¾ú´ç
+		isdead = true;
+		Dead();
+	}
 }
 
 void Player::HpUIUp(int healvalue)
@@ -44,7 +60,7 @@ void Player::CollideItem()
 
 void Player::CheckAttackUp()
 {
-	attackupTick -= DXUTGetElapsedTime();
+	attackupTick -= SM GetDeltaTime();
 
 	if (attackupTick > 0)
 	{
@@ -72,13 +88,13 @@ void Player::Move()
 		return;
 
 	if (DXUTIsKeyDown('W'))
-		position.y -= DXUTGetElapsedTime() * movespeed;
+		position.y -= SM GetDeltaTime() * movespeed;
 	if (DXUTIsKeyDown('A'))
-		position.x -= DXUTGetElapsedTime() * movespeed;
+		position.x -= SM GetDeltaTime() * movespeed;
 	if (DXUTIsKeyDown('S'))
-		position.y += DXUTGetElapsedTime() * movespeed;
+		position.y += SM GetDeltaTime() * movespeed;
 	if (DXUTIsKeyDown('D'))
-		position.x += DXUTGetElapsedTime() * movespeed;
+		position.x += SM GetDeltaTime() * movespeed;
 }
 
 bool Player::WeakShoot()
@@ -236,7 +252,7 @@ void Player::Shoot()
 		}
 	}
 	else
-		spawnTime -= DXUTGetElapsedTime();
+		spawnTime -= SM GetDeltaTime();
 
 	// 0 ¿ÞÂÊ 1 ¸¶¿ì½º ÈÙ 2 ¿À¸¥ÂÊ
 	if (DXUTIsMouseButtonDown(0))
@@ -302,7 +318,7 @@ void Player::Action()
 	if (aimTime < 0)
 		aimPos = { -999, -999 };
 	else
-		aimTime -= DXUTGetElapsedTime();
+		aimTime -= SM GetDeltaTime();
 
 	/*if (DXUTWasKeyPressed('B'))
 		Damaged(1);*/

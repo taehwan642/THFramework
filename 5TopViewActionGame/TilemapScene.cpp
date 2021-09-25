@@ -18,22 +18,22 @@ void TilemapScene::Update()
 
 	if (DXUTIsKeyDown('W'))
 	{
-		cam.camPos.y -= 500.f * DXUTGetElapsedTime();
+		cam.camPos.y -= 500.f * SM GetDeltaTime();
 	}
 
 	if (DXUTIsKeyDown('A'))
 	{
-		cam.camPos.x -= 500.f * DXUTGetElapsedTime();
+		cam.camPos.x -= 500.f * SM GetDeltaTime();
 	}
 
 	if (DXUTIsKeyDown('S'))
 	{
-		cam.camPos.y += 500.f * DXUTGetElapsedTime();
+		cam.camPos.y += 500.f * SM GetDeltaTime();
 	}
 
 	if (DXUTIsKeyDown('D'))
 	{
-		cam.camPos.x += 500.f * DXUTGetElapsedTime();
+		cam.camPos.x += 500.f * SM GetDeltaTime();
 	}
 
 

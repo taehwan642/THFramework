@@ -1,6 +1,16 @@
 #include "DXUT.h"
 #include "Font.h"
+#include "Texture.h"
 #include "RenderManager.h"
+
+void Font::Adapt(Vec2 pos, Texture* tex, Vec2 sc, Vec2 intv)
+{
+    position = { pos.x, pos.y };
+    // 피봇은 무조건 0.5라는 가정 하에 진행된다.
+    // x를 버튼의 크기만큼 빼주고, y를 버튼의 크기만큼 빼주면 (올려주면) 된다.
+    position.x -= ((tex->info.Width / 2) * sc.x) - intv.x;
+    position.y -= ((tex->info.Height / 2) * sc.y) - intv.y;
+}
 
 Font::Font(float scale, float weight, LPCWSTR path)
 {

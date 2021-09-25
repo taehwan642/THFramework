@@ -3,6 +3,9 @@
 #include "RenderManager.h"
 #include "Camera.h"
 #include "Scene.h"
+
+#define SM SceneManager::GetInstance().
+
 class SceneManager final :
     public Singleton<SceneManager>
 {
@@ -23,6 +26,7 @@ public:
     __forceinline void 
         ChangeScene(const std::wstring& sceneName) 
     {
+        timeScale = 1.f;
         if (currentScene != nullptr)
             currentScene->Exit();
 
@@ -53,5 +57,12 @@ public:
         }
         sceneMap.clear();
     };
+
+    float timeScale = 1.f;
+
+    float GetDeltaTime()
+    {
+        return timeScale * DXUTGetElapsedTime();
+    }
 };
 

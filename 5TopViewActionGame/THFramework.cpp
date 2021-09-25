@@ -14,6 +14,7 @@
 #include "IntroScene.h"
 #include "RankScene.h"
 #include "FailScene.h"
+#include "OptionScene.h"
 #include "SoundManager.h"
 
 SceneManager& sm = SceneManager::GetInstance();
@@ -24,6 +25,7 @@ HRESULT CALLBACK
 OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
 {
+    SM timeScale = 1.f;
     D3DXCreateSprite(DXUTGetD3D9Device(), &Sprite::sprite);
     Camera& c = Camera::GetInstance();
     c.Initialize();
@@ -136,19 +138,20 @@ main(void)
     DXUTSetCallbackD3D9DeviceDestroyed( OnD3D9DestroyDevice );
 
     DXUTInit( true, true );
-    DXUTSetHotkeyHandling( true, true, true );
+    DXUTSetHotkeyHandling( true, false, true );
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
     DXUTCreateDevice( true, screenwidth, screenheight );
     
-    sm.AddScene(L"Stage1", new Stage1);
-    sm.AddScene(L"Tilemap", new TilemapScene);
-    sm.AddScene(L"Main", new MainScene);
     sm.AddScene(L"Intro", new IntroScene);
+    sm.AddScene(L"Main", new MainScene);
+    sm.AddScene(L"Stage1", new Stage1);
     sm.AddScene(L"End", new EndingScene);
     sm.AddScene(L"Rank", new RankScene);
     sm.AddScene(L"Fail", new FailScene);
-    sm.ChangeScene(L"Rank");
+    sm.AddScene(L"Tilemap", new TilemapScene);
+    sm.AddScene(L"Option", new OptionScene);
+    sm.ChangeScene(L"Intro");
 
     DXUTMainLoop();
 

@@ -1,5 +1,6 @@
 #include "DXUT.h"
 #include "TileMapManager.h"
+#include "SceneManager.h"
 #include "GameObject.h"
 
 void GameObject::Heal(int healvalue)
@@ -102,8 +103,8 @@ bool GameObject::Collide()
 
 void GameObject::Update()
 {
-	attackspeed -= DXUTGetElapsedTime();
-	dontmoveTime -= DXUTGetElapsedTime();
+	attackspeed -= SM GetDeltaTime();
+	dontmoveTime -= SM  GetDeltaTime();
 
 	Action();
 

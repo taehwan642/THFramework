@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Player.h"
 #include "Effect.h"
+#include "SceneManager.h"
 #include "Item.h"
 
 void Item::Effect(Player* p)
@@ -30,7 +31,7 @@ void Item::Update()
 {
 	if (type == I_BOMB)
 	{
-		tick -= DXUTGetElapsedTime();
+		tick -= SM GetDeltaTime();
 		if (tick < 0)
 		{
 			// 빵!
@@ -60,6 +61,7 @@ void ItemManager::Create()
 		it->isactive = false;
 		it->pl = pl; // 플레이어 할당 부분
 		it->scale = { 0.5,0.5 };
+		it->layer = 30;
 		items.push_back(it);
 	}
 }

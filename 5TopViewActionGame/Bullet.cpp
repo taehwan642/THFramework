@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Player.h"
 #include "Effect.h"
+#include "SceneManager.h"
 #include "Bullet.h"
 
 void BManager::Create()
@@ -88,6 +89,6 @@ void Bullet::Action()
 		position = { -999,-999 };
 	}
 
-	position += dir * movespeed * DXUTGetElapsedTime();
-	alivetime -= DXUTGetElapsedTime();
+	position += dir * movespeed * SM GetDeltaTime();
+	alivetime -= SM GetDeltaTime();
 }

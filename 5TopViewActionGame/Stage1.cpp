@@ -14,7 +14,86 @@
 #include "SceneManager.h"
 #include "Button.h"
 #include "RankScene.h"
+#include "Button.h"
 #include "Stage1.h"
+
+void Stage1::CheatKey()
+{
+	if (DXUTWasKeyPressed(VK_F1))
+	{
+		p->invincible = !p->invincible;
+	}
+
+	if (DXUTWasKeyPressed(VK_F2))
+	{
+		p->attackgauge = 10;
+	}
+
+	if (DXUTWasKeyPressed(VK_F3))
+	{
+		for (auto iter : MonsterManager::GetInstance().monsters)
+		{
+			if (iter == nullptr)
+				continue;
+			if (iter->isactive == false)
+				continue;
+
+			Vec2 dist = iter->position - Camera::GetInstance().camPos;
+			float length = D3DXVec2Length(&dist);
+			if (length < 700)
+			{
+				iter->isactive = false;
+				iter->hpui->isactive = false;
+				iter->hpuibar->isactive = false;
+			}
+		}
+		// 700
+	}
+
+	
+
+	if (DXUTWasKeyPressed(VK_F5))
+	{
+		currentStage = 0;
+		door->currentDoorIndex = 0;
+		SetMap(door->currentDoorIndex); // 넘길 때
+		Initialize(); // 넘어갔을 때
+		p->movespeed = 300.f;
+		uipack->ScoreActive(false);
+		coolTime = TIMECOST;
+		difficulty = 1;
+	}
+
+	if (DXUTWasKeyPressed(VK_F6))
+	{
+		currentStage = 1;
+		door->currentDoorIndex = stagedatas[0] + 1;
+		SetMap(door->currentDoorIndex - 1); // 넘길 때
+		Initialize(); // 넘어갔을 때
+		p->movespeed = 300.f;
+		uipack->ScoreActive(false);
+		coolTime = TIMECOST;
+		difficulty = 1;
+	}
+
+	if (DXUTWasKeyPressed(VK_F7))
+	{
+		currentStage = 2;
+		door->currentDoorIndex = stagedatas[0] + stagedatas[1] + 1;
+		SetMap(door->currentDoorIndex - 1); // 넘길 때
+		Initialize(); // 넘어갔을 때
+		p->movespeed = 300.f;
+		uipack->ScoreActive(false);
+		coolTime = TIMECOST;
+		difficulty = 1;
+	}
+
+	if (DXUTWasKeyPressed(VK_F8) || DXUTWasKeyPressed(VK_ESCAPE))
+	{
+		isPaused = !isPaused;
+	}
+
+}
 
 void Stage1::Initialize()
 {
@@ -114,18 +193,74 @@ void Stage1::Init()
 	stagedatas[2] = 1; // 스테이지 3에는 맵이 총 1
 	coolTime = TIMECOST;
 	Initialize();
+
+	blur = new Sprite;
+	blur->isUI = true;
+	blur->layer = 10000;
+	blur->SetTexture(L"background.png");
+	blur->color = D3DCOLOR_RGBA(0, 0, 0, 120);
+	blur->position = { screenwidth / 2, screenheight / 2 };
+	blur->isactive = false;
+
+	mainButton = new Button;
+	mainButton->isUI = true;
+	mainButton->layer = 10001;
+	mainButton->SetTexture(L"Exit.png");
+	mainButton->position = { screenwidth / 2 - 300, screenheight / 2 - 500 };
+	mainButton->function = []()
+	{
+		SceneManager::GetInstance().ChangeScene(L"Main");
+	};
+
+	restartButton = new Button;
+	restartButton->isUI = true;
+	restartButton->layer = 10002;
+	restartButton->SetTexture(L"Restart.png");
+	restartButton->position = { screenwidth / 2, screenheight / 2 - 500 };
+	restartButton->function = []()
+	{
+		SceneManager::GetInstance().ChangeScene(L"Stage1");
+	};
 }
 
 void Stage1::Update()
 {
-	if(DXUTWasKeyPressed('B'))
-		ItemManager::GetInstance().Spawn({ screenwidth / 2, screenheight / 2 });
+	CheatKey();
+
+	if (isPaused)
+	{
+		SM timeScale = 0.f;
+		blur->isactive = true;
+		mainButton->isactive = true;
+		restartButton->isactive = true;
+
+		D3DXVec2Lerp(&restartButton->position,
+			&restartButton->position, 
+			&Vec2(screenwidth / 2, screenheight / 2 + 100 ), // 도착 위치
+			DXUTGetElapsedTime() * 2);
+
+		D3DXVec2Lerp(&mainButton->position,
+			&mainButton->position,
+			&Vec2(screenwidth / 2 - 300, screenheight / 2 + 100), // 도착 위치
+			DXUTGetElapsedTime() * 2);
+	}
+	else
+	{
+		SM timeScale = 1.f;
+		blur->isactive = false;
+		mainButton->isactive = false;
+		restartButton->isactive = false;
+
+		mainButton->position = { screenwidth / 2 - 300, screenheight / 2 - 500 };
+		restartButton->position = { screenwidth / 2, screenheight / 2 - 500 };
+	}
+	
 
 	Camera& cam = Camera::GetInstance();
-	D3DXVec2Lerp(&cam.camPos, &cam.camPos, &p->position, DXUTGetElapsedTime() * 2);
+	D3DXVec2Lerp(&cam.camPos, &cam.camPos, &p->position, SM GetDeltaTime() * 2);
 
 	if (uipack->scoreButton->isactive == false)
-		coolTime -= DXUTGetElapsedTime();
+		coolTime -= SM GetDeltaTime();
 
 	uipack->Update();
 
@@ -133,11 +268,16 @@ void Stage1::Update()
 	{
 		if (door->currentDoorIndex == mapTXTdata.size())
 		{
-			SceneManager::GetInstance().ChangeScene(L"End");
 			RankScene::isCleared = true;
+			RankScene::score = p->score;
+			SceneManager::GetInstance().ChangeScene(L"End");
 		}
 		else
 		{
+			p->hp = p->maxHP;
+			p->attackgauge = 0;
+			p->hpuigauge = 0;
+
 			int mapCount = 0;
 			// 0일때 1, 1일때 2
 			for (int i = 0; i <= currentStage; ++i)
@@ -196,6 +336,37 @@ void Stage1::Update()
 		SceneManager::GetInstance().ChangeScene(L"Fail");
 		return;
 	}
+
+	// 버튼 눌리면 들어가기
+	if (restartButton->isactive == true)
+	{
+		// 버튼 두개 검사
+		POINT asdfp;
+		GetCursorPos(&asdfp);
+		ScreenToClient(DXUTGetHWND(), &asdfp);
+
+		if (DXUTIsMouseButtonDown(0))
+		{
+			if (PtInRect(&restartButton->GetRect(), asdfp))
+			{
+				restartButton->function();
+				return;
+			}
+
+			if (PtInRect(&mainButton->GetRect(), asdfp))
+			{
+				mainButton->function();
+				return;
+			}
+		}
+
+	}
+
+	if (DXUTWasKeyPressed(VK_F4))
+	{
+		SceneManager::GetInstance().ChangeScene(L"Main");
+		return;
+	}
 }
 
 void Stage1::Exit()
@@ -215,4 +386,10 @@ void Stage1::Exit()
 	for (auto iter : chests)
 		delete iter;
 	chests.clear();
+
+	delete blur;
+	delete restartButton;
+	delete mainButton;
+
+	isPaused = false;
 }

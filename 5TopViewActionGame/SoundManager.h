@@ -9,6 +9,7 @@ class SoundManager :
 public:
     std::map <std::wstring, CSound*> soundmap;
     CSoundManager* mng = nullptr;
+    LONG worldVolume = 0;
 
     // »ı¼ºÀÚ
     SoundManager();

@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Player.h"
 #include "Effect.h"
+#include "SceneManager.h"
 #include "Monster1.h"
 
 Monster1::Monster1()
@@ -36,7 +37,7 @@ void Monster1::Follow()
 	Vec2 dir = player->position - position;
 	D3DXVec2Normalize(&dir, &dir);
 
-	position += dir;
+	position += dir * SM GetDeltaTime() * movespeed;
 }
 
 void Monster1::Attack()
