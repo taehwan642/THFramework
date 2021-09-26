@@ -8,6 +8,7 @@ class Monster;
 class MonsterSpawner;
 class Door;
 class Button;
+class Boss1;
 
 struct MapTXTData
 {

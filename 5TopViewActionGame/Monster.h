@@ -26,10 +26,10 @@ public:
 
     void CollideBullet();
 
-    void HPUIUpdate();
+    virtual void HPUIUpdate();
 
     virtual void Follow() {};
-    virtual void Attack() {};
+    virtual void CheckCanAttack() {};
 
     void Action() override;
 
@@ -37,6 +37,8 @@ public:
 
     virtual bool IdleState() { return true; };
     virtual bool AttackState() { return true; };
+
+    void CollideMonsters();
 };
 
 class MonsterManager : public Singleton<MonsterManager>

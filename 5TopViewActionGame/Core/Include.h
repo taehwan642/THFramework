@@ -21,4 +21,3 @@ using Vec3 = D3DXVECTOR3;
 using Vec4 = D3DXVECTOR4;
 using Color = D3DXCOLOR;
 using Matrix = D3DXMATRIX;
-

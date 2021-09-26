@@ -31,6 +31,8 @@ public:
     Button* optionButton;
     Font* optionFont;
 
+    Button* exitButton;
+
     void HelpActive(bool b);
 
     void Init() override;

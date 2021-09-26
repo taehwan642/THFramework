@@ -169,4 +169,5 @@ void UIPack::Delete()
 	delete aim;
 	delete scoreboard;
 	delete scorefont;
+	delete scoreButton;
 }

@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "Monster1.h"
 #include "TileMapManager.h"
+#include "Boss1.h"
 #include "Monster.h"
 
 Monster::Monster()
@@ -14,6 +15,7 @@ Monster::Monster()
 	hpuibar->layer = 199;
 	TileMapManager& tm = TileMapManager::GetInstance();
 	scale = { tm.blockScale, tm.blockScale };
+	position = { -999999, -99999 };
 }
 
 Monster::~Monster()
@@ -73,11 +75,11 @@ void Monster::Action()
 		isactive = false;
 	}
 	Lookat(player->position);
-
 	CollideBullet();
 	HPUIUpdate();
 	Follow();
-	Attack();
+	CheckCanAttack();
+	CollideMonsters();
 
 	switch (state)
 	{
@@ -85,6 +87,9 @@ void Monster::Action()
 		IdleState();
 		break;
 	case M_ATTACK:
+		// 함수가 돌아갈 때 if?
+		// if가 돌아갈 때 함수?
+		
 		if (AttackState())
 		{
 			state = M_IDLE;
@@ -92,6 +97,59 @@ void Monster::Action()
 		break;
 	default:
 		break;
+	}
+}
+
+void Monster::CollideMonsters()
+{
+	for (auto iter : MonsterManager::GetInstance().monsters)
+	{
+		if (iter == nullptr)
+			continue;
+
+		if (iter->isactive == false)
+			continue;
+
+		if (iter == this)
+			continue;
+		
+		float downScale = 0.05f;
+		RECT myRect = GetRect();
+		SetRect(&myRect, myRect.left * downScale, myRect.top * downScale, 
+			myRect.right * downScale, myRect.bottom * downScale);
+		RECT iterRect = iter->GetRect();
+		SetRect(&iterRect, iterRect.left * downScale, iterRect.top * downScale, 
+			iterRect.right * downScale, iterRect.bottom * downScale);
+
+		RECT r;
+		if (IntersectRect(&r, &myRect, &iterRect))
+		{
+			float xlength = r.right - r.left;
+			float ylength = r.bottom - r.top;
+
+			if (xlength < ylength)
+			{
+				// x
+				float mypivot = (myRect.right + myRect.left) / 2;
+				float iterpivot = (iterRect.right + iterRect.left) / 2;
+				if (mypivot < iterpivot)
+					// 왼쪽
+					position.x -= xlength;
+				else
+					position.x += xlength;
+			}
+			else
+			{
+				// y
+				float mypivot = (myRect.bottom + myRect.top) / 2;
+				float iterpivot = (iterRect.bottom + iterRect.top) / 2;
+				if (mypivot < iterpivot)
+					// 왼쪽
+					position.y -= ylength;
+				else
+					position.y += ylength;
+			}
+		}
 	}
 }
 
@@ -153,6 +211,9 @@ void MonsterManager::Spawn(BlockType type, Vec2 position, int difficulty)
 		{
 		case MONSTER1:
 			iter = new Monster1;
+			break;
+		case BOSS1:
+			iter = new Boss1;
 			break;
 		default:
 			break;

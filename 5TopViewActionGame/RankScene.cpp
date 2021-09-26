@@ -55,6 +55,8 @@ void RankScene::Init()
 	returnButton->function = []() {
 		SceneManager::GetInstance().ChangeScene(L"Main");
 	};
+
+	isEntered = false;
 }
 
 void RankScene::Update()

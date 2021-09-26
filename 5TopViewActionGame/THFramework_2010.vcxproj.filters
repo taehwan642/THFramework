@@ -224,6 +224,12 @@
     <ClCompile Include="OptionScene.cpp">
       <Filter>2.Client\0.Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Boss1.cpp">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterBullet.cpp">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -339,6 +345,12 @@
     </ClInclude>
     <ClInclude Include="OptionScene.h">
       <Filter>2.Client\0.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss1.h">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterBullet.h">
+      <Filter>2.Client\1.GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

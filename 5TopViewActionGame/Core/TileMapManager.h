@@ -24,7 +24,12 @@ enum BlockType
 	CHEST,
 	PLAYER,
 	MONSTER1,
-	MONSTERSPAWNER
+	MONSTERSPAWNER,
+	MONSTER2,
+	MONSTER3, // 원거리 해골
+	MONSTER4,
+	BOSS1, // 그 초록 대포
+	BOSS2
 };
 
 // 키를 넣는 방법 2개

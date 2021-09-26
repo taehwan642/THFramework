@@ -10,7 +10,7 @@ public:
     void Dead() override;
 
     void Follow() override;
-    void Attack() override;
+    void CheckCanAttack() override;
 
     bool IdleState() override;
     bool AttackState() override;

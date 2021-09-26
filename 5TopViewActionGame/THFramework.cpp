@@ -1,9 +1,16 @@
 #include "DXUT.h"
 #include "resource.h"
 #include "SceneManager.h"
-#include "Texture.h"
 #include "RenderManager.h"
 #include "TileMapManager.h"
+#include "SoundManager.h"
+#include "Monster.h"
+#include "MonsterSpawner.h"
+#include "Item.h"
+#include "Effect.h"
+#include "Bullet.h"
+
+#include "Texture.h"
 #include "Sprite.h"
 #include "Camera.h"
 #include "Stage1.h"
@@ -15,11 +22,18 @@
 #include "RankScene.h"
 #include "FailScene.h"
 #include "OptionScene.h"
-#include "SoundManager.h"
 
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
-bool isEnd = false;
+
+void LoadAni(std::wstring tag, int frameCount)
+{
+    for (int i = 0; i < frameCount; ++i)
+    {
+        const auto& route = tag + L" (" + std::to_wstring(i + 1) + L").png";
+        TextureManager::GetInstance().LoadTexture(route);
+    }
+}
 
 HRESULT CALLBACK 
 OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
@@ -47,6 +61,7 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
                 tm.LoadTexture(tmm.GetTextureTag((BlockType)i));
             }
 
+            LoadAni(L"boss1idle", 10);
 
             return 0;
         });
@@ -82,8 +97,6 @@ HRESULT CALLBACK OnD3D9ResetDevice(IDirect3DDevice9* pd3dDevice,
 
 void CALLBACK OnLostDevice(void* pUserContext)
 {
-    if (isEnd)
-        return;
     Sprite::sprite->OnLostDevice();
     std::list<Object*>& list = rm.GetRenderObjects();
     for (auto iter : list)
@@ -117,16 +130,46 @@ OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, float fElapsedTim
 void CALLBACK 
 OnD3D9DestroyDevice( void* pUserContext )
 {
+    if (SceneManager::GetInstance().deviceEnd == true)
+    {
+        sm.ClearScenes();
+        sm.DeleteInstance();
 
+        TextureManager& tm = TextureManager::GetInstance();
+        tm.ReleaseAllTexture();
+        tm.DeleteInstance();
+
+        TileMapManager& tmm = TileMapManager::GetInstance();
+        tmm.DeleteBlocks();
+        tmm.DeleteInstance();
+
+        rm.ClearAll();
+        rm.DeleteInstance();
+
+        Camera& c = Camera::GetInstance();
+        c.DeleteInstance();
+
+        Sprite::sprite->Release();
+
+        SoundManager& smm = SoundManager::GetInstance();
+        smm.DeleteSounds();
+        smm.DeleteInstance();
+
+        MonsterManager::GetInstance().DeleteInstance();
+        MonsterSpawnerManager::GetInstance().DeleteInstance();
+        ItemManager::GetInstance().DeleteInstance();
+        EManager::GetInstance().DeleteInstance();
+        BManager::GetInstance().DeleteInstance();
+    }
 }
 
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
-int 
-main(void)
+int main(void)
 {
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
+    //_CrtSetBreakAlloc(316);
 
     DXUTSetCallbackD3D9DeviceCreated( OnD3D9CreateDevice );
 
@@ -141,7 +184,7 @@ main(void)
     DXUTSetHotkeyHandling( true, false, true );
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
-    DXUTCreateDevice( true, screenwidth, screenheight );
+    DXUTCreateDevice( false, screenwidth, screenheight );
     
     sm.AddScene(L"Intro", new IntroScene);
     sm.AddScene(L"Main", new MainScene);
@@ -154,30 +197,6 @@ main(void)
     sm.ChangeScene(L"Intro");
 
     DXUTMainLoop();
-
-    isEnd = true;
-
-    sm.ClearScenes();
-    sm.DeleteInstance();
-
-    TextureManager& tm = TextureManager::GetInstance();
-    tm.ReleaseAllTexture();
-    tm.DeleteInstance();
-
-    TileMapManager& tmm = TileMapManager::GetInstance();
-    tmm.DeleteInstance();
-
-    rm.ClearAll();
-    rm.DeleteInstance();
-
-    Camera& c = Camera::GetInstance();
-    c.DeleteInstance();
-
-    Sprite::sprite->Release();
-
-    SoundManager& smm = SoundManager::GetInstance();
-    smm.DeleteSounds();
-    smm.DeleteInstance();
 
     return DXUTGetExitCode();
 }

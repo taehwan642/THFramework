@@ -57,4 +57,5 @@ void SoundManager::DeleteSounds()
 		delete iter.second;
 	}
 	soundmap.clear();
+	delete mng;
 }

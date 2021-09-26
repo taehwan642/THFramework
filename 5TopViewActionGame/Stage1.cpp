@@ -15,6 +15,8 @@
 #include "Button.h"
 #include "RankScene.h"
 #include "Button.h"
+#include "Boss1.h"
+#include "MonsterBullet.h"
 #include "Stage1.h"
 
 void Stage1::CheatKey()
@@ -103,11 +105,21 @@ void Stage1::Initialize()
 
 	for (auto iter : MonsterManager::GetInstance().monsters)
 	{
-		if(iter != nullptr)
+		if (iter != nullptr)
+		{
+			iter->position = { -999999, -99999 };
 			iter->isactive = false;
+			iter->hpui->isactive = false;
+			iter->hpuibar->isactive = false;
+		}
 	}
 
 	for (auto iter : MonsterSpawnerManager::GetInstance().spn)
+	{
+		iter->isactive = false;
+	}
+
+	for (auto iter : ItemManager::GetInstance().items)
 	{
 		iter->isactive = false;
 	}
@@ -159,6 +171,10 @@ void Stage1::Init()
 	data.objTXT = "mapobj2.txt";
 	mapTXTdata.push_back(data);
 
+	data.blockTXT = "mapblock4.txt";
+	data.objTXT = "mapobj4.txt";
+	mapTXTdata.push_back(data);
+
 	data.blockTXT = "mapblock3.txt";
 	data.objTXT = "mapobj3.txt";
 	mapTXTdata.push_back(data);
@@ -189,7 +205,7 @@ void Stage1::Init()
 
 	currentStage = 0;
 	stagedatas[0] = 1; // 스테이지 1에는 맵이 총 1
-	stagedatas[1] = 1; // 스테이지 2에는 맵이 총 1
+	stagedatas[1] = 2; // 스테이지 2에는 맵이 총 1
 	stagedatas[2] = 1; // 스테이지 3에는 맵이 총 1
 	coolTime = TIMECOST;
 	Initialize();
@@ -221,6 +237,14 @@ void Stage1::Init()
 	{
 		SceneManager::GetInstance().ChangeScene(L"Stage1");
 	};
+
+	/*boss = new Boss1;
+	boss->player = p;
+	boss->position = { screenwidth / 2, screenheight / 2 };
+	boss->SetStat(difficulty);*/
+
+	MonsterBulletManager::GetInstance().p = p;
+	MonsterBulletManager::GetInstance().Create();
 }
 
 void Stage1::Update()
@@ -274,16 +298,15 @@ void Stage1::Update()
 		}
 		else
 		{
-			p->hp = p->maxHP;
-			p->attackgauge = 0;
-			p->hpuigauge = 0;
-
 			int mapCount = 0;
 			// 0일때 1, 1일때 2
 			for (int i = 0; i <= currentStage; ++i)
 				mapCount += stagedatas[i];
 			if (door->currentDoorIndex == mapCount) // 현재 스테이지가 끝나고 다음 스테이지로 넘어가기 직전
 			{
+				p->hp = p->maxHP;
+				p->attackgauge = 0;
+				p->hpuigauge = 0;
 				// UI띄우는 코드
 				// 다음 스테이지로 넘어가기 직전이다.
 				// UI 스코어를 계산.
@@ -372,6 +395,7 @@ void Stage1::Update()
 void Stage1::Exit()
 {
 	uipack->Delete();
+	delete uipack;
 	delete p;
 	ItemManager::GetInstance().Delete();
 
@@ -380,6 +404,7 @@ void Stage1::Exit()
 	EManager::GetInstance().Delete();
 	MonsterManager::GetInstance().Delete();
 	MonsterSpawnerManager::GetInstance().Delete();
+	MonsterBulletManager::GetInstance().Delete();
 
 	SoundManager::GetInstance().Stop(L"bgm");
 
@@ -390,6 +415,9 @@ void Stage1::Exit()
 	delete blur;
 	delete restartButton;
 	delete mainButton;
+	delete door;
 
 	isPaused = false;
+
+	mapTXTdata.clear();
 }

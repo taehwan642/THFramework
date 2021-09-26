@@ -10,7 +10,6 @@ Monster1::Monster1()
 	CreateAnimation(L"m1att", 5, 0.1f);
 	PlayAnimation(L"m1att");
 	layer = 100;
-	position = { screenwidth / 2, screenheight / 2 };
 	hpui->SetTexture(L"Enemy_HP.png");
 	maxHP = 5;
 }
@@ -40,7 +39,7 @@ void Monster1::Follow()
 	position += dir * SM GetDeltaTime() * movespeed;
 }
 
-void Monster1::Attack()
+void Monster1::CheckCanAttack()
 {
 	// x, y의 거리가 들어갔다.
 	Vec2 distance = player->position - position;

@@ -4,6 +4,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 #include "DXUT.h"
+#include "SceneManager.h"
 #define DXUT_MIN_WINDOW_SIZE_X 200
 #define DXUT_MIN_WINDOW_SIZE_Y 200
 #define DXUT_COUNTER_STAT_LENGTH 2048
@@ -1848,7 +1849,7 @@ HRESULT WINAPI DXUTMainLoop( HACCEL hAccel )
         DestroyAcceleratorTable( hAccel );
 
     GetDXUTState().SetInsideMainloop( false );
-
+    SceneManager::GetInstance().deviceEnd = true;
     return S_OK;
 }
 

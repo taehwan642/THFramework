@@ -14,6 +14,8 @@ private:
     Scene* currentScene = nullptr;
 
 public:
+    bool deviceEnd = false;
+
     __forceinline void 
         AddScene(const std::wstring& sceneName, Scene* scene) 
     {
