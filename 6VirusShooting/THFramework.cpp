@@ -27,7 +27,7 @@ HRESULT CALLBACK
 OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
 {
-    SM timeScale = 1.f;
+    Time::timescale = 1.f;
     D3DXCreateSprite(DXUTGetD3D9Device(), &Sprite::sprite);
     Camera& c = Camera::GetInstance();
     c.Initialize();
@@ -36,6 +36,7 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
     std::thread th([&]() 
         {
             LoadAni(L"Sprites/effect/AirSupprt/airsupport", 0, 15);
+            LoadAni(L"Sprites/player/move/6/move", 0, 15);
             return 0;
         });
 
@@ -49,12 +50,23 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
     std::thread th3([&]()
         {
             LoadAni(L"Sprites/effect/AirSupprt/airsupport", 20, 31);
+            LoadAni(L"Sprites/player/move/6/move", 15, 30);
             return 0;
+        });
+
+    std::thread th4([&]() {
+           LoadAni(L"Sprites/bullet/mine/mine",0, 30);
+           LoadAni(L"Sprites/bullet/Garbage/type1/trash", 0, 30);
+           LoadAni(L"Sprites/bullet/Garbage/type2/trash", 0, 30);
+           LoadAni(L"Sprites/Item/toolbox/toolbox", 0, 30);
+           LoadAni(L"Sprites/Item/eventbox/eventbox", 0, 30);
+           return 0;
         });
 
     th.join();
     th2.join();
     th3.join();
+    th4.join();
     return S_OK;
 }
 
@@ -88,6 +100,7 @@ void CALLBACK OnLostDevice(void* pUserContext)
 void CALLBACK 
 OnFrameMove( double fTime, float fElapsedTime, void* pUserContext )
 {
+    Time::dt = fElapsedTime * Time::timescale;
     sm.UpdateScene();
 }
 

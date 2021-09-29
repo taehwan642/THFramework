@@ -164,6 +164,21 @@
     <ClCompile Include="Effect.cpp">
       <Filter>2.Client</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>2.Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Singleton.cpp">
+      <Filter>1.Core\1.Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>2.Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Obsticle.cpp">
+      <Filter>2.Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>2.Client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -227,6 +242,18 @@
       <Filter>2.Client</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
+      <Filter>2.Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>2.Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>2.Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Obsticle.h">
+      <Filter>2.Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
       <Filter>2.Client</Filter>
     </ClInclude>
   </ItemGroup>

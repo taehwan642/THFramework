@@ -27,3 +27,10 @@ public:
 
 // 변수의 타입, 변수를 담고 있는 클래스, 해당 변수
 template<typename T> T* Singleton<T>::instance = nullptr;
+
+class Time
+{
+public:
+	static float dt;
+	static float timescale;
+};

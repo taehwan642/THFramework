@@ -38,7 +38,7 @@ AniSprite::PlayAnimation(const std::wstring& tag)
 		SetTexture(currentAnimation.second[0]);
 	}
 
-	currentTick += SM GetDeltaTime();
+	currentTick += Time::dt;
 
 	if (currentTick > currentAnimation.first)
 	{

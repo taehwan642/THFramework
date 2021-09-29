@@ -385,17 +385,26 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="DXUT\Optional\SDKsound.cpp" />
     <ClCompile Include="DXUT\Optional\SDKwavefile.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Obsticle.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="UIPack.cpp" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="DXUT\Optional\SDKsound.h" />
     <ClInclude Include="DXUT\Optional\SDKwavefile.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Obsticle.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="UIPack.h" />

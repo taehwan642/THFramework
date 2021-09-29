@@ -25,7 +25,7 @@ public:
     void Heal(int healvalue); // 즉시 회복
     virtual void Damaged(int damage);
 
-    bool Collide();
+    //bool Collide();
 
     virtual void Action() PURE;
     void Update() override;
