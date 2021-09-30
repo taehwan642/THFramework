@@ -10,6 +10,8 @@ Bullet::Bullet()
 void Bullet::Move()
 {
 	position += dir * Time::dt * movespeed;
+	if (position.x > screenwidth + 100)
+		isactive = false;
 }
 
 void Bullet::Update()

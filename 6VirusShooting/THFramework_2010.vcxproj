@@ -391,11 +391,13 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="MessageBoy.cpp" />
     <ClCompile Include="Obsticle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="UIPack.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="DXUT\Optional\SDKsound.h" />
     <ClInclude Include="DXUT\Optional\SDKwavefile.h" />
@@ -403,11 +405,13 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="MessageBoy.h" />
     <ClInclude Include="Obsticle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="UIPack.h" />
+    <ClInclude Include="Weapon.h" />
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="Core\AniSprite.h" />
     <ClInclude Include="Core\Camera.h" />

@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Obsticle.h"
 #include "Item.h"
+#include "MessageBoy.h"
 #include "Stage1.h"
 
 void Stage1::Init()
@@ -13,6 +14,7 @@ void Stage1::Init()
 	pack->Init();
 
 	player = new Player;
+	pack->player = player;
 
 	EffectManager::GetInstance().Create();
 	BulletManager::GetInstance().Create();
@@ -20,6 +22,8 @@ void Stage1::Init()
 	ObsticleManager::GetInstance().Create();
 	ItemManager::GetInstance().player = player;
 	ItemManager::GetInstance().Create();
+
+	MessageBoy::GetInstance().Create();
 }
 
 void Stage1::Update()
@@ -29,7 +33,7 @@ void Stage1::Update()
 		int r = rand() % O_END;
 		ObsticleManager::GetInstance().Spawn(MIDDLE, (ObsticleType)r);
 	}
-
+	MessageBoy::GetInstance().Update();
 	pack->Update();
 }
 
@@ -42,4 +46,5 @@ void Stage1::Exit()
 	ItemManager::GetInstance().Delete();
 	delete pack;
 	delete player;
+	MessageBoy::GetInstance().Delete();
 }

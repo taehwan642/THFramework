@@ -179,6 +179,12 @@
     <ClCompile Include="Item.cpp">
       <Filter>2.Client</Filter>
     </ClCompile>
+    <ClCompile Include="MessageBoy.cpp">
+      <Filter>2.Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>2.Client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -254,6 +260,12 @@
       <Filter>2.Client</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
+      <Filter>2.Client</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBoy.h">
+      <Filter>2.Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
       <Filter>2.Client</Filter>
     </ClInclude>
   </ItemGroup>

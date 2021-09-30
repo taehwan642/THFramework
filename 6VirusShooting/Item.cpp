@@ -1,10 +1,13 @@
 #include "DXUT.h"
 #include "Player.h"
+#include "MessageBoy.h"
 #include "Item.h"
 
 void Item::Booster()
 {
+	player->speedbuffValue = 200.f;
 	player->speedbuffTime = 2.f;
+	MessageBoy::GetInstance().SpawnBoy("ºÎ½ºÅÍ È¹µæ!");
 }
 
 void Item::Toolbox()
@@ -14,18 +17,19 @@ void Item::Toolbox()
 	{
 		player->hp = player->maxHP;
 	}
+	MessageBoy::GetInstance().SpawnBoy("°ø±¸»óÀÚ È¹µæ!");
 }
 
 void Item::Eventbox()
 {
 	player->invincibleTime = 2.f;
+	MessageBoy::GetInstance().SpawnBoy("ÀÌº¥Æ®»óÀÚ È¹µæ!");
 }
 
 void Item::CollideWithPlayer()
 {
 	Vec2 dist = player->position - position;
 	float length = D3DXVec2Length(&dist);
-	std::cout << length << std::endl;
 	if (length < 100.f)
 	{
 		switch (type)

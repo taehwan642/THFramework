@@ -21,6 +21,9 @@ public:
     float movespeed = 100.f;
     Obsticle();
 
+    void Mine();
+    void Trash();
+
     void CollideWithBullet();
     void CollideWithPlayer();
     

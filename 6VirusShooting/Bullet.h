@@ -5,7 +5,9 @@
 enum BulletType
 {
     B_MACHINEGUNBULLET,
-    B_NAVALGUNBULLET
+    B_NAVALGUNBULLET,
+    B_MISSILE,
+    B_TORPEDO
 };
 
 class Bullet :

@@ -11,6 +11,19 @@ Obsticle::Obsticle()
 	CreateAnimation(L"Sprites/bullet/Garbage/type2/trash", 30, 0.05f);
 }
 
+void Obsticle::Mine()
+{
+	player->Damaged(3);
+	player->speedbuffTime = 1.f;
+	player->speedbuffValue = -300 / 2.f;
+}
+
+void Obsticle::Trash()
+{
+	player->speedbuffTime = 1.f;
+	player->speedbuffValue = -100.f;
+}
+
 void Obsticle::CollideWithBullet()
 {
 	for (auto iter : BulletManager::GetInstance().b)
@@ -41,6 +54,17 @@ void Obsticle::CollideWithPlayer()
 	if (length < 70.f)
 	{
 		player->Damaged(1);
+		switch (type)
+		{
+		case O_MINEOBS:
+			Mine();
+			break;
+		case O_TRASHOBS:
+			Trash();
+			break;
+		default:
+			break;
+		}
 	}
 }
 
