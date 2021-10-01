@@ -11,6 +11,17 @@
 #include "Font.h"
 #include "Stage1.h"
 
+// 무기 아이템 연결
+// 총알 데미지 추가
+// 나머지 총알, 무기, 아이템
+// 관련된 UI 모두 제작
+// 스킬
+// 적
+// 스테이지
+// 씬 플로우
+// 사운드 추가
+// 마무리
+
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
 
@@ -148,6 +159,7 @@ OnD3D9DestroyDevice( void* pUserContext )
     }
 }
 
+// 창 -> 주석풀기
 //INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
 int main(void)
 {
@@ -169,6 +181,7 @@ int main(void)
     DXUTSetHotkeyHandling( true, false, true );
     DXUTSetCursorSettings( true, true );
     DXUTCreateWindow( L"THFramework" );
+    // false 세팅
     DXUTCreateDevice( true, screenwidth, screenheight );
     
     sm.AddScene(L"Stage1", new Stage1);
