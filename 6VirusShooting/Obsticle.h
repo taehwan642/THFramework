@@ -16,10 +16,14 @@ class Obsticle :
 public:
     Player* player;
     ObsticleType type;
-    int hp = 5;
+    Sprite* radius = nullptr;
+    int hp = 10;
     int trashtype = 0;
-    float movespeed = 100.f;
+    float movespeed = 80.f;
     Obsticle();
+    virtual ~Obsticle();
+    // RAII 생성자에서 리소스 할당
+    // 소멸자에서 리소스 해제
 
     void Mine();
     void Trash();

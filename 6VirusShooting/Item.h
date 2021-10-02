@@ -18,6 +18,9 @@ class Item :
     public AniSprite
 {
 private:
+    void MachineGunBullet();
+    void Torpedo();
+    void Missile();
     void Booster();
     void Toolbox();
     void Eventbox();

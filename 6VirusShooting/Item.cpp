@@ -1,7 +1,56 @@
 #include "DXUT.h"
 #include "Player.h"
 #include "MessageBoy.h"
+#include "Weapon.h"
 #include "Item.h"
+
+void Item::MachineGunBullet()
+{
+	// ÇÃ·¹ÀÌ¾î ¼Ó weapon¾È¿¡
+	// ³»°¡ Ã£´Â °Å°Å °Å°Å°Å °Å°Ô ÀÖ´Ù¸é
+	// currentbullet+=30;
+	for (int i = 0; i < player->weapons.size(); ++i)
+	{
+		if (dynamic_cast<MachineGun*>(player->weapons[i]) != nullptr)
+		{
+			player->weapons[i]->currentBullet += 30;
+			if (player->weapons[i]->currentBullet > 180)
+				player->weapons[i]->currentBullet = 180;
+			break;
+		}
+	}
+	MessageBoy::GetInstance().SpawnBoy("¸Ó½Å°Ç ÃÑ¾Ë\n È¹µæ!");
+}
+
+void Item::Torpedo()
+{
+	for (int i = 0; i < player->weapons.size(); ++i)
+	{
+		if (dynamic_cast<TorpedoLauncher*>(player->weapons[i]) != nullptr)
+		{
+			player->weapons[i]->currentBullet += 5;
+			if (player->weapons[i]->currentBullet > 15)
+				player->weapons[i]->currentBullet = 15;
+			break;
+		}
+	}
+	MessageBoy::GetInstance().SpawnBoy("¾î·Ú È¹µæ!");
+}
+
+void Item::Missile()
+{
+	for (int i = 0; i < player->weapons.size(); ++i)
+	{
+		if (dynamic_cast<MissileLauncher*>(player->weapons[i]) != nullptr)
+		{
+			player->weapons[i]->currentBullet += 3;
+			if (player->weapons[i]->currentBullet > 10)
+				player->weapons[i]->currentBullet = 10;
+			break;
+		}
+	}
+	MessageBoy::GetInstance().SpawnBoy("¹Ì»çÀÏ È¹µæ!");
+}
 
 void Item::Booster()
 {
@@ -35,10 +84,13 @@ void Item::CollideWithPlayer()
 		switch (type)
 		{
 		case I_MACHINEGUNBULLET:
+			MachineGunBullet();
 			break;
 		case I_TORPEDO:
+			Torpedo();
 			break;
 		case I_MISSILE:
+			Missile();
 			break;
 		case I_BOOSTER:
 			Booster();
@@ -62,6 +114,9 @@ Item::Item()
 	CreateAnimation(L"Sprites/Item/toolbox/toolbox", 30, 0.05f);
 	CreateAnimation(L"Sprites/Item/eventbox/eventbox", 30, 0.05f);
 	CreateAnimation(L"Sprites/Item/Boost/boost", 1, 1);
+	CreateAnimation(L"Sprites/Item/machinegun/machine", 30, 0.05f);
+	CreateAnimation(L"Sprites/Item/missile/missile", 30, 0.05);
+	CreateAnimation(L"Sprites/Item/Torpedo/torpedo", 30, 0.05);
 }
 
 void Item::Update()
@@ -70,10 +125,13 @@ void Item::Update()
 	switch (type)
 	{
 	case I_MACHINEGUNBULLET:
+		PlayAnimation(L"Sprites/Item/machinegun/machine");
 		break;
 	case I_TORPEDO:
+		PlayAnimation(L"Sprites/Item/Torpedo/torpedo");
 		break;
 	case I_MISSILE:
+		PlayAnimation(L"Sprites/Item/missile/missile");
 		break;
 	case I_BOOSTER:
 		PlayAnimation(L"Sprites/Item/Boost/boost");
@@ -89,6 +147,13 @@ void Item::Update()
 	}
 
 	position.x -= movespeed * Time::dt;
+	if (position.x > screenwidth + 100 ||
+		position.x < -100 ||
+		position.y > screenheight + 100 ||
+		position.y < -100)
+	{
+		isactive = false;
+	}
 }
 
 void ItemManager::Create()

@@ -1,4 +1,11 @@
 #pragma once
+
+struct ReturnData
+{ 
+	std::vector<Vec2> dirs;
+	Sprite* sp = nullptr;
+};
+
 struct Weapon
 {
 	// 장전시간
@@ -12,11 +19,12 @@ struct Weapon
 
 	// 쏘기
 	virtual void Shoot(Vec2 pos) PURE;
-	virtual std::vector<Vec2> CheckShoot(Vec2 pos);
+	virtual ReturnData CheckShoot(Vec2 pos, Weapon* thisw);
 };
 
 struct MachineGun : public Weapon
 {
+	float focustime = 0.f;
 	MachineGun();
 	void Shoot(Vec2 pos) override;
 };

@@ -2,15 +2,22 @@
 #include "AniSprite.h"
 #include "Font.h"
 #include "Player.h"
+#include "Monster.h"
 #include "UIPack.h"
 
 void UIPack::Init()
 {
-	background = new AniSprite;
-	background->isUI = true;
-	background->CreateAnimation(L"Sprites/map/back", 2, 1.1f);
-	background->position = MIDDLE;
-	background->PlayAnimation(L"Sprites/map/back");
+	for (int i = 0; i < 2; ++i)
+	{
+		background[i] = new AniSprite;
+		background[i]->isUI = true;
+		background[i]->CreateAnimation(L"Sprites/map/back", 2, 1.1f);
+		background[i]->position = MIDDLE;
+		background[i]->PlayAnimation(L"Sprites/map/back");
+		background[i]->layer = -100;
+	}
+	background[1]->position = { screenwidth / 2.f + (float)screenwidth, screenheight / 2 };
+
 
 	for (int i = 0; i < 2; ++i)
 	{
@@ -34,7 +41,24 @@ void UIPack::Init()
 
 void UIPack::Update()
 {
-	background->PlayAnimation(L"Sprites/map/back");
+	bool isBossOn = false;
+	for (auto iter : MonsterManager::GetInstance().m)
+	{
+		if (iter->isactive == true && iter->isBoss == true && iter->isdead == false)
+			isBossOn = true;
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		if(isBossOn == false)
+			background[i]->position.x -= Time::dt * 300.f;
+
+		background[i]->PlayAnimation(L"Sprites/map/back");
+		if (background[i]->position.x < -(screenwidth / 2.f))
+		{
+			background[i]->position.x = screenwidth / 2.f + (float)screenwidth;
+		}
+	}
 
 	if (player->speedbuffTime > 0)
 	{
@@ -71,7 +95,9 @@ void UIPack::Update()
 
 void UIPack::Delete()
 {
-	delete background;
+	for (int i = 0; i < 2; ++i)
+		delete background[i];
+
 	for (int i = 0; i < 2; ++i)
 		delete buffFont[i];
 

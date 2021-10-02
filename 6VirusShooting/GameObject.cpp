@@ -14,6 +14,9 @@ void GameObject::Heal(int healvalue)
 
 void GameObject::Damaged(int damage)
 {
+	if (isdead == true)
+		return;
+
 	hp -= damage;
 	if (hp <= 0)
 	{

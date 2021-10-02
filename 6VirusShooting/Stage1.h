@@ -8,6 +8,8 @@ class Stage1 :
     public Scene
 {
 public:
+    float monsterSpawnTime = 3.f;
+
     Player* player;
     UIPack* pack;
 

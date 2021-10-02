@@ -1,6 +1,8 @@
 #include "DXUT.h"
 #include "Bullet.h"
 #include "Weapon.h"
+#include "Monster.h"
+#include "Effect.h"
 #include "Player.h"
 
 Player::Player()
@@ -26,13 +28,45 @@ Player::~Player()
 	weapons.clear();
 }
 
+void Player::Collision()
+{
+	for (auto iter : BulletManager::GetInstance().b)
+	{
+		if (iter->isactive == false)
+			continue;
+
+
+		if (iter->type >= B_MACHINEGUNBULLET && iter->type <= B_TORPEDO)
+			continue;
+
+		Vec2 dist = iter->position - position;
+		float length = D3DXVec2Length(&dist);
+		if (length < 70.f)
+		{
+			Damaged(iter->damage);
+			iter->isactive = false;
+			iter->position = { -9999, -9999 };
+		}
+	}
+
+	for (auto iter : MonsterManager::GetInstance().m)
+	{
+		if (iter->isactive == false)
+			continue;
+
+		Vec2 dist = iter->position - position;
+		float length = D3DXVec2Length(&dist);
+		if (length < 70.f)
+		{
+			Damaged(iter->strValue);
+		}
+	}
+}
+
 void Player::Shoot()
 {
 	// 가장 근접한 유닛 구하는 방법
 	// Monster 
-	
-	
-
 	// pos은 뭐다? 쏘는 위치
 	// dir은 뭐다? 날라가가는 방향
 	// 즉 가장 근접한 유닛으로의 방향이
@@ -74,6 +108,17 @@ void Player::Move()
 	{
 		position.x += movespeed * Time::dt;
 	}
+
+	if (DXUTWasKeyPressed('I'))
+	{
+		EffectManager::GetInstance().Spawn(MIDDLE, E_AIRSUPPORT);
+	}
+
+	if (DXUTWasKeyPressed('O'))
+	{
+		static_cast<MachineGun*>(weapons[0])->focustime = 5.f;
+	}
+
 }
 
 void Player::Action()
@@ -81,8 +126,9 @@ void Player::Action()
 	invincibleTime -= Time::dt;
 	speedbuffTime -= Time::dt;
 	
-	if (invincibleTime > 0) color = D3DCOLOR_RGBA(128, 128, 128, 255);
-	else color = D3DCOLOR_RGBA(255, 255, 255, 255);
+	// 스피드 버프가 있을 때 버프 맥이고
+	// 스피드 버프가 없는데, 무적 버프가 있으면 색깔 맥이고
+	
 
 	if (speedbuffTime > 0)
 	{
@@ -95,15 +141,21 @@ void Player::Action()
 	else
 	{
 		movespeed = 300.f;
-		color = D3DCOLOR_RGBA(255, 255, 255, 255);
+		if (invincibleTime > 0) color = D3DCOLOR_RGBA(128, 128, 128, 255);
+		else color = D3DCOLOR_RGBA(255, 255, 255, 255);
 	}
 	
 	Shoot();
+	Collision();
 
 	if (DXUTWasKeyPressed('1'))
 		currentWeapon = 0;
 	if (DXUTWasKeyPressed('2'))
 		currentWeapon = 1;
+	if (DXUTWasKeyPressed('3'))
+		currentWeapon = 2;
+	if (DXUTWasKeyPressed('4'))
+		currentWeapon = 3;
 
 	PlayAnimation(L"Sprites/player/move/6/move");
 	Move();

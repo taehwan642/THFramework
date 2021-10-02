@@ -9,7 +9,7 @@ class UIPack
 public:
 	Player* player;
 
-	AniSprite* background;
+	AniSprite* background[2];
 	Font* buffFont[2];
 
 	Sprite* weaponSprite[4];

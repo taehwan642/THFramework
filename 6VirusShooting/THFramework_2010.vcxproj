@@ -392,6 +392,7 @@
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MessageBoy.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Obsticle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Singleton.cpp" />
@@ -406,6 +407,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MessageBoy.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="Obsticle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SoundManager.h" />

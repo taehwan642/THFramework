@@ -1,10 +1,13 @@
 #include "DXUT.h"
+#include "Monster.h"
 #include "Effect.h"
 
 Effect::Effect()
 {
 	CreateAnimation(L"Sprites/effect/AirSupprt/airsupport", 31, 0.05f);
 	CreateAnimation(L"Sprites/effect/explo/explosion", 23, 0.05f);
+	layer = 100;
+	RenderManager::GetInstance().Sort();
 }
 
 void Effect::Update()
@@ -14,6 +17,18 @@ void Effect::Update()
 	{
 	case E_AIRSUPPORT:
 		isEnd = PlayAnimation(L"Sprites/effect/AirSupprt/airsupport");
+		if (currentFrame == 11)
+		{
+			for (auto iter : MonsterManager::GetInstance().m)
+			{
+				if (iter->isactive == false)
+					continue;
+				if (iter->isdead == true)
+					continue;
+
+				iter->Damaged(100);
+			}
+		}
 		break;
 	case E_EXPLOSION:
 		isEnd = PlayAnimation(L"Sprites/effect/explo/explosion");
@@ -35,7 +50,7 @@ void EffectManager::Create()
 	}
 }
 
-void EffectManager::Spawn(Vec2 pos, EffectType type)
+Effect* EffectManager::Spawn(Vec2 pos, EffectType type)
 {
 	for (auto iter : eff)
 	{
@@ -44,7 +59,11 @@ void EffectManager::Spawn(Vec2 pos, EffectType type)
 			iter->position = pos;
 			iter->type = type;
 			iter->isactive = true;
-			return;
+			if (type == E_EXPLOSION)
+				iter->scale = { 3,3 };
+			else
+				iter->scale = { 1,1 };
+			return iter;
 		}
 	}
 }

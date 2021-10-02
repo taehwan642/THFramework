@@ -14,8 +14,12 @@ public:
     float speedbuffTime = 0.f;
     float speedbuffValue = 0.f;
 
+    // 
+
     Player();
     virtual ~Player();
+
+    void Collision();
 
     void Shoot();
     void Damaged(int damage) override;

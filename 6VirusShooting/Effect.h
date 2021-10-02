@@ -21,6 +21,6 @@ class EffectManager : public Singleton<EffectManager>
 public:
     std::vector<Effect*> eff;
     void Create();
-    void Spawn(Vec2 pos, EffectType type);
+    Effect* Spawn(Vec2 pos, EffectType type);
     void Delete();
 };

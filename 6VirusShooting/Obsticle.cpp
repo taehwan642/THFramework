@@ -9,6 +9,19 @@ Obsticle::Obsticle()
 	CreateAnimation(L"Sprites/bullet/mine/mine", 30, 0.05f);
 	CreateAnimation(L"Sprites/bullet/Garbage/type1/trash", 30, 0.05f);
 	CreateAnimation(L"Sprites/bullet/Garbage/type2/trash", 30, 0.05f);
+	radius = new Sprite;
+	radius->isactive = false;
+	radius->SetTexture(L"Sprites/bullet/RedLight/00.png");
+	radius->scale = { 3.5f, 3.5f };
+	radius->layer = -1;
+	RenderManager::GetInstance().Sort();
+	position = { -9999, -9999 };
+	radius->position = { -9999, -9999 };
+}
+
+Obsticle::~Obsticle()
+{
+	delete radius;
 }
 
 void Obsticle::Mine()
@@ -31,16 +44,22 @@ void Obsticle::CollideWithBullet()
 		if (iter->isactive == false)
 			continue;
 
+		if (iter->type == B_ENEMYMISSILE || iter->type == B_ENEMYTORPEDO)
+			continue;
+
 		Vec2 dist = iter->position - position;
 		float length = D3DXVec2Length(&dist);
 		if (length < 70.f)
 		{
-			--hp;
+			hp -= iter->damage;
 			if (hp <= 0)
 			{
 				int r = rand() % I_END;
 				ItemManager::GetInstance().Spawn(position, (ItemType)r);
 				isactive = false;
+				radius->isactive = false;
+				position = { -9999, -9999 };
+				radius->position = { -9999, -9999 };
 			}
 			iter->isactive = false;
 		}
@@ -87,8 +106,18 @@ void Obsticle::Update()
 	default:
 		break;
 	}
-
+	radius->position = position;
 	position.x -= movespeed * Time::dt;
+
+	if (position.x > screenwidth + 100 ||
+		position.x < -100 ||
+		position.y > screenheight + 100 ||
+		position.y < -100)
+	{
+		isactive = false;
+		radius->isactive = false;
+	}
+	
 }
 
 void ObsticleManager::Create()
@@ -114,6 +143,10 @@ void ObsticleManager::Spawn(Vec2 pos, ObsticleType type)
 			iter->isactive = true;
 			if (type == O_TRASHOBS)
 				iter->trashtype = rand() % 2;
+			else
+			{
+				iter->radius->isactive = true;
+			}
 			return;
 		}
 	}
