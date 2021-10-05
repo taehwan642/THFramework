@@ -1,4 +1,5 @@
 #pragma once
+#include <mutex>
 #include "Singleton.h"
 
 struct Texture final
@@ -13,7 +14,7 @@ class TextureManager final :
 {
 private:
 	std::list<Texture*> texturelist;
-
+	std::mutex mtx;
 public:
 	[[nodiscard]] Texture* 
 		LoadTexture(const std::wstring& path);

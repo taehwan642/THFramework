@@ -10,6 +10,7 @@
 #include "Stage1.h"
 #include "Font.h"
 #include "Stage1.h"
+#include "LoadScene.h"
 
 // 무기 아이템 연결
 // 총알 데미지 추가
@@ -25,15 +26,6 @@
 SceneManager& sm = SceneManager::GetInstance();
 RenderManager& rm = RenderManager::GetInstance();
 
-void LoadAni(std::wstring tag, int startindex, int frameCount)
-{
-    for (int i = startindex; i < frameCount; ++i)
-    {
-        const auto& route = tag + L" (" + std::to_wstring(i + 1) + L").png";
-        TextureManager::GetInstance().LoadTexture(route);
-    }
-}
-
 HRESULT CALLBACK 
 OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
@@ -43,64 +35,7 @@ OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBu
     Camera& c = Camera::GetInstance();
     c.Initialize();
     srand(time(NULL));
-    std::thread th([&]() 
-        {
-            LoadAni(L"Sprites/effect/AirSupprt/airsupport", 0, 15);
-            LoadAni(L"Sprites/player/move/6/move", 0, 15);
-            LoadAni(L"Sprites/enemy/type1/move/18/move", 0, 30);
-            LoadAni(L"Sprites/enemy/type1/sink/18/sink", 0, 28);
-            std::cout << "스레드1끝" << std::endl;
-            return 0;
-        });
-
-    std::thread th2([&]()
-        {
-            LoadAni(L"Sprites/effect/explo/explosion", 23,0);
-            LoadAni(L"Sprites/effect/AirSupprt/airsupport", 15, 20);
-            LoadAni(L"Sprites/Item/machinegun/machine",0, 30);
-            LoadAni(L"Sprites/Item/missile/missile", 0,30);
-            LoadAni(L"Sprites/Item/Torpedo/torpedo",0, 30);
-            LoadAni(L"Sprites/effect/explo/explosion", 0, 23);
-            std::cout << "스레드2끝" << std::endl;
-            return 0;
-        });
-
-    std::thread th3([&]()
-        {
-            LoadAni(L"Sprites/effect/AirSupprt/airsupport", 20, 25);
-            LoadAni(L"Sprites/player/move/6/move", 15, 30);
-            LoadAni(L"Sprites/enemy/type2/move/18/move", 0, 30);
-            LoadAni(L"Sprites/bullet/EnemyMissile/missile", 0, 30);
-            LoadAni(L"Sprites/enemy/typeboss1/move/move", 0, 15);
-            std::cout << "스레드3끝" << std::endl;
-            return 0;
-        });
-
-    std::thread th4([&]() {
-           LoadAni(L"Sprites/effect/AirSupprt/airsupport", 25, 31);
-           LoadAni(L"Sprites/bullet/mine/mine",0, 30);
-           LoadAni(L"Sprites/bullet/Garbage/type1/trash", 0, 30);
-           LoadAni(L"Sprites/bullet/Garbage/type2/trash", 0, 30);
-           LoadAni(L"Sprites/Item/toolbox/toolbox", 0, 30);
-           LoadAni(L"Sprites/Item/eventbox/eventbox", 0, 30);
-           LoadAni(L"Sprites/bullet/Torpedo/torpedo", 0, 30);
-           LoadAni(L"Sprites/bullet/PlayerMissile/missile", 0, 30);
-           std::cout << "스레드4끝" << std::endl;
-           return 0;
-        });
-    std::thread th5([&]() {
-        LoadAni(L"Sprites/enemy/typeboss1/move/move", 15, 30);
-
-        std::cout << "스레드5끝" << std::endl;
-
-        return 0;
-        });
-
-    th.join();
-    th2.join();
-    th3.join();
-    th4.join();
-    th5.join();
+    
     return S_OK;
 }
 
@@ -208,7 +143,8 @@ int main(void)
     DXUTCreateDevice( true, screenwidth, screenheight );
     
     sm.AddScene(L"Stage1", new Stage1);
-    sm.ChangeScene(L"Stage1");
+    sm.AddScene(L"Load", new LoadScene);
+    sm.ChangeScene(L"Load");
 
     DXUTMainLoop();
 

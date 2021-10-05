@@ -188,6 +188,9 @@
     <ClCompile Include="Monster.cpp">
       <Filter>2.Client</Filter>
     </ClCompile>
+    <ClCompile Include="LoadScene.cpp">
+      <Filter>2.Client\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -273,6 +276,9 @@
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>2.Client</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadScene.h">
+      <Filter>2.Client\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
